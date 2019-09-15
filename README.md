@@ -14,12 +14,16 @@ The goal is to allow someone to:
 
 Then receive:
 
-  => the ephemeris for all major bodies (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`!!)
+  => the calculated major angles (`Ascendant` and `Midheaven (MC)`)
 
-  => the cusps of each astrological sign as it relates to the ecliptic plane (`Aries`, `Taurus`, `Gemini`, `Cancer`, `Leo`, `Virgo`, `Libra`, `Scorpio`, `Sagittarius`, `Capricorn`, `Aquarius`, `Pisces`)
+  => the positions for all major bodies as they relate to the ecliptic (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)
 
-  => the cusps of each house within the Placidus house system as it relates to the ecliptic plane (more house systems to come, possibly).
+  => the positions of each astrological sign as it relates to the ecliptic (`Aries`, `Taurus`, `Gemini`, `Cancer`, `Leo`, `Virgo`, `Libra`, `Scorpio`, `Sagittarius`, `Capricorn`, `Aquarius`, `Pisces`)
 
-  => the constellation position for each major body
+  => the cusps of each house within the Placidus house system as it relates to the ecliptic (more house systems too!).
 
-  => the house position for each major body
+  => the computed constellation each major body occupies
+
+  => the computed house position each major body occupies
+
+  => the computed aspects of all major bodies
