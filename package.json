@@ -1,0 +1,21 @@
+{
+  "name": "western-horoscope-js",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [
+    "Astrology"
+  ],
+  "author": "",
+  "license": "Unlicense",
+  "dependencies": {
+    "webpack": "^4.40.2"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.8"
+  }
+}

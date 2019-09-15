@@ -27,3 +27,30 @@ Then receive:
   => the computed house position each major body occupies
 
   => the computed aspects of all major bodies
+
+## Installation
+
+If installing from a package manager (NPM, Yarn, etc), run the following command in terminal:
+
+```
+npm install western-horoscope-js
+
+// or
+
+yarn add western-horoscope-js
+```
+
+If installing from source, the main file can be found at `dist/main.js` and included in your codebase.
+
+
+## Building
+
+This package uses webpack to produce a javascript bundle. If modifying this code, a new bundle can be built with the following command:
+
+```
+npm run build
+
+// or
+
+yarn run build
+```
