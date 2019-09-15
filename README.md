@@ -1,6 +1,6 @@
 # WesternAstrologyJS
 
-This project exists with the intention to make western astrological horoscope creation free, readily available, and easy to access for anyone who can interact with Javascript. By horoscope, we're talking about astrological & birth charts. Not daily predictions (although you are certainly free to make them with these charts).
+This project exists with the intention to make western astrological horoscope creation free, readily available, and easy to access for anyone who can interact with Javascript. By **horoscope**, we're talking about astrological birth charts. Not daily horoscope **readings** (although you are certainly free to make them with these charts).
 
 Example:
 
