@@ -1,7 +1,7 @@
 import moment from 'moment-timezone'
 import tzlookup from 'tz-lookup'
 
-import { getJulianDate, hourTimeToDecimal } from './utilities/dateTimeUtilities'
+import { getJulianDate, getLocalSiderealTime, hourTimeToDecimal } from './utilities/dateTimeUtilities'
 
 //////////
 // Origin
@@ -23,18 +23,31 @@ import { getJulianDate, hourTimeToDecimal } from './utilities/dateTimeUtilities'
 class Origin {
   constructor({year = 0, month = 0, date = 0, hour = 0, minute = 0, latitude = 0.00, longitude = 0.00}={}) {
 
+    this.timeObject = {
+      year: year,
+      month: month,
+      date: date,
+      hour: hour,
+      minute: minute,
+      second: 0,
+      millisecond: 0
+    }
 
-    this.timeLocationObject = { year: year, month: month, date: date, hour: hour, minute: minute, second: 0, millisecond: 0 }
-    this.timezone = moment.tz.zone(tzlookup(latitude, longitude))
-    this.localTime = moment.tz(this.timeLocationObject, this.timezone.name)
-    this.utcTime = moment.tz(this.timeLocationObject, this.timezone.name).utc()
+    this.latitude = latitude
+    this.longitude = longitude
+    this.timezone = moment.tz.zone(tzlookup(this.latitude, this.longitude))
+    this.localTime = moment.tz(this.timeObject, this.timezone.name)
+    this.utcTime = moment.tz(this.timeObject, this.timezone.name).utc()
     this.julianDate = getJulianDate({
       year: this.utcTime.years(),
       month: this.utcTime.months() + 1,
       date: this.utcTime.dates(),
       ut: hourTimeToDecimal({ hour: this.utcTime.hours(), minute: this.utcTime.minutes() })
     })
-    debugger
+    this.localSiderealTime = getLocalSiderealTime({
+                                                    jd: this.julianDate,
+                                                    longitude: parseFloat(this.longitude)
+                                                  })
   }
 }
 
