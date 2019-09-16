@@ -8,9 +8,9 @@ Example Chart:
 
 The goal is to allow someone to:
 
-1) Enter a (calendar) date + time and a latitude/longitude coordinates for a position on the planet Earth (or a city / country)
+1) Enter a calendar date + time and latitude/longitude coordinates for a position on the planet Earth.
 
-2) And receive:
+2) Receive:
 
   => the calculated major angles (`Ascendant` and `Midheaven (MC)`)
 
@@ -38,7 +38,7 @@ npm install western-horoscope-js
 yarn add western-horoscope-js
 ```
 
-If installing from source, the main file can be found at `dist/main.js` and included in your codebase.
+If installing from source, the main file can be found at `dist/main.bundle.js` and included in your codebase.
 
 
 ## Building
@@ -52,3 +52,9 @@ npm run build
 
 yarn run build
 ```
+
+## Demo
+
+A small HTML implementation demo is provided.
+
+To view, open the file `dist/demo.html` in your browser.
