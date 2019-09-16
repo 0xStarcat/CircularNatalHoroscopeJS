@@ -34,8 +34,6 @@ class DemoApp {
       latitude: this.latitudeInput.value,
       longitude: this.longitudeInput.value
     })
-
-    debugger
   }
 }
 

@@ -9,7 +9,7 @@ export const getJulianDate = ({year=0, month=0, date=0, ut=0}={}) => {
   // * int month (1...12)
   // * int date = (1...31)
   // * float ut = universal time
-  // => Returns Float - the Julian Date given the specific Gregorian calendar date
+  // => Returns Float || the Julian Date given the specific Gregorian calendar date
 
   return  (367 * year) -
           Math.floor(7 * (year + Math.floor((month + 9) / 12)) / 4) -
@@ -25,7 +25,7 @@ export const getLocalSiderealTime = ({jd = 0, longitude = 0}={}) => {
   // Tested with http://neoprogrammics.com/sidereal_time_calculator/index.php
   // * float jd = julian date decimal
   // * float longitude = local longitude in decimal form
-  // => returns Float - the sidereal time in arc degrees (0...359)
+  // => returns Float || the sidereal time in arc degrees (0...359)
 
   const julianDaysJan1st2000 = 2451545.0
   const julianDaysSince2000 = jd - julianDaysJan1st2000
