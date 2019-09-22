@@ -12,19 +12,19 @@ The goal is to allow someone to:
 
 2) Receive:
 
-  => ~~the calculated major angles (`Ascendent` and `Midheaven (MC)`)~~
+  => ~~the calculated major angles (`Ascendent` and `Midheaven (MC)`) for a given datetime and origin~~
 
-  => the positions for all major bodies as they relate to the ecliptic (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)
+  => the positions for all major bodies as they relate to the ecliptic for a given datetime and origin (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)
 
-  => the positions of each astrological sign as it relates to the ecliptic (`Aries`, `Taurus`, `Gemini`, `Cancer`, `Leo`, `Virgo`, `Libra`, `Scorpio`, `Sagittarius`, `Capricorn`, `Aquarius`, `Pisces`)
+  => the cusps of each astrological sign as they relate to the ecliptic for a given datetime and origin (`Aries`, `Taurus`, `Gemini`, `Cancer`, `Leo`, `Virgo`, `Libra`, `Scorpio`, `Sagittarius`, `Capricorn`, `Aquarius`, `Pisces`)
 
-  => the cusps of each house within the Placidus house system as it relates to the ecliptic (more house systems too!).
+  => the cusps of each house within the Placidus, Koch, and Whole sign house systems (more house systems too!).
 
-  => the computed constellation each major body occupies
+  => A list containing the sign each angle, major body, and house occupy.
 
-  => the computed house position each major body occupies
+  => A list containing all the computed aspects of all major bodies.
 
-  => the computed aspects of all major bodies
+  => A data format that interfaces with a frontend library (maybe this one https://github.com/Kibo/AstroChart or a custom one) for creating the actual charts.
 
 ## Installation
 
