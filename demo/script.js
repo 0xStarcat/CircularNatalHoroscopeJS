@@ -2,6 +2,7 @@ import moment from 'moment-timezone'
 import Origin from '../src/Origin'
 import Horoscope from '../src/Horoscope'
 import { decimalDegreesToDMS } from '../src/utilities/math'
+import { dmsString, signDecimalDegrees, signDMS } from '../src/utilities/copy'
 
 class DemoApp {
   constructor() {
@@ -44,9 +45,9 @@ class DemoApp {
       origin: locationTimeData
     })
 
-    this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${decimalDegreesToDMS(horoscope.midheaven).degrees} ${decimalDegreesToDMS(horoscope.midheaven).minutes}' ${decimalDegreesToDMS(horoscope.midheaven).seconds}''`
+    this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${dmsString(decimalDegreesToDMS(horoscope.midheaven))} || ${signDecimalDegrees(horoscope.midheaven)} || ${signDMS(horoscope.midheaven)}`
 
-    this.ascendentElement.innerHTML = `${horoscope.ascendent} || ${decimalDegreesToDMS(horoscope.ascendent).degrees} ${decimalDegreesToDMS(horoscope.ascendent).minutes}' ${decimalDegreesToDMS(horoscope.ascendent).seconds}''`
+    this.ascendentElement.innerHTML = `${horoscope.ascendent} || ${dmsString(decimalDegreesToDMS(horoscope.ascendent))} || ${signDecimalDegrees(horoscope.ascendent)} || ${signDMS(horoscope.ascendent)}`
   }
 }
 
