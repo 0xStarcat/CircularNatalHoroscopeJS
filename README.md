@@ -12,7 +12,7 @@ The goal is to allow someone to:
 
 2) Receive:
 
-  => the calculated major angles (`Ascendant` and `Midheaven (MC)`)
+  => ~~the calculated major angles (`Ascendent` and `Midheaven (MC)`)~~
 
   => the positions for all major bodies as they relate to the ecliptic (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)
 
@@ -39,6 +39,28 @@ yarn add western-horoscope-js
 ```
 
 If installing from source, the main file can be found at `dist/main.bundle.js` and included in your codebase.
+
+## Development
+
+Install node modules
+
+```
+npm install
+
+// or
+
+yarn install
+```
+
+Run tests with
+
+```
+npm test
+
+// or
+
+yarn test
+```
 
 
 ## Building
