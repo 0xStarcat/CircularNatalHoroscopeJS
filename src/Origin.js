@@ -1,7 +1,8 @@
 import moment from 'moment-timezone'
 import tzlookup from 'tz-lookup'
 
-import { getJulianDate, getLocalSiderealTime, hourTimeToDecimal } from './utilities/dateTimeUtilities'
+import { hourTimeToDecimal } from './utilities/math'
+import { getJulianDate, getLocalSiderealTime } from './utilities/astronomy'
 
 //////////
 // Origin
