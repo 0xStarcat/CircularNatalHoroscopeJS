@@ -63,3 +63,7 @@ typings/
 
 calculations.txt
 solarTimeConverter.js
+
+
+demo.html
+demoScript.bundle.js

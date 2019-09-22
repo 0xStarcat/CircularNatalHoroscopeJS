@@ -57,4 +57,8 @@ yarn run build
 
 A small HTML implementation demo is provided.
 
-To view, open the file `dist/demo.html` in your browser.
+To view, build the demo files locally with:
+
+`npm run build`
+
+and then open `dist/demo.html` in a browser.
