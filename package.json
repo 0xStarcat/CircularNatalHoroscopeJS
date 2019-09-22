@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "build": "webpack",
     "start:dev": "webpack --watch --mode=development"
   },
@@ -21,7 +21,11 @@
     "webpack": "^4.40.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "babel-jest": "^24.9.0",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.9.0",
     "webpack-cli": "^3.3.8"
   }
 }
