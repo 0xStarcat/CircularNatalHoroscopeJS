@@ -74,14 +74,13 @@ export const getMidheavenSun = ({localSiderealTime=0.00, obliquityEcliptic=23.43
 
 export const getAscendent = ({latitude=0.00, obliquityEcliptic=23.4367, localSiderealTime=0.00} = {}) => {
   //////////
-  // https://www.astrosofa.com/horoscope/ascendant
   // * float latitude
   // * float obliquityEcliptic
   // * float localSiderealTime
   // returns => Float as degrees
   //////////
   // source: An Astrological House Formulary by Michael P. Munkasey
-  // verified with https://cafeastrology.com/ascendantcalculator.html
+  // verified with https://cafeastrology.com/ascendantcalculator.html and https://www.astrosofa.com/horoscope/ascendant
   // Default obliquityEcliptic value from http://www.neoprogrammics.com/obliquity_of_the_ecliptic/
   // for Mean Obliquity on Sept. 22 2019 at 0000 UTC
 

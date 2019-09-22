@@ -41,6 +41,7 @@ export const getSignFromDD = decimalDegree => {
   // Converts a decimal degree (0 - 359) into its astrological sign
   //////////
   // * float decimalDegree
+  // => returns { <signObject> }
   //////////
 
   const signIndex = Math.floor(decimalDegree / 30)
