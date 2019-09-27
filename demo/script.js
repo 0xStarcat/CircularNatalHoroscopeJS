@@ -32,9 +32,9 @@ class DemoApp {
     e.preventDefault()
     const timestamp = moment(`${this.dateInput.value} ${this.timeInput.value}`)
     const locationTimeData = new Origin({
-      year: timestamp.years(),
-      month: timestamp.months(),
-      date: timestamp.dates(),
+      year: timestamp.year(),
+      month: timestamp.month(),
+      date: timestamp.date(),
       hour: timestamp.hours(),
       minute: timestamp.minutes(),
       latitude: this.latitudeInput.value,
