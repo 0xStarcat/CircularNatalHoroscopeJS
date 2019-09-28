@@ -1,6 +1,6 @@
 import { getMidheavenSun, getascendant } from './utilities/astronomy'
 
-import { calculateEqualHouseCusps, calculatePlacidianHouseCusps, calculateWholeSignHouseCusps } from './utilities/astrology'
+import { calculateEqualHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateWholeSignHouseCusps } from './utilities/astrology'
 
 //////////
 // Horoscope
@@ -21,7 +21,7 @@ class Horoscope {
   }
 
   static get HouseSystems() {
-    return ['equal house', 'placidus', 'whole sign']
+    return ['equal house', 'placidus', 'regiomontanus', 'whole sign']
   }
 
   validateHouseSystem(string) {
@@ -35,6 +35,8 @@ class Horoscope {
         return calculateEqualHouseCusps({ascendant: this.ascendant})
       case 'placidus':
         return calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+      case 'regiomontanus':
+        return calculateRegiomontanusHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
       case 'whole sign':
         return calculateWholeSignHouseCusps({ascendant: this.ascendant})
       default:
