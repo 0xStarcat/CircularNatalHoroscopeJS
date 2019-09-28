@@ -58,7 +58,11 @@ describe('Midheaven & Ascendent calculations', () => {
 })
 
 describe('House cusp calculation', () => {
-  test('Placidus', () => {    
+  test('Placidus', () => {
     expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus'}).houseCusps).toEqual(["169.4304","195.8759","226.0562","258.4576","290.9246","321.6638","349.4304","15.8759","46.0562","78.4576","110.9246","141.6638"])
+  })
+
+  test('Whole sign', () => {
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign'}).houseCusps).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
   })
 })

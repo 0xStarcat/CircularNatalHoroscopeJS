@@ -166,3 +166,11 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
 
   return arr
 }
+
+
+export const calculateWholeSignHouseCusps = ({ascendent=0.00}={}) => {
+  const startingDegree = Math.floor(ascendent / 30) * 30
+  return new Array(12).fill(undefined).map((el, index) => {
+    return modulo(index ? (index * 30) + startingDegree : index + startingDegree, 360)
+  })
+}

@@ -40,6 +40,8 @@ class DemoApp {
       this.houseSystemSelect.appendChild(opt)
     })
 
+    this.houseSystemSelect.value = "placidus"
+
   }
 
   handleSubmit(e) {
