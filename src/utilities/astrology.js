@@ -57,7 +57,7 @@ const shouldMod180 = (prevCusp, currentCusp) => {
   if (currentCusp < prevCusp) {
     // For instances when prev = 350 and current = 20
     // But not when prev = 250 and current = 100 (280)
-    if (modulo(prevCusp + currentCusp, 360) < prevCusp && Math.abs(currentCusp - prevCusp) >= 180) return false
+    if (Math.abs(currentCusp - prevCusp) >= 180) return false
     return true
   } else if (prevCusp < currentCusp) {
     if (currentCusp - prevCusp < 180) return false
