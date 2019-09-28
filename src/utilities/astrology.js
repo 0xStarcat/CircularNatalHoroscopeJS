@@ -50,8 +50,8 @@ export const getSignFromDD = decimalDegree => {
   return signs[signIndex]
 }
 
-export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, ascendent=0.00, latitude=0.00, obliquityEcliptic=23.4367}={}) => {
-  // Centuries old and most widely used house system. Ascendent is the cusp of the 1st house, while the M.C. is the cusp of the 10th house. Every other house is calculated in a complicated way to divide the space between these fixed cusps up.
+export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, ascendant=0.00, latitude=0.00, obliquityEcliptic=23.4367}={}) => {
+  // Centuries old and most widely used house system. ascendant is the cusp of the 1st house, while the M.C. is the cusp of the 10th house. Every other house is calculated in a complicated way to divide the space between these fixed cusps up.
   // NOTE - known to perform irregularly at latitudes greater than +60 and less than -60
   //////////
   // source: An Astrological House Formulary by Michael P. Munkasey, page 18
@@ -117,7 +117,7 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
     return radiansToDegrees(cuspValue) + 180
   }
 
-  const c1 = ascendent
+  const c1 = ascendant
   const c2 = modulo(calculatedCusp(2), 360)
   const c3 = modulo(calculatedCusp(3), 360)
   const c4 = modulo(midheaven + 180, 360)
@@ -126,7 +126,7 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
   const c12 = calculatedCusp(12)
   const c5 = modulo(c11 + 180, 360)
   const c6 = modulo(c12 + 180, 360)
-  const c7 = modulo(ascendent + 180, 360)
+  const c7 = modulo(ascendant + 180, 360)
   const c8 = modulo(c2 + 180, 360)
   const c9 = modulo(c3 + 180, 360)
 
@@ -169,24 +169,24 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
   return arr
 }
 
-export const calculateEqualHouseCusps = ({ascendent=0.00}={}) => {
-  // The ascendent is taken as the first house and each house is 30 degrees further along the zodiac
+export const calculateEqualHouseCusps = ({ascendant=0.00}={}) => {
+  // The ascendant is taken as the first house and each house is 30 degrees further along the zodiac
   //////////
-  // * float ascendent
+  // * float ascendant
   // returns => [1..12] (array of 12 floats marking the cusp of each house)
   /////////
   return new Array(12).fill(undefined).map((el, index) => {
-    return modulo(index ? (index * 30) + ascendent : index + ascendent, 360).toFixed(4)
+    return modulo(index ? (index * 30) + ascendant : index + ascendant, 360).toFixed(4)
   })
 }
 
-export const calculateWholeSignHouseCusps = ({ascendent=0.00}={}) => {
-  // The ascendent is taken as the first house and each house is assigned to each of the signs in zodiacal order, with each of the twelve houses exactly coinciding with the start and end of each sign
+export const calculateWholeSignHouseCusps = ({ascendant=0.00}={}) => {
+  // The ascendant is taken as the first house and each house is assigned to each of the signs in zodiacal order, with each of the twelve houses exactly coinciding with the start and end of each sign
   //////////
-  // * float ascendent
+  // * float ascendant
   // returns => [1..12] (array of 12 floats marking the cusp of each house)
   /////////
-  const startingDegree = Math.floor(ascendent / 30) * 30
+  const startingDegree = Math.floor(ascendant / 30) * 30
   return new Array(12).fill(undefined).map((el, index) => {
     return modulo(index ? (index * 30) + startingDegree : index + startingDegree, 360)
   })

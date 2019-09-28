@@ -12,7 +12,7 @@ The goal is to allow someone to:
 
 2) Receive:
 
-  => ~~the calculated major angles (`Ascendent` and `Midheaven (MC)`) for a given datetime and origin~~
+  => ~~the calculated major angles (`ascendant` and `Midheaven (MC)`) for a given datetime and origin~~
 
   => the positions for all major bodies as they relate to the ecliptic for a given datetime and origin (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)
 

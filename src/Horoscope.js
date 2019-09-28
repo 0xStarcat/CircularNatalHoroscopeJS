@@ -1,4 +1,4 @@
-import { getMidheavenSun, getAscendent } from './utilities/astronomy'
+import { getMidheavenSun, getascendant } from './utilities/astronomy'
 
 import { calculateEqualHouseCusps, calculatePlacidianHouseCusps, calculateWholeSignHouseCusps } from './utilities/astrology'
 
@@ -14,7 +14,7 @@ class Horoscope {
   constructor({origin = null, houseSystem='placidus'}={}) {
     this.origin = origin
     this.midheaven = getMidheavenSun({localSiderealTime: origin.localSiderealTime})
-    this.ascendent = getAscendent({latitude: origin.latitude, localSiderealTime: origin.localSiderealTime})
+    this.ascendant = getascendant({latitude: origin.latitude, localSiderealTime: origin.localSiderealTime})
     this.houseSystem = this.validateHouseSystem(houseSystem)
     this.houseCusps = this.calculateHouseCusps(this.houseSystem)
     this.validateHouseSystem = this.validateHouseSystem.bind(this)
@@ -32,13 +32,13 @@ class Horoscope {
   calculateHouseCusps(string) {
     switch (string) {
       case 'equal house':
-        return calculateEqualHouseCusps({ascendent: this.ascendent})
+        return calculateEqualHouseCusps({ascendant: this.ascendant})
       case 'placidus':
-        return calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendent: this.ascendent, latitude: this.origin.latitude})
+        return calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
       case 'whole sign':
-        return calculateWholeSignHouseCusps({ascendent: this.ascendent})
+        return calculateWholeSignHouseCusps({ascendant: this.ascendant})
       default:
-        return calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendent: this.ascendent, latitude: this.origin.latitude})
+        return calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
     }
   }
 }

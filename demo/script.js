@@ -14,7 +14,7 @@ class DemoApp {
     this.houseSystemSelect = document.querySelector('#houseSystem')
 
     this.midheavenElement = document.querySelector('#midheaven')
-    this.ascendentElement = document.querySelector('#ascendent')
+    this.ascendantElement = document.querySelector('#ascendant')
     this.housesElement = document.querySelector('#houses')
 
     this.displayDateTime = this.displayDateTime.bind(this)
@@ -64,7 +64,7 @@ class DemoApp {
 
     this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${dmsString(decimalDegreesToDMS(horoscope.midheaven))} || ${signDecimalDegrees(horoscope.midheaven)} || ${signDMS(horoscope.midheaven)}`
 
-    this.ascendentElement.innerHTML = `${horoscope.ascendent} || ${dmsString(decimalDegreesToDMS(horoscope.ascendent))} || ${signDecimalDegrees(horoscope.ascendent)} || ${signDMS(horoscope.ascendent)}`
+    this.ascendantElement.innerHTML = `${horoscope.ascendant} || ${dmsString(decimalDegreesToDMS(horoscope.ascendant))} || ${signDecimalDegrees(horoscope.ascendant)} || ${signDMS(horoscope.ascendant)}`
 
     horoscope.houseCusps.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp

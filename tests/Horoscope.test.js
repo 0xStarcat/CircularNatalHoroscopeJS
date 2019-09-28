@@ -25,7 +25,7 @@ describe('Construction Validation & Errors', () => {
   })
 })
 
-describe('Midheaven & Ascendent calculations', () => {
+describe('Midheaven & ascendant calculations', () => {
   test('Northern Hemisphere Horoscope calculations', () => {
     const origin = defaultOrigin
 
@@ -34,7 +34,7 @@ describe('Midheaven & Ascendent calculations', () => {
     })
 
     expect(horoscope.midheaven).toBe(78.4576237174029)
-    expect(horoscope.ascendent).toBe(169.4304413315524)
+    expect(horoscope.ascendant).toBe(169.4304413315524)
   })
 
   test('Southern Hemisphere Horoscope calculations', () => {
@@ -53,7 +53,7 @@ describe('Midheaven & Ascendent calculations', () => {
     })
 
     expect(horoscope.midheaven).toBe(78.17823398760186)
-    expect(horoscope.ascendent).toBe(160.2684369319495)
+    expect(horoscope.ascendant).toBe(160.2684369319495)
   })
 })
 

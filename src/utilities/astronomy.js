@@ -72,7 +72,7 @@ export const getMidheavenSun = ({localSiderealTime=0.00, obliquityEcliptic=23.43
   return midheaven
 }
 
-export const getAscendent = ({latitude=0.00, obliquityEcliptic=23.4367, localSiderealTime=0.00} = {}) => {
+export const getascendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSiderealTime=0.00} = {}) => {
   //////////
   // * float latitude
   // * float obliquityEcliptic
@@ -88,6 +88,6 @@ export const getAscendent = ({latitude=0.00, obliquityEcliptic=23.4367, localSid
   const b = sinFromDegrees(localSiderealTime) * cosFromDegrees(obliquityEcliptic)
   const c = (a + b) / cosFromDegrees(localSiderealTime)
 
-  const ascendent = modulo(radiansToDegrees(arccot(-c)), 360)
-  return ascendent
+  const ascendant = modulo(radiansToDegrees(arccot(-c)), 360)
+  return ascendant
 }
