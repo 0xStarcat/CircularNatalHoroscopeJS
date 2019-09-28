@@ -18,7 +18,7 @@ The goal is to allow someone to:
 
   => the cusps of each astrological sign as they relate to the 2D ecliptic chart for a given datetime, origin, and a particular house system.
 
-  => ~~the cusps of each house within multiple house systems.~~ (more to come too)
+  => ~~the cusps of each house within multiple house systems.~~ (Placidus, Whole Sign, and Equal House added. more to come too - next are Koch, Topocentric, and Regiomontanus)
 
   => A list containing the sign each angle, major body, and house occupy.
 
