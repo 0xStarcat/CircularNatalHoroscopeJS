@@ -51,6 +51,8 @@ export const getSignFromDD = decimalDegree => {
 }
 
 export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, ascendent=0.00, latitude=0.00, obliquityEcliptic=23.4367}={}) => {
+  // Centuries old and most widely used house system. Ascendent is the cusp of the 1st house, while the M.C. is the cusp of the 10th house. Every other house is calculated in a complicated way to divide the space between these fixed cusps up.
+  // NOTE - known to perform irregularly at latitudes greater than +60 and less than -60
   //////////
   // source: An Astrological House Formulary by Michael P. Munkasey, page 18
   // verified within +-10 minutes of values in https://astrolibrary.org/compare-house-systems/
@@ -168,12 +170,22 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
 }
 
 export const calculateEqualHouseCusps = ({ascendent=0.00}={}) => {
+  // The ascendent is taken as the first house and each house is 30 degrees further along the zodiac
+  //////////
+  // * float ascendent
+  // returns => [1..12] (array of 12 floats marking the cusp of each house)
+  /////////
   return new Array(12).fill(undefined).map((el, index) => {
     return modulo(index ? (index * 30) + ascendent : index + ascendent, 360).toFixed(4)
   })
 }
 
 export const calculateWholeSignHouseCusps = ({ascendent=0.00}={}) => {
+  // The ascendent is taken as the first house and each house is assigned to each of the signs in zodiacal order, with each of the twelve houses exactly coinciding with the start and end of each sign
+  //////////
+  // * float ascendent
+  // returns => [1..12] (array of 12 floats marking the cusp of each house)
+  /////////
   const startingDegree = Math.floor(ascendent / 30) * 30
   return new Array(12).fill(undefined).map((el, index) => {
     return modulo(index ? (index * 30) + startingDegree : index + startingDegree, 360)
