@@ -14,6 +14,7 @@ class DemoApp {
 
     this.midheavenElement = document.querySelector('#midheaven')
     this.ascendentElement = document.querySelector('#ascendent')
+    this.housesElement = document.querySelector('#houses')
 
     this.displayDateTime = this.displayDateTime.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -42,12 +43,18 @@ class DemoApp {
     })
 
     const horoscope = new Horoscope({
-      origin: locationTimeData
+      origin: locationTimeData,
+      houseSystem: "placidus"
     })
 
     this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${dmsString(decimalDegreesToDMS(horoscope.midheaven))} || ${signDecimalDegrees(horoscope.midheaven)} || ${signDMS(horoscope.midheaven)}`
 
     this.ascendentElement.innerHTML = `${horoscope.ascendent} || ${dmsString(decimalDegreesToDMS(horoscope.ascendent))} || ${signDecimalDegrees(horoscope.ascendent)} || ${signDMS(horoscope.ascendent)}`
+
+    horoscope.houseCusps.forEach((cusp, index) => {
+      document.querySelector(`#house-${index + 1}a`).innerHTML = cusp
+      document.querySelector(`#house-${index + 1}b`).innerHTML = signDMS(cusp)
+    })
   }
 }
 

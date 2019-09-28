@@ -6,6 +6,18 @@ export const arccot = (x) => {
   return Math.PI / 2 - Math.atan(x)
 }
 
+export const sinFromDegrees = degrees => {
+  return Math.sin(degreesToRadians(degrees))
+}
+
+export const cosFromDegrees = degrees => {
+  return Math.cos(degreesToRadians(degrees))
+}
+
+export const tanFromDegrees = degrees => {
+  return Math.tan(degreesToRadians(degrees))
+}
+
 export const degreesToRadians = degrees => {
   // https://www.rapidtables.com/convert/number/degrees-to-radians.html
   return degrees * (Math.PI / 180)

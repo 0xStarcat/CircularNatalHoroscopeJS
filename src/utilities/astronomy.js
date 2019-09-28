@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { degreesToRadians, radiansToDegrees, modulo, arccot } from './math'
+import { degreesToRadians, radiansToDegrees, modulo, arccot, sinFromDegrees, cosFromDegrees, tanFromDegrees } from './math'
 
 export const getObliquityEcliptic = () => {
   return
@@ -28,7 +28,7 @@ export const getJulianDate = ({year=0, month=0, date=0, ut=0}={}) => {
 }
 
 export const getLocalSiderealTime = ({jd = 0, longitude = 0}={}) => {
-  // Also gives: Right Ascension of M.C.
+  // Also gives: Right Ascension of M.C. or RAMC
   /////////
   // * float jd = julian date decimal
   // * float longitude = local longitude in decimal form
@@ -65,8 +65,8 @@ export const getMidheavenSun = ({localSiderealTime=0.00, obliquityEcliptic=23.43
   // for Mean Obliquity on Sept. 22 2019 at 0000 UTC
 
 
-  const tanLST = Math.tan(degreesToRadians(localSiderealTime))
-  const cosOE = Math.cos(degreesToRadians(obliquityEcliptic))
+  const tanLST = tanFromDegrees(localSiderealTime)
+  const cosOE = cosFromDegrees(obliquityEcliptic)
   const midheaven = modulo(radiansToDegrees(Math.atan(tanLST / cosOE)), 360)
 
   return midheaven
@@ -84,9 +84,9 @@ export const getAscendent = ({latitude=0.00, obliquityEcliptic=23.4367, localSid
   // Default obliquityEcliptic value from http://www.neoprogrammics.com/obliquity_of_the_ecliptic/
   // for Mean Obliquity on Sept. 22 2019 at 0000 UTC
 
-  const a = Math.tan(degreesToRadians(latitude)) * Math.sin(degreesToRadians(obliquityEcliptic))
-  const b = Math.sin(degreesToRadians(localSiderealTime)) * Math.cos(degreesToRadians(obliquityEcliptic))
-  const c = (a + b) / Math.cos(degreesToRadians(localSiderealTime))
+  const a = tanFromDegrees(latitude) * sinFromDegrees(obliquityEcliptic)
+  const b = sinFromDegrees(localSiderealTime) * cosFromDegrees(obliquityEcliptic)
+  const c = (a + b) / cosFromDegrees(localSiderealTime)
 
   const ascendent = modulo(radiansToDegrees(arccot(-c)), 360)
   return ascendent

@@ -24,13 +24,13 @@ import { getJulianDate, getLocalSiderealTime } from './utilities/astronomy'
 class Origin {
   constructor({year = 0, month = 0, date = 0, hour = 0, minute = 0, latitude = 0.00, longitude = 0.00}={}) {
 
-    this._year = this.ValidateYear(year)
-    this._month = this.ValidateMonth(month)
-    this._date = this.ValidateDate(date)
-    this._hour = this.ValidateHour(hour)
-    this._minute = this.ValidateMinute(minute)
-    this._latitude = this.ValidateLatitude(latitude)
-    this._longitude = this.ValidateLongitude(longitude)
+    this.year = this.ValidateYear(year)
+    this.month = this.ValidateMonth(month)
+    this.date = this.ValidateDate(date)
+    this.hour = this.ValidateHour(hour)
+    this.minute = this.ValidateMinute(minute)
+    this.latitude = this.ValidateLatitude(latitude)
+    this.longitude = this.ValidateLongitude(longitude)
 
     this.timeObject = {
       year: year,
