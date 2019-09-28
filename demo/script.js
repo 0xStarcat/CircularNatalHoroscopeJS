@@ -11,15 +11,18 @@ class DemoApp {
     this.timeInput = document.querySelector('#time')
     this.latitudeInput = document.querySelector('#latitude')
     this.longitudeInput = document.querySelector('#longitude')
+    this.houseSystemSelect = document.querySelector('#houseSystem')
 
     this.midheavenElement = document.querySelector('#midheaven')
     this.ascendentElement = document.querySelector('#ascendent')
     this.housesElement = document.querySelector('#houses')
 
     this.displayDateTime = this.displayDateTime.bind(this)
+    this.loadHouseSystemSelect = this.loadHouseSystemSelect.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 
     this.displayDateTime()
+    this.loadHouseSystemSelect()
     this.form.addEventListener('submit', this.handleSubmit)
   }
 
@@ -27,6 +30,16 @@ class DemoApp {
     const today = moment(new Date())
     this.dateInput.value = today.format('YYYY-MM-DD');
     this.timeInput.value = today.format('HH:mm:00')
+  }
+
+  loadHouseSystemSelect() {
+    Horoscope.HouseSystems.forEach(system => {
+      var opt = document.createElement('option');
+      opt.value = system
+      opt.appendChild(document.createTextNode(system))
+      this.houseSystemSelect.appendChild(opt)
+    })
+
   }
 
   handleSubmit(e) {
@@ -44,7 +57,7 @@ class DemoApp {
 
     const horoscope = new Horoscope({
       origin: locationTimeData,
-      houseSystem: "placidus"
+      houseSystem: this.houseSystemSelect.value
     })
 
     this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${dmsString(decimalDegreesToDMS(horoscope.midheaven))} || ${signDecimalDegrees(horoscope.midheaven)} || ${signDMS(horoscope.midheaven)}`
