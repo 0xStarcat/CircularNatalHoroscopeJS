@@ -1,4 +1,5 @@
 import moment from 'moment-timezone'
+import { modulo } from './utilities/math'
 
 class Sign {
   constructor({id=0, zodiac="tropical"}={}) {
@@ -175,6 +176,32 @@ class Sign {
       case 'tropical':
         startDate = moment({month: sign.tropicalStartMonth, date: sign.tropicalStartDate, hour: 0}).startOf('day')
         return moment.tz({month: sign.tropicalEndMonth, date: sign.tropicalEndDate, year: startDate.month() === 11 && sign.tropicalEndMonth === 0 ? startDate.year() + 1 : startDate.year()}, 'UTC').endOf('day')
+    }
+  }
+
+  get EclipticStart() {
+    const sign = Sign.Data.find(sign => sign.id === this.id)
+    switch(this.zodiac) {
+      case 'astronomical':
+        return modulo(sign.eclipticStart + 24.1, 360).toFixed(4)
+      case 'sidereal':
+        // conversion from https://vijayajyoti.com/sidereal-and-tropical-zodiac/
+        return modulo(sign.eclipticStart + 24.1, 360).toFixed(4)
+      case 'tropical':
+        return modulo(sign.eclipticStart, 360).toFixed(4)
+    }
+  }
+
+  get EclipticEnd() {
+    const sign = Sign.Data.find(sign => sign.id === this.id)
+    switch(this.zodiac) {
+      case 'astronomical':
+        return modulo(sign.eclipticEnd + 24.1, 360).toFixed(4)
+      case 'sidereal':
+        // conversion from https://vijayajyoti.com/sidereal-and-tropical-zodiac/
+        return modulo(sign.eclipticEnd + 24.1, 360).toFixed(4)
+      case 'tropical':
+        return modulo(sign.eclipticEnd, 360).toFixed(4)
     }
   }
 }
