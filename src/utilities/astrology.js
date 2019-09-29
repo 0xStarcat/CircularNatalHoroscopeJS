@@ -69,7 +69,7 @@ export const calculateKochHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, 
   // The house system is named after the German astrologer Walter Koch (1895-1970) but was actually invented by Fiedrich Zanzinger (1913-1967) and Heinz Specht (1925-).
   // NOTE - known to perform irregularly at latitudes greater than +60 and less than -60
   //////////
-  // source: An Astrological House Formulary by Michael P. Munkasey, page 18
+  // source: An Astrological House Formulary by Michael P. Munkasey, page 14
   // verified within +-10 minutes of values in https://astrolibrary.org/compare-house-systems/
 
   const declinationMC = Math.asin(sinFromDegrees(midheaven) * sinFromDegrees(obliquityEcliptic)) // radians
@@ -343,7 +343,7 @@ export const calculateTopocentricHouseCusps = ({rightAscensionMC=0.00, midheaven
   // The house system was invented by the Hungarian-Argentinian astrologer Wendel Polich (1892-1979) and the English-Argentinian astrologer Anthony Nelson Page (1919-1970). The topocentric system can also be described as an approximation algorithm for the Placidus system.
   // NOTE - known to perform irregularly at latitudes greater than +60 and less than -60
   //////////
-  // source: An Astrological House Formulary by Michael P. Munkasey, page 20
+  // source: An Astrological House Formulary by Michael P. Munkasey, page 21
   // verified within +-10 minutes of values in https://astrolibrary.org/compare-house-systems/
 
   const cuspInterval = (houseNumber) => {

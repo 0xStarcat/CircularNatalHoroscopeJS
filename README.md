@@ -18,13 +18,19 @@ The goal is to allow someone to:
 
   => the cusps of each astrological sign as they relate to the 2D ecliptic chart for a given datetime, origin, and a particular house system.
 
-  => ~~the cusps of each house within multiple house systems.~~ (Placidus, Whole Sign, and Equal House added. more to come too - next are Koch, Topocentric, and Regiomontanus)
+  => ~~the cusps of each house within multiple house systems.~~ (Placidus, Koch, Topocentric, Regiomontanus, Whole Sign, and Equal House added.
 
   => A list containing the sign each angle, major body, and house occupy.
 
   => A list containing all the computed aspects of all major bodies.
 
   => A data format that interfaces with a frontend library (maybe this one https://github.com/Kibo/AstroChart or a custom one) for creating the actual charts.
+
+## Planned work
+
+Right now, this is a work in progress. Progress is marked off by items above being ~~struck out~~.
+
+I'm open to requests for house systems. I'm currently stopped at 6 - we have 2 "modern" systems (Topocentric, Koch), 2 "medieval" systems (Placidus, Regiomontanus), and 2 "ancient" systems (Whole Sign, Equal House). My formula resource "An Astrological House Formulary" by Michael P. Munkasey has many more house formulas I can implement if wanted. Hopefully I covered the most popular ones.
 
 ## Installation
 
