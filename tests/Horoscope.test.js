@@ -126,31 +126,31 @@ describe('Zodiacs', () => {
 
   describe('Tropical Zodiac', () => {
     test('Get sign for Nov. 10', () => {
-      expect(new Horoscope({origin: novOrigin, zodiac: "tropical"}).sunSign.name).toBe('Scorpio')
+      expect(new Horoscope({origin: novOrigin, zodiac: "tropical"}).sunSign.Name).toBe('Scorpio')
     })
 
     test('Get sign for cusp start', () => {
-      expect(new Horoscope({origin: cuspStart, zodiac: "tropical"}).sunSign.name).toBe('Libra')
+      expect(new Horoscope({origin: cuspStart, zodiac: "tropical"}).sunSign.Name).toBe('Libra')
     })
 
     test('Get sign for cusp end', () => {
-      expect(new Horoscope({origin: cuspEnd, zodiac: "tropical"}).sunSign.name).toBe('Virgo')
+      expect(new Horoscope({origin: cuspEnd, zodiac: "tropical"}).sunSign.Name).toBe('Virgo')
     })
 
     test('Get sign for Dec. 31', () => {
-      expect(new Horoscope({origin: decOrigin, zodiac: "tropical"}).sunSign.name).toBe('Capricorn')
+      expect(new Horoscope({origin: decOrigin, zodiac: "tropical"}).sunSign.Name).toBe('Capricorn')
     })
   })
 
   describe('Sidereal Zodiac', () => {
     test('Get sign for Nov. 10', () => {
-      expect(new Horoscope({origin: novOrigin, zodiac: "sidereal"}).sunSign.name).toBe('Libra')
+      expect(new Horoscope({origin: novOrigin, zodiac: "sidereal"}).sunSign.Name).toBe('Libra')
     })
   })
 
   describe('Astronomical Zodiac', () => {
     test('Get sign for Nov. 10', () => {
-      expect(new Horoscope({origin: novOrigin, zodiac: "astronomical"}).sunSign.name).toBe('Libra')
+      expect(new Horoscope({origin: novOrigin, zodiac: "astronomical"}).sunSign.Name).toBe('Libra')
     })
   })
 })

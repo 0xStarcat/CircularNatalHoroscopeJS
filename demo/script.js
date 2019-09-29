@@ -65,7 +65,7 @@ class DemoApp {
       zodiac: 'tropical'
     })
 
-    this.sunSignElement.innerHTML = horoscope.sunSign.name
+    this.sunSignElement.innerHTML = horoscope.sunSign.Name
 
     this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${signDMS(horoscope.midheaven)}`
 

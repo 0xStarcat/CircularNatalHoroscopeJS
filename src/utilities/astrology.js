@@ -1,5 +1,5 @@
 import moment from 'moment-timezone'
-import { signs } from './signs'
+import Sign from '../Sign'
 import {
   modulo, arccot, degreesToRadians, radiansToDegrees, tanFromDegrees, cosFromDegrees, sinFromDegrees
 } from './math'
@@ -16,7 +16,7 @@ export const getSignFromDD = decimalDegree => {
   // => returns { <signObject> }
   //////////
 
-  return signs.find(sign => sign.eclipticStart <= decimalDegree && sign.eclipticEnd > decimalDegree)
+  return Sign.Data.find(sign => sign.eclipticStart <= decimalDegree && sign.eclipticEnd > decimalDegree)
 }
 
 const shouldMod180 = (prevCusp, currentCusp) => {

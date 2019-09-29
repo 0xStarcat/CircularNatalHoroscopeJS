@@ -1,7 +1,7 @@
+import Sign from './Sign'
 import { getMidheavenSun, getascendant } from './utilities/astronomy'
 
 import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps } from './utilities/astrology'
-import { signs } from './utilities/signs'
 import moment from 'moment-timezone'
 
 //////////
@@ -81,30 +81,24 @@ class Horoscope {
   }
 
   getTropicalSign() {
-    const sign = signs.find(sign => {
-      const startDate = moment.tz({month: sign.tropicalStartMonth, date: sign.tropicalStartDate, hour: 0}, 'UTC').startOf('day')
-      const endDate = moment.tz({month: sign.tropicalEndMonth, date: sign.tropicalEndDate, year: startDate.month() === 11 && sign.tropicalEndMonth === 0 ? startDate.year() + 1 : startDate.year()}, 'UTC').endOf('day')
-      return this.origin.utcTime.isBetween(startDate, endDate, null, '[]')
+    const sign = Sign.Tropical.find(sign => {
+      return this.origin.utcTime.isBetween(sign.StartDate, sign.EndDate, null, '[]')
     })
 
     return sign
   }
 
   getSiderealSign() {
-    const sign = signs.find(sign => {
-      const startDate = moment({month: sign.siderealStartMonth, date: sign.siderealStartDate, hour: 0}).startOf('day')
-      const endDate = moment({month: sign.siderealEndMonth, date: sign.siderealEndDate, year: startDate.month() === 11 && sign.siderealEndMonth === 0 ? startDate.year() + 1 : startDate.year()}).endOf('day')
-      return this.origin.utcTime.isBetween(startDate, endDate, null, '[]')
+    const sign = Sign.Sidereal.find(sign => {
+      return this.origin.utcTime.isBetween(sign.StartDate, sign.EndDate, null, '[]')
     })
 
     return sign
   }
 
   getAstronomicalSign() {
-    const sign = signs.find(sign => {
-      const startDate = moment({month: sign.astronomicalStartMonth, date: sign.astronomicalStartDate, hour: 0}).startOf('day')
-      const endDate = moment({month: sign.astronomicalEndMonth, date: sign.astronomicalEndDate, year: startDate.month() === 11 && sign.astronomicalEndMonth === 0 ? startDate.year() + 1 : startDate.year()}).endOf('day')
-      return this.origin.utcTime.isBetween(startDate, endDate, null, '[]')
+    const sign = Sign.Astronomical.find(sign => {
+      return this.origin.utcTime.isBetween(sign.StartDate, sign.EndDate, null, '[]')
     })
 
     return sign
