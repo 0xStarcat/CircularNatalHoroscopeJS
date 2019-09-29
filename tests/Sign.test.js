@@ -21,12 +21,12 @@ describe('Sign', () => {
         expect(new Sign({id: 11}).EndDate.format('MM/DD')).toBe("03/20")
       })
 
-      test('Get EclipticStart', () => {
-        expect(new Sign({id: 11}).EclipticStart).toBe("330.0000")
+      test('Get ZodiacStart', () => {
+        expect(new Sign({id: 11}).ZodiacStart).toBe(330)
       })
 
-      test('Get EclipticEnd', () => {
-        expect(new Sign({id: 11}).EclipticEnd).toBe("0.0000")
+      test('Get ZodiacEnd', () => {
+        expect(new Sign({id: 11}).ZodiacEnd).toBe(0)
       })
     })
   })
@@ -41,12 +41,12 @@ describe('Sign', () => {
         expect(new Sign({id: 11, zodiac: 'sidereal'}).EndDate.format('MM/DD')).toBe("04/13")
       })
 
-      test('Get EclipticStart', () => {
-        expect(new Sign({id: 11, zodiac: 'sidereal'}).EclipticStart).toBe("354.1000")
+      test('Get ZodiacStart', () => {
+        expect(new Sign({id: 11, zodiac: 'sidereal'}).ZodiacStart).toBe(354.1)
       })
 
-      test('Get EclipticEnd', () => {
-        expect(new Sign({id: 11, zodiac: 'sidereal'}).EclipticEnd).toBe("24.1000")
+      test('Get ZodiacEnd', () => {
+        expect(new Sign({id: 11, zodiac: 'sidereal'}).ZodiacEnd).toBe(24.1)
       })
     })
   })
@@ -61,12 +61,12 @@ describe('Sign', () => {
         expect(new Sign({id: 11, zodiac: 'astronomical'}).EndDate.format('MM/DD')).toBe("04/17")
       })
 
-      test('Get EclipticStart', () => {
-        expect(new Sign({id: 11, zodiac: 'astronomical'}).EclipticStart).toBe("354.1000")
+      test('Get ZodiacStart', () => {
+        expect(new Sign({id: 11, zodiac: 'astronomical'}).ZodiacStart).toBe(354.1)
       })
 
-      test('Get EclipticEnd', () => {
-        expect(new Sign({id: 11, zodiac: 'astronomical'}).EclipticEnd).toBe("24.1000")
+      test('Get ZodiacEnd', () => {
+        expect(new Sign({id: 11, zodiac: 'astronomical'}).ZodiacEnd).toBe(24.1)
       })
     })
   })

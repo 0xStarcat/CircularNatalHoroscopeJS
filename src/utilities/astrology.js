@@ -16,7 +16,34 @@ export const getSignFromDD = decimalDegree => {
   // => returns { <signObject> }
   //////////
 
-  return Sign.Data.find(sign => sign.eclipticStart <= decimalDegree && sign.eclipticEnd > decimalDegree)
+  return Sign.Data.find(sign => sign.zodiacStart <= decimalDegree && sign.zodiacEnd > decimalDegree)
+}
+
+const getZodiacSignFromRange = (signs, decimalDegrees) => {
+  return signs.find(sign => {
+    const start = sign.ZodiacStart
+    let end = sign.ZodiacEnd
+    if (start > end) { end += 360 }
+    return start <= decimalDegrees && end > decimalDegrees
+  })
+}
+
+export const getZodiacSign = ({decimalDegrees=0.00, zodiac='tropical'}={}) => {
+  // Converts a decimal degree (0 - 359) and its corresponding zodiac type
+  // into an astrological sign
+  //////////
+  // * float decimalDegree
+  // * string zodiac = ['astronimical', 'sidereal', 'tropical']
+  // => returns { <signObject> }
+  //////////
+  switch(zodiac) {
+    case 'astronomical':
+      return getZodiacSignFromRange(Sign.Astronomical, decimalDegrees)
+    case 'sidereal':
+      return getZodiacSignFromRange(Sign.Sidereal, decimalDegrees)
+    case 'tropical':
+      return getZodiacSignFromRange(Sign.Tropical, decimalDegrees)
+  }
 }
 
 const shouldMod180 = (prevCusp, currentCusp) => {

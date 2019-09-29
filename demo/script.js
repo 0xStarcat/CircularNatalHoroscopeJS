@@ -67,9 +67,9 @@ class DemoApp {
 
     this.sunSignElement.innerHTML = horoscope.sunSign.Name
 
-    this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${signDMS(horoscope.midheaven)}`
+    this.midheavenElement.innerHTML = `${horoscope.Midheaven.DecimalDegrees} || ${horoscope.Midheaven.ArcDegreesFormatted}`
 
-    this.ascendantElement.innerHTML = `${horoscope.ascendant} || ${signDMS(horoscope.ascendant)}`
+    this.ascendantElement.innerHTML = `${horoscope.Ascendant.DecimalDegrees} || ${horoscope.Ascendant.ArcDegreesFormatted}`
 
     horoscope.houseCusps.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp

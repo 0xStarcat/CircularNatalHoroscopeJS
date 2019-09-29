@@ -1,7 +1,8 @@
 import Sign from './Sign'
-import { getMidheavenSun, getascendant } from './utilities/astronomy'
+import ZodiacPosition from './ZodiacPosition'
+import { getMidheavenSun, getAscendant } from './utilities/astronomy'
 
-import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps } from './utilities/astrology'
+import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign } from './utilities/astrology'
 import moment from 'moment-timezone'
 
 //////////
@@ -16,12 +17,13 @@ class Horoscope {
   constructor({origin = null, houseSystem='placidus', zodiac='tropical'}={}) {
     this.origin = origin
     this.midheaven = getMidheavenSun({localSiderealTime: origin.localSiderealTime})
-    this.ascendant = getascendant({latitude: origin.latitude, localSiderealTime: origin.localSiderealTime})
+    this.ascendant = getAscendant({latitude: origin.latitude, localSiderealTime: origin.localSiderealTime})
     this.houseSystem = this.validateHouseSystem(houseSystem)
     this.houseCusps = this.calculateHouseCusps(this.houseSystem)
     this.validateHouseSystem = this.validateHouseSystem.bind(this)
     this.zodiac = this.validateZodiac(zodiac.toLowerCase())
     this.sunSign = this.getSunSign(this.zodiac)
+
     this.getSunSign = this.getSunSign.bind(this)
     this.getTropicalSign = this.getTropicalSign.bind(this)
     this.getAstronomicalSign = this.getAstronomicalSign.bind(this)
@@ -44,6 +46,18 @@ class Horoscope {
   validateZodiac(string) {
     if (Horoscope.Zodiacs.includes(string.toLowerCase())) return string.toLowerCase()
     else throw new Error(`The "${string}" zodiac is not included. Please choose from the following list: ${Horoscope.Zodiacs.join(', ')}.`)
+  }
+
+  get Midheaven() {
+    const decimalDegrees = getMidheavenSun({localSiderealTime: this.origin.localSiderealTime})
+    const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this.zodiac})
+    return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})
+  }
+
+  get Ascendant() {
+    const decimalDegrees = getAscendant({latitude: this.origin.latitude, localSiderealTime: this.origin.localSiderealTime})
+    const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this.zodiac})
+    return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})
   }
 
   calculateHouseCusps(string) {
@@ -81,24 +95,26 @@ class Horoscope {
   }
 
   getTropicalSign() {
+    const standardizedDate = moment.tz({month: this.origin.utcTime.month(), date: this.origin.utcTime.date(), hour: this.origin.utcTime.hour(), minute: this.origin.utcTime.minute()}, 'UTC')
     const sign = Sign.Tropical.find(sign => {
-      return this.origin.utcTime.isBetween(sign.StartDate, sign.EndDate, null, '[]')
+      return standardizedDate.isBetween(sign.StartDate, sign.EndDate, null, '[]')
     })
-
     return sign
   }
 
   getSiderealSign() {
+    const standardizedDate = moment.tz({month: this.origin.utcTime.month(), date: this.origin.utcTime.date(), hour: this.origin.utcTime.hour(), minute: this.origin.utcTime.minute()}, 'UTC')
     const sign = Sign.Sidereal.find(sign => {
-      return this.origin.utcTime.isBetween(sign.StartDate, sign.EndDate, null, '[]')
+      return standardizedDate.isBetween(sign.StartDate, sign.EndDate, null, '[]')
     })
 
     return sign
   }
 
   getAstronomicalSign() {
+    const standardizedDate = moment.tz({month: this.origin.utcTime.month(), date: this.origin.utcTime.date(), hour: this.origin.utcTime.hour(), minute: this.origin.utcTime.minute()}, 'UTC')
     const sign = Sign.Astronomical.find(sign => {
-      return this.origin.utcTime.isBetween(sign.StartDate, sign.EndDate, null, '[]')
+      return standardizedDate.isBetween(sign.StartDate, sign.EndDate, null, '[]')
     })
 
     return sign

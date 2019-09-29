@@ -32,3 +32,9 @@ export const validateLongitude = (longitude) => {
   if (longitude >= -180 && longitude <= 180) return longitude
   else throw new Error(`The longitude: "${longitude}" - must be an float and between -180.00 to 180.00`)
 }
+
+export const validateString = string => {
+  if (!string) throw new Error(`Invalid string: ${string}`)
+  return string
+
+}

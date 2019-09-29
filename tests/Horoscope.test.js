@@ -37,8 +37,12 @@ describe('Midheaven & ascendant calculations', () => {
       origin
     })
 
-    expect(horoscope.midheaven).toBe(78.4576237174029)
-    expect(horoscope.ascendant).toBe(169.4304413315524)
+    expect(horoscope.Midheaven.DecimalDegrees).toBe(78.4576237174029)
+    expect(horoscope.Midheaven.ArcDegreesFormatted).toBe("78° 27' 27''")
+    expect(horoscope.Midheaven.Sign.Name).toBe("Gemini")
+    expect(horoscope.Ascendant.DecimalDegrees).toBe(169.4304413315524)
+    expect(horoscope.Ascendant.ArcDegreesFormatted).toBe("169° 25' 50''")
+    expect(horoscope.Ascendant.Sign.Name).toBe("Virgo")
   })
 
   test('Southern Hemisphere Horoscope calculations', () => {
@@ -56,8 +60,12 @@ describe('Midheaven & ascendant calculations', () => {
       origin
     })
 
-    expect(horoscope.midheaven).toBe(78.17823398760186)
-    expect(horoscope.ascendant).toBe(160.2684369319495)
+    expect(horoscope.Midheaven.DecimalDegrees).toBe(78.17823398760186)
+    expect(horoscope.Midheaven.ArcDegreesFormatted).toBe("78° 10' 42''")
+    expect(horoscope.Midheaven.Sign.Name).toBe("Gemini")
+    expect(horoscope.Ascendant.DecimalDegrees).toBe(160.2684369319495)
+    expect(horoscope.Ascendant.ArcDegreesFormatted).toBe("160° 16' 6''")
+    expect(horoscope.Ascendant.Sign.Name).toBe("Virgo")
   })
 })
 
