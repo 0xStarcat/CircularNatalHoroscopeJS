@@ -62,6 +62,10 @@ describe('House cusp calculation', () => {
     expect(new Horoscope({origin: defaultOrigin, houseSystem: 'equal house'}).houseCusps).toEqual(["169.4304","199.4304","229.4304","259.4304","289.4304","319.4304","349.4304","19.4304","49.4304","79.4304","109.4304","139.4304"])
   })
 
+  test('Koch', () => {
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'koch'}).houseCusps).toEqual([ '169.4304', '199.3303', '228.7571', '258.4576', '290.4533', '319.8347', '349.4304', '19.3303', '48.7571', '78.4576', '110.4533', '139.8347' ])
+  })
+
   test('Placidus', () => {
     expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus'}).houseCusps).toEqual(["169.4304","195.8759","226.0562","258.4576","290.9246","321.6638","349.4304","15.8759","46.0562","78.4576","110.9246","141.6638"])
   })

@@ -1,4 +1,4 @@
-import { modulo, degreesToRadians, radiansToDegrees, tanFromDegrees, cosFromDegrees, sinFromDegrees } from './math'
+import { modulo, arccot, degreesToRadians, radiansToDegrees, tanFromDegrees, cosFromDegrees, sinFromDegrees } from './math'
 
 export const signs = [
   {
@@ -65,6 +65,78 @@ const shouldMod180 = (prevCusp, currentCusp) => {
   }
 }
 
+export const calculateKochHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, ascendant=0.00, latitude=0.00, obliquityEcliptic=23.4367}={}) => {
+  // The house system is named after the German astrologer Walter Koch (1895-1970) but was actually invented by Fiedrich Zanzinger (1913-1967) and Heinz Specht (1925-).
+  // NOTE - known to perform irregularly at latitudes greater than +60 and less than -60
+  //////////
+  // source: An Astrological House Formulary by Michael P. Munkasey, page 18
+  // verified within +-10 minutes of values in https://astrolibrary.org/compare-house-systems/
+
+  const declinationMC = Math.asin(sinFromDegrees(midheaven) * sinFromDegrees(obliquityEcliptic)) // radians
+  const ascensionalDiff = Math.asin(Math.tan(declinationMC) * tanFromDegrees(latitude)) // radians
+  const obliqueAscensionMC = degreesToRadians(rightAscensionMC) - ascensionalDiff // radians
+  const cuspDisplacementInterval = modulo(((rightAscensionMC + 90) - radiansToDegrees(obliqueAscensionMC)) / 3, 360) // degrees
+
+  const houseCuspPosition = houseNumber => {
+    // returns => n in degrees
+    switch(houseNumber) {
+      case 11:
+        return radiansToDegrees(obliqueAscensionMC) + cuspDisplacementInterval - 90
+      case 12:
+        return houseCuspPosition(11) + cuspDisplacementInterval
+      case 1:
+        return houseCuspPosition(12) + cuspDisplacementInterval
+      case 2:
+        return houseCuspPosition(1) + cuspDisplacementInterval
+      case 3:
+        return houseCuspPosition(2) + cuspDisplacementInterval
+    }
+  }
+
+  const calculatedCusp = houseNumber => {
+    const radians = arccot(-((tanFromDegrees(latitude) * sinFromDegrees(obliquityEcliptic)) + (sinFromDegrees(houseCuspPosition(houseNumber)) * cosFromDegrees(obliquityEcliptic))) / cosFromDegrees(houseCuspPosition(houseNumber)))
+
+    return radiansToDegrees(radians)
+  }
+
+  const c1 = modulo(calculatedCusp(1), 360)
+  const c2 = modulo(calculatedCusp(2), 360)
+  const c3 = modulo(calculatedCusp(3), 360)
+  const c4 = modulo(midheaven + 180, 360)
+  const c10 = midheaven
+  const c11 = calculatedCusp(11)
+  const c12 = calculatedCusp(12)
+  const c5 = modulo(c11 + 180, 360)
+  const c6 = modulo(c12 + 180, 360)
+  const c7 = modulo(ascendant + 180, 360)
+  const c8 = modulo(c2 + 180, 360)
+  const c9 = modulo(c3 + 180, 360)
+
+  // ** For debugging **
+  // const rawArr = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12]
+  // console.log(rawArr)
+
+  const firstCusp = c1
+  const secondCusp =  shouldMod180(c1, c2) ? modulo(c2 + 180, 360) : c2
+  const thirdCusp =  shouldMod180(c1, c3) ? modulo(c3 + 180, 360) : c3
+  const fourthCusp = c4
+  const fifthCusp = shouldMod180(c4, c5) ? modulo(c5 + 180, 360) : c5
+  const sixthCusp = shouldMod180(c4, c6) ? modulo(c6 + 180, 360) : c6
+  const seventhCusp = c7
+  const eighthCusp = shouldMod180(c7, c8) ? modulo(c8 + 180, 360) : c8
+  const ninthCusp = shouldMod180(c7, c9) ? modulo(c9 + 180, 360) : c9
+  const tenthCusp = c10
+  const eleventhCusp = shouldMod180(c10, c11) ? modulo(c11 + 180, 360) : c11
+  const twelthCusp = shouldMod180(c10, c12) ? modulo(c12 + 180, 360) : c12
+
+  const arr = [
+    firstCusp.toFixed(4), secondCusp.toFixed(4), thirdCusp.toFixed(4), fourthCusp.toFixed(4), fifthCusp.toFixed(4), sixthCusp.toFixed(4),
+    seventhCusp.toFixed(4), eighthCusp.toFixed(4), ninthCusp.toFixed(4), tenthCusp.toFixed(4), eleventhCusp.toFixed(4), twelthCusp.toFixed(4)
+  ]
+
+  return arr
+}
+
 export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, ascendant=0.00, latitude=0.00, obliquityEcliptic=23.4367}={}) => {
   // Centuries old and most widely used house system. ascendant is the cusp of the 1st house, while the M.C. is the cusp of the 10th house. Every other house is calculated in a complicated way to divide the space between these fixed cusps up.
   // NOTE - known to perform irregularly at latitudes greater than +60 and less than -60
@@ -72,9 +144,9 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
   // source: An Astrological House Formulary by Michael P. Munkasey, page 18
   // verified within +-10 minutes of values in https://astrolibrary.org/compare-house-systems/
 
-  const cuspInterval = (cuspNumber) => {
+  const cuspInterval = (houseNumber) => {
     // returns n in degrees
-    switch(cuspNumber) {
+    switch(houseNumber) {
       case 2:
         return rightAscensionMC + 120
         break
@@ -90,8 +162,8 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
     }
   }
 
-  const semiArcRatio = (cuspNumber) => {
-    switch(cuspNumber) {
+  const semiArcRatio = (houseNumber) => {
+    switch(houseNumber) {
       case 2:
         return 2 / 3
       case 3:
@@ -108,9 +180,9 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
     return Math.asin(sinFromDegrees(obliquityEcliptic) * sinFromDegrees(interval))
   }
 
-  const calculatedCusp = cuspNumber => {
-    const interval = cuspInterval(cuspNumber)
-    const saRatio = semiArcRatio(cuspNumber)
+  const calculatedCusp = houseNumber => {
+    const interval = cuspInterval(houseNumber)
+    const saRatio = semiArcRatio(houseNumber)
     let cuspValue = initialCuspalDeclination(interval, semiArcRatio)
     let prevCuspValue = 0
 
@@ -149,22 +221,22 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
   // const rawArr = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12]
   // console.log(rawArr)
 
-  const firstCusp = c1.toFixed(4)
-  const secondCusp =  shouldMod180(c1, c2) ? modulo(c2 + 180, 360).toFixed(4) : c2.toFixed(4)
-  const thirdCusp =  shouldMod180(c1, c3) ? modulo(c3 + 180, 360).toFixed(4) : c3.toFixed(4)
-  const fourthCusp = c4.toFixed(4)
-  const fifthCusp = shouldMod180(c4, c5) ? modulo(c5 + 180, 360).toFixed(4) : c5.toFixed(4)
-  const sixthCusp = shouldMod180(c4, c6) ? modulo(c6 + 180, 360).toFixed(4) : c6.toFixed(4)
-  const seventhCusp = c7.toFixed(4)
-  const eighthCusp = shouldMod180(c7, c8) ? modulo(c8 + 180, 360).toFixed(4) : c8.toFixed(4)
-  const ninthCusp = shouldMod180(c7, c9) ? modulo(c9 + 180, 360).toFixed(4) : c9.toFixed(4)
-  const tenthCusp = c10.toFixed(4)
-  const eleventhCusp = shouldMod180(c10, c11) ? modulo(c11 + 180, 360).toFixed(4) : c11.toFixed(4)
-  const twelthCusp = shouldMod180(c10, c12) ? modulo(c12 + 180, 360).toFixed(4) : c12.toFixed(4)
+  const firstCusp = c1
+  const secondCusp =  shouldMod180(c1, c2) ? modulo(c2 + 180, 360) : c2
+  const thirdCusp =  shouldMod180(c1, c3) ? modulo(c3 + 180, 360) : c3
+  const fourthCusp = c4
+  const fifthCusp = shouldMod180(c4, c5) ? modulo(c5 + 180, 360) : c5
+  const sixthCusp = shouldMod180(c4, c6) ? modulo(c6 + 180, 360) : c6
+  const seventhCusp = c7
+  const eighthCusp = shouldMod180(c7, c8) ? modulo(c8 + 180, 360) : c8
+  const ninthCusp = shouldMod180(c7, c9) ? modulo(c9 + 180, 360) : c9
+  const tenthCusp = c10
+  const eleventhCusp = shouldMod180(c10, c11) ? modulo(c11 + 180, 360) : c11
+  const twelthCusp = shouldMod180(c10, c12) ? modulo(c12 + 180, 360) : c12
 
   const arr = [
-    firstCusp, secondCusp, thirdCusp, fourthCusp, fifthCusp, sixthCusp,
-    seventhCusp, eighthCusp, ninthCusp, tenthCusp, eleventhCusp, twelthCusp
+    firstCusp.toFixed(4), secondCusp.toFixed(4), thirdCusp.toFixed(4), fourthCusp.toFixed(4), fifthCusp.toFixed(4), sixthCusp.toFixed(4),
+    seventhCusp.toFixed(4), eighthCusp.toFixed(4), ninthCusp.toFixed(4), tenthCusp.toFixed(4), eleventhCusp.toFixed(4), twelthCusp.toFixed(4)
   ]
 
   return arr
@@ -178,9 +250,9 @@ export const calculateRegiomontanusHouseCusps = ({rightAscensionMC=0.00, midheav
   // source: An Astrological House Formulary by Michael P. Munkasey, page 20
   // verified within +-10 minutes of values in https://astrolibrary.org/compare-house-systems/
 
-  const cuspInterval = (cuspNumber) => {
+  const cuspInterval = (houseNumber) => {
     // returns => n in degrees
-    switch(cuspNumber) {
+    switch(houseNumber) {
       case 2:
         return 120
         break
@@ -196,20 +268,20 @@ export const calculateRegiomontanusHouseCusps = ({rightAscensionMC=0.00, midheav
     }
   }
 
-  const equatorialInterval = cuspNumber => {
+  const equatorialInterval = houseNumber => {
     // returns => n in degrees
-    switch(cuspNumber) {
+    switch(houseNumber) {
       case 2:
-        return rightAscensionMC + cuspInterval(cuspNumber)
+        return rightAscensionMC + cuspInterval(houseNumber)
         break
       case 3:
-        return rightAscensionMC + cuspInterval(cuspNumber)
+        return rightAscensionMC + cuspInterval(houseNumber)
         break
       case 11:
-        return rightAscensionMC + cuspInterval(cuspNumber)
+        return rightAscensionMC + cuspInterval(houseNumber)
         break
       case 12:
-        return rightAscensionMC + cuspInterval(cuspNumber)
+        return rightAscensionMC + cuspInterval(houseNumber)
         break
     }
   }
@@ -219,10 +291,10 @@ export const calculateRegiomontanusHouseCusps = ({rightAscensionMC=0.00, midheav
     return Math.atan(tanFromDegrees(latitude) * sinFromDegrees(cuspInterval(houseNumber)))
   }
 
-  const calculatedCusp = cuspNumber => {
-    const eqint = equatorialInterval(cuspNumber)
+  const calculatedCusp = houseNumber => {
+    const eqint = equatorialInterval(houseNumber)
     // First intermediate value
-    const m = Math.atan(Math.tan(housePole(cuspNumber)) / cosFromDegrees(eqint)) // radians
+    const m = Math.atan(Math.tan(housePole(houseNumber)) / cosFromDegrees(eqint)) // radians
 
     // Intermediate house cusps
     const r = Math.atan((tanFromDegrees(eqint) * Math.cos(m)) / Math.cos(m + degreesToRadians(obliquityEcliptic))) // radians
@@ -247,22 +319,22 @@ export const calculateRegiomontanusHouseCusps = ({rightAscensionMC=0.00, midheav
   // const rawArr = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12]
   // console.log(rawArr)
 
-  const firstCusp = c1.toFixed(4)
-  const secondCusp =  shouldMod180(c1, c2) ? modulo(c2 + 180, 360).toFixed(4) : c2.toFixed(4)
-  const thirdCusp =  shouldMod180(c1, c3) ? modulo(c3 + 180, 360).toFixed(4) : c3.toFixed(4)
-  const fourthCusp = c4.toFixed(4)
-  const fifthCusp = shouldMod180(c4, c5) ? modulo(c5 + 180, 360).toFixed(4) : c5.toFixed(4)
-  const sixthCusp = shouldMod180(c4, c6) ? modulo(c6 + 180, 360).toFixed(4) : c6.toFixed(4)
-  const seventhCusp = c7.toFixed(4)
-  const eighthCusp = shouldMod180(c7, c8) ? modulo(c8 + 180, 360).toFixed(4) : c8.toFixed(4)
-  const ninthCusp = shouldMod180(c7, c9) ? modulo(c9 + 180, 360).toFixed(4) : c9.toFixed(4)
-  const tenthCusp = c10.toFixed(4)
-  const eleventhCusp = shouldMod180(c10, c11) ? modulo(c11 + 180, 360).toFixed(4) : c11.toFixed(4)
-  const twelthCusp = shouldMod180(c10, c12) ? modulo(c12 + 180, 360).toFixed(4) : c12.toFixed(4)
+  const firstCusp = c1
+  const secondCusp =  shouldMod180(c1, c2) ? modulo(c2 + 180, 360) : c2
+  const thirdCusp =  shouldMod180(c1, c3) ? modulo(c3 + 180, 360) : c3
+  const fourthCusp = c4
+  const fifthCusp = shouldMod180(c4, c5) ? modulo(c5 + 180, 360) : c5
+  const sixthCusp = shouldMod180(c4, c6) ? modulo(c6 + 180, 360) : c6
+  const seventhCusp = c7
+  const eighthCusp = shouldMod180(c7, c8) ? modulo(c8 + 180, 360) : c8
+  const ninthCusp = shouldMod180(c7, c9) ? modulo(c9 + 180, 360) : c9
+  const tenthCusp = c10
+  const eleventhCusp = shouldMod180(c10, c11) ? modulo(c11 + 180, 360) : c11
+  const twelthCusp = shouldMod180(c10, c12) ? modulo(c12 + 180, 360) : c12
 
   const arr = [
-    firstCusp, secondCusp, thirdCusp, fourthCusp, fifthCusp, sixthCusp,
-    seventhCusp, eighthCusp, ninthCusp, tenthCusp, eleventhCusp, twelthCusp
+    firstCusp.toFixed(4), secondCusp.toFixed(4), thirdCusp.toFixed(4), fourthCusp.toFixed(4), fifthCusp.toFixed(4), sixthCusp.toFixed(4),
+    seventhCusp.toFixed(4), eighthCusp.toFixed(4), ninthCusp.toFixed(4), tenthCusp.toFixed(4), eleventhCusp.toFixed(4), twelthCusp.toFixed(4)
   ]
 
   return arr
