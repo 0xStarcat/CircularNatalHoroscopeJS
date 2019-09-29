@@ -1,6 +1,6 @@
 # Western Horoscope JS
 
-This project exists with the intention to make western astrological horoscope creation free, readily available, and easy to access for anyone who can interact with Javascript. By **horoscope**, we're talking about astrological **birth charts**. **Not  horoscope readings** or **interpretations**.
+By **horoscope**, we're talking about astrological **birth charts**. **Not  horoscope readings** or **interpretations**.
 
 Example Chart:
 
@@ -10,7 +10,7 @@ The goal is to allow someone to:
 
 1) Enter a calendar date + time and latitude/longitude coordinates for a position on the planet Earth.
 
-2) Receive:
+2) And receive a javascript class containing:
 
   => ~~Calculated SunSign from Tropical, Sidereal, and IAU Astronomical zodiacs~~
 
@@ -30,7 +30,7 @@ The goal is to allow someone to:
 
 ## Planned work
 
-Right now, this is a work in progress. Progress is marked off by items above being ~~struck out~~.
+This is a work in progress. Progress is marked off by items above being ~~struck out~~.
 
 I'm open to requests for house systems. I'm currently stopped at 6 - we have 2 "modern" systems (Topocentric, Koch), 2 "medieval" systems (Placidus, Regiomontanus), and 2 "ancient" systems (Whole Sign, Equal House). My formula resource "An Astrological House Formulary" by Michael P. Munkasey has many more house formulas I can implement if wanted. Hopefully I covered the most popular ones.
 
