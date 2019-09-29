@@ -74,6 +74,10 @@ describe('House cusp calculation', () => {
     expect(new Horoscope({origin: defaultOrigin, houseSystem: 'regiomontanus'}).houseCusps).toEqual([ '169.4304', '195.1442', '224.3037', '258.4576', '293.2347', '323.3454', '349.4304', '15.1442', '44.3037', '78.4576', '113.2347', '143.3454' ])
   })
 
+  test('Topocentric', () => {
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'topocentric'}).houseCusps).toEqual(["169.4304","195.8759","226.0562","258.4576","290.9246","321.6638","349.4304","15.8759","46.0562","78.4576","110.9246","141.6638"])
+  })
+
   test('Whole sign', () => {
     expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign'}).houseCusps).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
   })

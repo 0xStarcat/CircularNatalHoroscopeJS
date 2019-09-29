@@ -138,7 +138,7 @@ export const calculateKochHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, 
 }
 
 export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, ascendant=0.00, latitude=0.00, obliquityEcliptic=23.4367}={}) => {
-  // Centuries old and most widely used house system. ascendant is the cusp of the 1st house, while the M.C. is the cusp of the 10th house. Every other house is calculated in a complicated way to divide the space between these fixed cusps up.
+  // Most widely used house system. The Placidus house system is named after the Italian monk and mathematician Placidus de Titis (1603-1668), but was first published in Europe by the astronomer and mathematician Giovanni Antonio Magini (1555-1617). Evidence suggests it was published even earlier in 13th century Arabic literature.
   // NOTE - known to perform irregularly at latitudes greater than +60 and less than -60
   //////////
   // source: An Astrological House Formulary by Michael P. Munkasey, page 18
@@ -243,8 +243,7 @@ export const calculatePlacidianHouseCusps = ({rightAscensionMC=0.00, midheaven=0
 }
 
 export const calculateRegiomontanusHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, ascendant=0.00, latitude=0.00, obliquityEcliptic=23.4367}={}) => {
-  // "The Regiomontanus house system divides the celestial equator into twelve equal segments. Then, great circles are drawn from the North point through these segment points to the South point. The intersection of these lines with the ecliptic (zodiac) make up the house cusps"
-  // - https://www.astro.com/faq/fq_fh_owhouse_e.htm
+  // The house system is named after the German mathematician, astronomer and astrologer Regiomontanus (Johannes Müller of Königsberg, 1436-1476), but was invented by the Spanish Jewish astrologer Abrahma ibn Esra (-1167).
   // NOTE - known to perform irregularly at latitudes greater than +60 and less than -60
   //////////
   // source: An Astrological House Formulary by Michael P. Munkasey, page 20
@@ -298,6 +297,92 @@ export const calculateRegiomontanusHouseCusps = ({rightAscensionMC=0.00, midheav
 
     // Intermediate house cusps
     const r = Math.atan((tanFromDegrees(eqint) * Math.cos(m)) / Math.cos(m + degreesToRadians(obliquityEcliptic))) // radians
+
+    return radiansToDegrees(r)
+  }
+
+  const c1 = ascendant
+  const c2 = modulo(calculatedCusp(2), 360)
+  const c3 = modulo(calculatedCusp(3), 360)
+  const c4 = modulo(midheaven + 180, 360)
+  const c10 = midheaven
+  const c11 = calculatedCusp(11)
+  const c12 = calculatedCusp(12)
+  const c5 = modulo(c11 + 180, 360)
+  const c6 = modulo(c12 + 180, 360)
+  const c7 = modulo(ascendant + 180, 360)
+  const c8 = modulo(c2 + 180, 360)
+  const c9 = modulo(c3 + 180, 360)
+
+  // ** For debugging **
+  // const rawArr = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12]
+  // console.log(rawArr)
+
+  const firstCusp = c1
+  const secondCusp =  shouldMod180(c1, c2) ? modulo(c2 + 180, 360) : c2
+  const thirdCusp =  shouldMod180(c1, c3) ? modulo(c3 + 180, 360) : c3
+  const fourthCusp = c4
+  const fifthCusp = shouldMod180(c4, c5) ? modulo(c5 + 180, 360) : c5
+  const sixthCusp = shouldMod180(c4, c6) ? modulo(c6 + 180, 360) : c6
+  const seventhCusp = c7
+  const eighthCusp = shouldMod180(c7, c8) ? modulo(c8 + 180, 360) : c8
+  const ninthCusp = shouldMod180(c7, c9) ? modulo(c9 + 180, 360) : c9
+  const tenthCusp = c10
+  const eleventhCusp = shouldMod180(c10, c11) ? modulo(c11 + 180, 360) : c11
+  const twelthCusp = shouldMod180(c10, c12) ? modulo(c12 + 180, 360) : c12
+
+  const arr = [
+    firstCusp.toFixed(4), secondCusp.toFixed(4), thirdCusp.toFixed(4), fourthCusp.toFixed(4), fifthCusp.toFixed(4), sixthCusp.toFixed(4),
+    seventhCusp.toFixed(4), eighthCusp.toFixed(4), ninthCusp.toFixed(4), tenthCusp.toFixed(4), eleventhCusp.toFixed(4), twelthCusp.toFixed(4)
+  ]
+
+  return arr
+}
+
+export const calculateTopocentricHouseCusps = ({rightAscensionMC=0.00, midheaven=0.00, ascendant=0.00, latitude=0.00, obliquityEcliptic=23.4367}={}) => {
+  // The house system was invented by the Hungarian-Argentinian astrologer Wendel Polich (1892-1979) and the English-Argentinian astrologer Anthony Nelson Page (1919-1970). The topocentric system can also be described as an approximation algorithm for the Placidus system.
+  // NOTE - known to perform irregularly at latitudes greater than +60 and less than -60
+  //////////
+  // source: An Astrological House Formulary by Michael P. Munkasey, page 20
+  // verified within +-10 minutes of values in https://astrolibrary.org/compare-house-systems/
+
+  const cuspInterval = (houseNumber) => {
+    // returns => n in degrees
+    switch(houseNumber) {
+      case 2:
+        return rightAscensionMC + 120
+        break
+      case 3:
+        return rightAscensionMC + 150
+        break
+      case 11:
+        return rightAscensionMC + 30
+        break
+      case 12:
+        return rightAscensionMC + 60
+        break
+    }
+  }
+
+  const semiArcRatio = (houseNumber) => {
+    switch(houseNumber) {
+      case 2:
+        return Math.atan(2 * (tanFromDegrees(latitude) / 3))
+      case 3:
+        return Math.atan(tanFromDegrees(latitude) / 3)
+      case 11:
+        return Math.atan(tanFromDegrees(latitude) / 3)
+      case 12:
+        return Math.atan(2 * (tanFromDegrees(latitude) / 3))
+    }
+  }
+
+  const calculatedCusp = houseNumber => {
+    // First intermediate value
+    const m = Math.atan(Math.tan(semiArcRatio(houseNumber)) / cosFromDegrees(cuspInterval(houseNumber))) // radians
+
+    // Intermediate house cusps
+    const r = Math.atan((tanFromDegrees(cuspInterval(houseNumber)) * Math.cos(m)) / Math.cos(m + degreesToRadians(obliquityEcliptic))) // radians
 
     return radiansToDegrees(r)
   }
