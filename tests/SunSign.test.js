@@ -12,7 +12,19 @@ describe('Constructor validations / errors', () => {
 })
 
 describe('Tropical Zodiac', () => {
-  test('get Scorpio', () => {
-    expect(new SunSign({month: 10, date: 20, zodiac: "tropical"}).sign.name).toBe('Scorpio')
+  test('Get sign for Nov. 10', () => {
+    expect(new SunSign({month: 10, date: 10, zodiac: "tropical"}).sign.name).toBe('Scorpio')
+  })
+})
+
+describe('Sidereal Zodiac', () => {
+  test('Get sign for Nov. 10', () => {
+    expect(new SunSign({month: 10, date: 10, zodiac: "sidereal"}).sign.name).toBe('Libra')
+  })
+})
+
+describe('Constellation Zodiac', () => {
+  test('Get sign for Nov. 10', () => {
+    expect(new SunSign({month: 10, date: 10, zodiac: "constellation"}).sign.name).toBe('Libra')
   })
 })

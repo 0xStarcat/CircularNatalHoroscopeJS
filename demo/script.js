@@ -1,5 +1,6 @@
 import moment from 'moment-timezone'
 import Origin from '../src/Origin'
+import SunSign from '../src/SunSign'
 import Horoscope from '../src/Horoscope'
 import { decimalDegreesToDMS } from '../src/utilities/math'
 import { dmsString, signDecimalDegrees, signDMS } from '../src/utilities/copy'
@@ -13,6 +14,7 @@ class DemoApp {
     this.longitudeInput = document.querySelector('#longitude')
     this.houseSystemSelect = document.querySelector('#houseSystem')
 
+    this.sunSignElement = document.querySelector('#sunsign')
     this.midheavenElement = document.querySelector('#midheaven')
     this.ascendantElement = document.querySelector('#ascendant')
     this.housesElement = document.querySelector('#houses')
@@ -47,7 +49,7 @@ class DemoApp {
   handleSubmit(e) {
     e.preventDefault()
     const timestamp = moment(`${this.dateInput.value} ${this.timeInput.value}`)
-    const locationTimeData = new Origin({
+    const origin = new Origin({
       year: timestamp.year(),
       month: timestamp.month(),
       date: timestamp.date(),
@@ -57,8 +59,16 @@ class DemoApp {
       longitude: this.longitudeInput.value
     })
 
+    const sunSign = new SunSign({
+      month: origin.utcTime.month(),
+      date: origin.utcTime.date(),
+      zodiac: "tropical"
+    })
+
+    this.sunSignElement.innerHTML = sunSign.sign.name
+
     const horoscope = new Horoscope({
-      origin: locationTimeData,
+      origin: origin,
       houseSystem: this.houseSystemSelect.value
     })
 
