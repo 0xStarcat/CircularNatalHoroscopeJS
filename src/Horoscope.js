@@ -16,17 +16,14 @@ import moment from 'moment-timezone'
 class Horoscope {
   constructor({origin = null, houseSystem='placidus', zodiac='tropical'}={}) {
     this.origin = origin
-    this.midheaven = getMidheavenSun({localSiderealTime: origin.localSiderealTime})
-    this.ascendant = getAscendant({latitude: origin.latitude, localSiderealTime: origin.localSiderealTime})
-    this.houseSystem = this.validateHouseSystem(houseSystem)
-    this.houseCusps = this.calculateHouseCusps(this.houseSystem)
-    this.validateHouseSystem = this.validateHouseSystem.bind(this)
-    this.zodiac = this.validateZodiac(zodiac.toLowerCase())
-    this.sunSign = this.getSunSign(this.zodiac)
+
+    this._houseSystem = this.validateHouseSystem(houseSystem)
+    this._zodiac = this.validateZodiac(zodiac.toLowerCase())
 
     this.getSunSign = this.getSunSign.bind(this)
     this.getTropicalSign = this.getTropicalSign.bind(this)
     this.getAstronomicalSign = this.getAstronomicalSign.bind(this)
+    this.validateHouseSystem = this.validateHouseSystem.bind(this)
     this.validateZodiac = this.validateZodiac.bind(this)
   }
 
@@ -50,43 +47,51 @@ class Horoscope {
 
   get Midheaven() {
     const decimalDegrees = getMidheavenSun({localSiderealTime: this.origin.localSiderealTime})
-    const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this.zodiac})
+    const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
     return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})
   }
 
   get Ascendant() {
     const decimalDegrees = getAscendant({latitude: this.origin.latitude, localSiderealTime: this.origin.localSiderealTime})
-    const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this.zodiac})
+    const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
     return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})
+  }
+
+  get SunSign() {
+    return this.getSunSign(this._zodiac)
+  }
+
+  get HouseCusps() {
+    return this.calculateHouseCusps(this._houseSystem)
   }
 
   calculateHouseCusps(string) {
     let cuspsArray
     switch (string) {
       case 'equal house':
-        cuspsArray = calculateEqualHouseCusps({ascendant: this.ascendant})
+        cuspsArray = calculateEqualHouseCusps({ascendant: this.Ascendant.DecimalDegrees})
         break
       case 'koch':
-        cuspsArray = calculateKochHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculateKochHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'placidus':
-        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'regiomontanus':
-        cuspsArray = calculateRegiomontanusHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculateRegiomontanusHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'topocentric':
-        cuspsArray = calculateTopocentricHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculateTopocentricHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'whole sign':
-        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.ascendant})
+        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.Ascendant.DecimalDegrees})
         break
       default:
-        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
     }
-    
-    return cuspsArray.map(cusp => new ZodiacPosition({decimalDegrees: cusp, sign: getZodiacSign({decimalDegrees: cusp, zodiac: this.zodiac})}))
+
+    return cuspsArray.map(cusp => new ZodiacPosition({decimalDegrees: cusp, sign: getZodiacSign({decimalDegrees: cusp, zodiac: this._zodiac})}))
   }
 
   getSunSign(zodiac) {

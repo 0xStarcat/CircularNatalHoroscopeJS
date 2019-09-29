@@ -64,13 +64,13 @@ class DemoApp {
       zodiac: 'tropical'
     })
 
-    this.sunSignElement.innerHTML = horoscope.sunSign.Name
+    this.sunSignElement.innerHTML = horoscope.SunSign.Name
 
     this.midheavenElement.innerHTML = `${horoscope.Midheaven.DecimalDegrees} || ${horoscope.Midheaven.Sign.Name} ${horoscope.Midheaven.ArcDegreesFormatted}`
 
     this.ascendantElement.innerHTML = `${horoscope.Ascendant.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.ArcDegreesFormatted}`
 
-    horoscope.houseCusps.forEach((cusp, index) => {
+    horoscope.HouseCusps.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.DecimalDegrees
       document.querySelector(`#house-${index + 1}b`).innerHTML = `${cusp.Sign.Name} ${cusp.ArcDegreesFormatted}`
     })

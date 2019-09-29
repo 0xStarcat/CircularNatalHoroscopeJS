@@ -67,8 +67,6 @@ class Origin {
                                                     longitude: parseFloat(this.longitude)
                                                   })
   }
-
-
 }
 
 export default Origin

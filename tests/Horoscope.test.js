@@ -20,7 +20,7 @@ describe('Construction Validation & Errors', () => {
     })
 
     test('Padding in a valid houseSystem string', () => {
-      expect(new Horoscope({origin: origin, houseSystem: "Placidus"}).houseSystem).toBe('placidus')
+      expect(new Horoscope({origin: origin, houseSystem: "Placidus"})._houseSystem).toBe('placidus')
     })
 
     test('invalid zodiac', () => {
@@ -71,27 +71,27 @@ describe('Midheaven & ascendant calculations', () => {
 
 describe('House cusp calculation', () => {
   test('Equal House', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'equal house'}).houseCusps.map(c => c.DecimalDegrees)).toEqual(["169.4304","199.4304","229.4304","259.4304","289.4304","319.4304","349.4304","19.4304","49.4304","79.4304","109.4304","139.4304"])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'equal house'}).HouseCusps.map(c => c.DecimalDegrees)).toEqual(["169.4304","199.4304","229.4304","259.4304","289.4304","319.4304","349.4304","19.4304","49.4304","79.4304","109.4304","139.4304"])
   })
 
   test('Koch', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'koch'}).houseCusps.map(c => c.DecimalDegrees)).toEqual([ '169.4304', '199.3303', '228.7571', '258.4576', '290.4533', '319.8347', '349.4304', '19.3303', '48.7571', '78.4576', '110.4533', '139.8347' ])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'koch'}).HouseCusps.map(c => c.DecimalDegrees)).toEqual([ '169.4304', '199.3303', '228.7571', '258.4576', '290.4533', '319.8347', '349.4304', '19.3303', '48.7571', '78.4576', '110.4533', '139.8347' ])
   })
 
   test('Placidus', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus'}).houseCusps.map(c => c.DecimalDegrees)).toEqual(["169.4304","195.8759","226.0562","258.4576","290.9246","321.6638","349.4304","15.8759","46.0562","78.4576","110.9246","141.6638"])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus'}).HouseCusps.map(c => c.DecimalDegrees)).toEqual(["169.4304","195.8759","226.0562","258.4576","290.9246","321.6638","349.4304","15.8759","46.0562","78.4576","110.9246","141.6638"])
   })
 
   test('Regiomontanus', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'regiomontanus'}).houseCusps.map(c => c.DecimalDegrees)).toEqual([ '169.4304', '195.1442', '224.3037', '258.4576', '293.2347', '323.3454', '349.4304', '15.1442', '44.3037', '78.4576', '113.2347', '143.3454' ])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'regiomontanus'}).HouseCusps.map(c => c.DecimalDegrees)).toEqual([ '169.4304', '195.1442', '224.3037', '258.4576', '293.2347', '323.3454', '349.4304', '15.1442', '44.3037', '78.4576', '113.2347', '143.3454' ])
   })
 
   test('Topocentric', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'topocentric'}).houseCusps.map(c => c.DecimalDegrees)).toEqual(["169.4304","195.8759","226.0562","258.4576","290.9246","321.6638","349.4304","15.8759","46.0562","78.4576","110.9246","141.6638"])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'topocentric'}).HouseCusps.map(c => c.DecimalDegrees)).toEqual(["169.4304","195.8759","226.0562","258.4576","290.9246","321.6638","349.4304","15.8759","46.0562","78.4576","110.9246","141.6638"])
   })
 
   test('Whole sign', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign'}).houseCusps.map(c => c.DecimalDegrees)).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign'}).HouseCusps.map(c => c.DecimalDegrees)).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
   })
 })
 
@@ -134,31 +134,31 @@ describe('Zodiacs', () => {
 
   describe('Tropical Zodiac', () => {
     test('Get sign for Nov. 10', () => {
-      expect(new Horoscope({origin: novOrigin, zodiac: "tropical"}).sunSign.Name).toBe('Scorpio')
+      expect(new Horoscope({origin: novOrigin, zodiac: "tropical"}).SunSign.Name).toBe('Scorpio')
     })
 
     test('Get sign for cusp start', () => {
-      expect(new Horoscope({origin: cuspStart, zodiac: "tropical"}).sunSign.Name).toBe('Libra')
+      expect(new Horoscope({origin: cuspStart, zodiac: "tropical"}).SunSign.Name).toBe('Libra')
     })
 
     test('Get sign for cusp end', () => {
-      expect(new Horoscope({origin: cuspEnd, zodiac: "tropical"}).sunSign.Name).toBe('Virgo')
+      expect(new Horoscope({origin: cuspEnd, zodiac: "tropical"}).SunSign.Name).toBe('Virgo')
     })
 
     test('Get sign for Dec. 31', () => {
-      expect(new Horoscope({origin: decOrigin, zodiac: "tropical"}).sunSign.Name).toBe('Capricorn')
+      expect(new Horoscope({origin: decOrigin, zodiac: "tropical"}).SunSign.Name).toBe('Capricorn')
     })
   })
 
   describe('Sidereal Zodiac', () => {
     test('Get sign for Nov. 10', () => {
-      expect(new Horoscope({origin: novOrigin, zodiac: "sidereal"}).sunSign.Name).toBe('Libra')
+      expect(new Horoscope({origin: novOrigin, zodiac: "sidereal"}).SunSign.Name).toBe('Libra')
     })
   })
 
   describe('Astronomical Zodiac', () => {
     test('Get sign for Nov. 10', () => {
-      expect(new Horoscope({origin: novOrigin, zodiac: "astronomical"}).sunSign.Name).toBe('Libra')
+      expect(new Horoscope({origin: novOrigin, zodiac: "astronomical"}).SunSign.Name).toBe('Libra')
     })
   })
 })
