@@ -1,6 +1,5 @@
 import moment from 'moment-timezone'
 import Origin from '../src/Origin'
-import SunSign from '../src/SunSign'
 import Horoscope from '../src/Horoscope'
 import { decimalDegreesToDMS } from '../src/utilities/math'
 import { dmsString, signDecimalDegrees, signDMS } from '../src/utilities/copy'
@@ -59,18 +58,14 @@ class DemoApp {
       longitude: this.longitudeInput.value
     })
 
-    const sunSign = new SunSign({
-      month: origin.utcTime.month(),
-      date: origin.utcTime.date(),
-      zodiac: "tropical"
-    })
-
-    this.sunSignElement.innerHTML = sunSign.sign.name
 
     const horoscope = new Horoscope({
       origin: origin,
-      houseSystem: this.houseSystemSelect.value
+      houseSystem: this.houseSystemSelect.value,
+      zodiac: 'tropical'
     })
+
+    this.sunSignElement.innerHTML = horoscope.sunSign.name
 
     this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${signDMS(horoscope.midheaven)}`
 

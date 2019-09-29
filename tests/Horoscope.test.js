@@ -22,6 +22,10 @@ describe('Construction Validation & Errors', () => {
     test('Padding in a valid houseSystem string', () => {
       expect(new Horoscope({origin: origin, houseSystem: "Placidus"}).houseSystem).toBe('placidus')
     })
+
+    test('invalid zodiac', () => {
+      expect(() => new Horoscope({origin: origin, zodiac: "TEST"})).toThrowError("The \"test\" zodiac is not included. Please choose from the following list: astronomical, sidereal, tropical.")
+    })
   })
 })
 
@@ -80,5 +84,73 @@ describe('House cusp calculation', () => {
 
   test('Whole sign', () => {
     expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign'}).houseCusps).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
+  })
+})
+
+describe('Zodiacs', () => {
+  const novOrigin = new Origin({
+    year: 2019,
+    month: 10,
+    date: 10,
+    hour: 0,
+    latitude: 0,
+    longitude: 0
+  })
+
+  const cuspStart = new Origin({
+    year: 2019,
+    month: 8,
+    date: 23,
+    hour: 0,
+    latitude: 0,
+    longitude: 0
+  })
+
+  const cuspEnd = new Origin({
+    year: 2019,
+    month: 8,
+    date: 22,
+    hour: 0,
+    latitude: 0,
+    longitude: 0
+  })
+
+  const decOrigin = new Origin({
+    year: 2019,
+    month: 11,
+    date: 31,
+    hour: 0,
+    latitude: 0,
+    longitude: 0
+  })
+
+  describe('Tropical Zodiac', () => {
+    test('Get sign for Nov. 10', () => {
+      expect(new Horoscope({origin: novOrigin, zodiac: "tropical"}).sunSign.name).toBe('Scorpio')
+    })
+
+    test('Get sign for cusp start', () => {
+      expect(new Horoscope({origin: cuspStart, zodiac: "tropical"}).sunSign.name).toBe('Libra')
+    })
+
+    test('Get sign for cusp end', () => {
+      expect(new Horoscope({origin: cuspEnd, zodiac: "tropical"}).sunSign.name).toBe('Virgo')
+    })
+
+    test('Get sign for Dec. 31', () => {
+      expect(new Horoscope({origin: decOrigin, zodiac: "tropical"}).sunSign.name).toBe('Capricorn')
+    })
+  })
+
+  describe('Sidereal Zodiac', () => {
+    test('Get sign for Nov. 10', () => {
+      expect(new Horoscope({origin: novOrigin, zodiac: "sidereal"}).sunSign.name).toBe('Libra')
+    })
+  })
+
+  describe('Astronomical Zodiac', () => {
+    test('Get sign for Nov. 10', () => {
+      expect(new Horoscope({origin: novOrigin, zodiac: "astronomical"}).sunSign.name).toBe('Libra')
+    })
   })
 })

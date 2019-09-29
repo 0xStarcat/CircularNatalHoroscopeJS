@@ -41,7 +41,7 @@ export const signs = [
   },
   {
     name: 'Virgo',
-    tropicalStartMonth: 6, tropicalStartDate: 23, tropicalEndMonth: 7, tropicalEndDate: 22,
+    tropicalStartMonth: 7, tropicalStartDate: 23, tropicalEndMonth: 8, tropicalEndDate: 22,
     siderealStartMonth: 8, siderealStartDate: 17, siderealEndMonth: 9, siderealEndDate: 16,
     astronomicalStartMonth: 8, astronomicalStartDate: 16, astronomicalEndMonth: 9, astronomicalEndDate: 29,
     eclipticStart: 150,

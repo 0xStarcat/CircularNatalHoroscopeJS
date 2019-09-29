@@ -69,7 +69,7 @@ export const decimalDegreesToDMS = (decimalDegrees) => {
   // if-tests are not necessary if no rounding is done.
   if (seconds === 60) {
    minutes++
-   s = 0
+   seconds = 0
   }
 
   if (minutes === 60) {
