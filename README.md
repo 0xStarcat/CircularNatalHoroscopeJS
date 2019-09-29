@@ -12,7 +12,7 @@ The goal is to allow someone to:
 
 2) Receive:
 
-  => Calculated SunSign from Tropical, Sidereal, and Constellation zodiacs
+  => ~~Calculated SunSign from Tropical, Sidereal, and IAU Astronomical zodiacs~~
 
   => ~~the calculated major angles (`ascendant` and `Midheaven (MC)`) for a given datetime and origin~~
 
