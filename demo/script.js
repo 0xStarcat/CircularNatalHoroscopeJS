@@ -62,9 +62,9 @@ class DemoApp {
       houseSystem: this.houseSystemSelect.value
     })
 
-    this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${dmsString(decimalDegreesToDMS(horoscope.midheaven))} || ${signDecimalDegrees(horoscope.midheaven)} || ${signDMS(horoscope.midheaven)}`
+    this.midheavenElement.innerHTML = `${horoscope.midheaven} || ${signDMS(horoscope.midheaven)}`
 
-    this.ascendantElement.innerHTML = `${horoscope.ascendant} || ${dmsString(decimalDegreesToDMS(horoscope.ascendant))} || ${signDecimalDegrees(horoscope.ascendant)} || ${signDMS(horoscope.ascendant)}`
+    this.ascendantElement.innerHTML = `${horoscope.ascendant} || ${signDMS(horoscope.ascendant)}`
 
     horoscope.houseCusps.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp
