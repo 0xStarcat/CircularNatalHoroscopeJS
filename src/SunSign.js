@@ -10,21 +10,35 @@ class SunSign {
     this.month = validateMonth(month)
     this.date = validateDate(date)
     this.moment = moment({month: this.month, date: this.date})
-    this.zodiac = zodiac.toLowerCase()
+    this.zodiac = this.validateZodiac(zodiac.toLowerCase())
     this.sign = this.getSign(this.zodiac)
 
     this.getSign = this.getSign.bind(this)
     this.getTropicalSign = this.getTropicalSign.bind(this)
     this.getConstellationSign = this.getConstellationSign.bind(this)
+    this.validateZodiac = this.validateZodiac.bind(this)
+  }
+
+  static get Zodiacs() {
+    return ['astronomical', 'sidereal', 'tropical']
+  }
+
+  validateZodiac(string) {
+    if (SunSign.Zodiacs.includes(string.toLowerCase())) return string.toLowerCase()
+    else throw new Error(`The "${string}" zodiac is not included. Please choose from the following list: ${SunSign.Zodiacs.join(', ')}.`)
   }
 
   getSign(zodiac) {
+    // Source: https://horoscopes.lovetoknow.com/about-astrology/new-horoscope-dates
+    // Constellation dates from IAU and slightly altered to be computed without times. End dates are all offset by -1
+    //
+
     switch(zodiac) {
       case 'tropical':
         return this.getTropicalSign()
       case 'sidereal':
         return this.getSiderealSign()
-      case 'constellation':
+      case 'astronomical':
         return this.getConstellationSign()
     }
   }
@@ -50,7 +64,7 @@ class SunSign {
   getConstellationSign() {
     // Each month integer is offset by -1
     const sign = signs.find(sign => {
-      return moment({month: sign.constellationStartMonth, date: sign.constellationStartDate}) <= this.moment && moment({month: sign.constellationEndMonth, date: sign.constellationEndDate}) >= this.moment
+      return moment({month: sign.astronomicalStartMonth, date: sign.astronomicalStartDate}) <= this.moment && moment({month: sign.astronomicalEndMonth, date: sign.astronomicalEndDate}) >= this.moment
     })
 
     return sign

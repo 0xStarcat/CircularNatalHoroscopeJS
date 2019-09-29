@@ -9,6 +9,10 @@ describe('Constructor validations / errors', () => {
   test('invalid date', () => {
     expect(() => new SunSign({month: 11, date: 32})).toThrowError("The date: \"32 must be between 1 - 31")
   })
+
+  test('invalid zodiac', () => {
+    expect(() => new SunSign({month: 11, date: 1, zodiac: "TEST"})).toThrowError("The \"test\" zodiac is not included. Please choose from the following list: astronomical, sidereal, tropical.")
+  })
 })
 
 describe('Tropical Zodiac', () => {
@@ -23,8 +27,8 @@ describe('Sidereal Zodiac', () => {
   })
 })
 
-describe('Constellation Zodiac', () => {
+describe('Astronomical Zodiac', () => {
   test('Get sign for Nov. 10', () => {
-    expect(new SunSign({month: 10, date: 10, zodiac: "constellation"}).sign.name).toBe('Libra')
+    expect(new SunSign({month: 10, date: 10, zodiac: "astronomical"}).sign.name).toBe('Libra')
   })
 })
