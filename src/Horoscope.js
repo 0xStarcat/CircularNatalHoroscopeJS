@@ -61,22 +61,32 @@ class Horoscope {
   }
 
   calculateHouseCusps(string) {
+    let cuspsArray
     switch (string) {
       case 'equal house':
-        return calculateEqualHouseCusps({ascendant: this.ascendant})
+        cuspsArray = calculateEqualHouseCusps({ascendant: this.ascendant})
+        break
       case 'koch':
-        return calculateKochHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculateKochHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        break
       case 'placidus':
-        return calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        break
       case 'regiomontanus':
-        return calculateRegiomontanusHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculateRegiomontanusHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        break
       case 'topocentric':
-        return calculateTopocentricHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculateTopocentricHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        break
       case 'whole sign':
-        return calculateWholeSignHouseCusps({ascendant: this.ascendant})
+        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.ascendant})
+        break
       default:
-        return calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.midheaven, ascendant: this.ascendant, latitude: this.origin.latitude})
+        break
     }
+    
+    return cuspsArray.map(cusp => new ZodiacPosition({decimalDegrees: cusp, sign: getZodiacSign({decimalDegrees: cusp, zodiac: this.zodiac})}))
   }
 
   getSunSign(zodiac) {

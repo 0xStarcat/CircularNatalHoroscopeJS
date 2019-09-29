@@ -2,7 +2,6 @@ import moment from 'moment-timezone'
 import Origin from '../src/Origin'
 import Horoscope from '../src/Horoscope'
 import { decimalDegreesToDMS } from '../src/utilities/math'
-import { dmsString, signDecimalDegrees, signDMS } from '../src/utilities/copy'
 
 class DemoApp {
   constructor() {
@@ -67,13 +66,13 @@ class DemoApp {
 
     this.sunSignElement.innerHTML = horoscope.sunSign.Name
 
-    this.midheavenElement.innerHTML = `${horoscope.Midheaven.DecimalDegrees} || ${horoscope.Midheaven.ArcDegreesFormatted}`
+    this.midheavenElement.innerHTML = `${horoscope.Midheaven.DecimalDegrees} || ${horoscope.Midheaven.Sign.Name} ${horoscope.Midheaven.ArcDegreesFormatted}`
 
-    this.ascendantElement.innerHTML = `${horoscope.Ascendant.DecimalDegrees} || ${horoscope.Ascendant.ArcDegreesFormatted}`
+    this.ascendantElement.innerHTML = `${horoscope.Ascendant.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.ArcDegreesFormatted}`
 
     horoscope.houseCusps.forEach((cusp, index) => {
-      document.querySelector(`#house-${index + 1}a`).innerHTML = cusp
-      document.querySelector(`#house-${index + 1}b`).innerHTML = signDMS(cusp)
+      document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.DecimalDegrees
+      document.querySelector(`#house-${index + 1}b`).innerHTML = `${cusp.Sign.Name} ${cusp.ArcDegreesFormatted}`
     })
   }
 }
