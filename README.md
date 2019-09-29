@@ -1,4 +1,4 @@
-# WesternAstrologyJS
+# Western Horoscope JS
 
 This project exists with the intention to make western astrological horoscope creation free, readily available, and easy to access for anyone who can interact with Javascript. By **horoscope**, we're talking about astrological **birth charts**. **Not  horoscope readings** or **interpretations**.
 
