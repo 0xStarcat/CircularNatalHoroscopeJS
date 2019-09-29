@@ -1,8 +1,12 @@
+import moment from 'moment-timezone'
 import { modulo, arccot, degreesToRadians, radiansToDegrees, tanFromDegrees, cosFromDegrees, sinFromDegrees } from './math'
+
+// https://horoscopes.lovetoknow.com/about-astrology/new-horoscope-dates
 
 export const signs = [
   {
-    name: 'Aries'
+    name: 'Aries',
+
   },
   {
     name: 'Taurus'

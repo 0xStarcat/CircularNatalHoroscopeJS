@@ -9,7 +9,9 @@
     "start:dev": "webpack --watch --mode=development"
   },
   "keywords": [
-    "Astrology"
+    "Astrology",
+    "Horoscope",
+    "Natal Chart"
   ],
   "author": "",
   "license": "Unlicense",
