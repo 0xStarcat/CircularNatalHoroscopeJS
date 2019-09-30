@@ -149,13 +149,13 @@ class Sign {
     }
   }
 
-  static get Zodiacs() {
+  static get ZodiacSystems() {
     return ['astronomical', 'sidereal', 'tropical']
   }
 
   validateZodiac(string) {
-    if (Sign.Zodiacs.includes(string.toLowerCase())) return string.toLowerCase()
-    else throw new Error(`The "${string}" zodiac is not included. Please choose from the following list: ${Sign.Zodiacs.join(', ')}.`)
+    if (Sign.ZodiacSystems.includes(string.toLowerCase())) return string.toLowerCase()
+    else throw new Error(`The "${string}" zodiac is not included. Please choose from the following list: ${Sign.ZodiacSystems.join(', ')}.`)
   }
 
   get Name() {

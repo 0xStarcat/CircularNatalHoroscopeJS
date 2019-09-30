@@ -38,13 +38,13 @@ class Horoscope {
     else throw new Error(`The "${string}" house system is not included. Please choose from the following list: ${Horoscope.HouseSystems.join(', ')}.`)
   }
 
-  static get Zodiacs() {
+  static get ZodiacSystems() {
     return ['astronomical', 'sidereal', 'tropical']
   }
 
   validateZodiac(string) {
-    if (Horoscope.Zodiacs.includes(string.toLowerCase())) return string.toLowerCase()
-    else throw new Error(`The "${string}" zodiac is not included. Please choose from the following list: ${Horoscope.Zodiacs.join(', ')}.`)
+    if (Horoscope.ZodiacSystems.includes(string.toLowerCase())) return string.toLowerCase()
+    else throw new Error(`The "${string}" zodiac is not included. Please choose from the following list: ${Horoscope.ZodiacSystems.join(', ')}.`)
   }
 
   get Midheaven() {

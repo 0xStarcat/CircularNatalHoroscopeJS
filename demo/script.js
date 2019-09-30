@@ -11,6 +11,7 @@ class DemoApp {
     this.latitudeInput = document.querySelector('#latitude')
     this.longitudeInput = document.querySelector('#longitude')
     this.houseSystemSelect = document.querySelector('#houseSystem')
+    this.zodiacSystemSelect = document.querySelector('#zodiacSystem')
 
     this.sunSignElement = document.querySelector('#sunsign')
     this.midheavenElement = document.querySelector('#midheaven')
@@ -20,10 +21,12 @@ class DemoApp {
 
     this.displayDateTime = this.displayDateTime.bind(this)
     this.loadHouseSystemSelect = this.loadHouseSystemSelect.bind(this)
+    this.loadZodiacSystemSelect = this.loadZodiacSystemSelect.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 
     this.displayDateTime()
     this.loadHouseSystemSelect()
+    this.loadZodiacSystemSelect()
     this.form.addEventListener('submit', this.handleSubmit)
   }
 
@@ -42,7 +45,17 @@ class DemoApp {
     })
 
     this.houseSystemSelect.value = "placidus"
+  }
 
+  loadZodiacSystemSelect() {
+    Horoscope.ZodiacSystems.forEach(system => {
+      var opt = document.createElement('option');
+      opt.value = system
+      opt.appendChild(document.createTextNode(system))
+      this.zodiacSystemSelect.appendChild(opt)
+    })
+
+    this.zodiacSystemSelect.value = "tropical"
   }
 
   handleSubmit(e) {
@@ -62,7 +75,7 @@ class DemoApp {
     const horoscope = new Horoscope({
       origin: origin,
       houseSystem: this.houseSystemSelect.value,
-      zodiac: 'tropical'
+      zodiac: this.zodiacSystemSelect.value
     })
 
     this.sunSignElement.innerHTML = horoscope.SunSign.Name
