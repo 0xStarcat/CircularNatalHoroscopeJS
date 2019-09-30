@@ -9,8 +9,15 @@ class Sign {
   }
 
   static ZodiacStartOffset(zodiac) {
-    // TODO - Remove this when adding offset to ascendant
-    return Sign.Formatted(zodiac).find((s => s.id === 0)).ZodiacStart
+    switch(zodiac) {
+      case 'astronomical':
+        return 24.1
+      case 'sidereal':
+        // conversion from https://vijayajyoti.com/sidereal-and-tropical-zodiac/
+        return 24.1
+      case 'tropical':
+        return 0
+    }
   }
 
   static get Data() {
@@ -199,28 +206,12 @@ class Sign {
 
   get ZodiacStart() {
     const sign = Sign.Data.find(sign => sign.id === this.id)
-    switch(this.zodiac) {
-      case 'astronomical':
-        return parseFloat(modulo(sign.zodiacStart + 24.1, 360).toFixed(4))
-      case 'sidereal':
-        // conversion from https://vijayajyoti.com/sidereal-and-tropical-zodiac/
-        return parseFloat(modulo(sign.zodiacStart + 24.1, 360).toFixed(4))
-      case 'tropical':
-        return parseFloat(modulo(sign.zodiacStart, 360).toFixed(4))
-    }
+    return parseFloat(modulo(sign.zodiacStart, 360).toFixed(4))
   }
 
   get ZodiacEnd() {
     const sign = Sign.Data.find(sign => sign.id === this.id)
-    switch(this.zodiac) {
-      case 'astronomical':
-        return parseFloat(modulo(sign.zodiacEnd + 24.1, 360).toFixed(4))
-      case 'sidereal':
-        // conversion from https://vijayajyoti.com/sidereal-and-tropical-zodiac/
-        return parseFloat(modulo(sign.zodiacEnd + 24.1, 360).toFixed(4))
-      case 'tropical':
-        return parseFloat(modulo(sign.zodiacEnd, 360).toFixed(4))
-    }
+    return parseFloat(modulo(sign.zodiacEnd, 360).toFixed(4))
   }
 }
 

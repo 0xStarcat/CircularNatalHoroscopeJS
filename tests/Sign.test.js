@@ -42,11 +42,11 @@ describe('Sign', () => {
       })
 
       test('Get ZodiacStart', () => {
-        expect(new Sign({id: 11, zodiac: 'sidereal'}).ZodiacStart).toBe(354.1)
+        expect(new Sign({id: 11, zodiac: 'sidereal'}).ZodiacStart).toBe(330)
       })
 
       test('Get ZodiacEnd', () => {
-        expect(new Sign({id: 11, zodiac: 'sidereal'}).ZodiacEnd).toBe(24.1)
+        expect(new Sign({id: 11, zodiac: 'sidereal'}).ZodiacEnd).toBe(0)
       })
     })
   })
@@ -62,11 +62,11 @@ describe('Sign', () => {
       })
 
       test('Get ZodiacStart', () => {
-        expect(new Sign({id: 11, zodiac: 'astronomical'}).ZodiacStart).toBe(354.1)
+        expect(new Sign({id: 11, zodiac: 'astronomical'}).ZodiacStart).toBe(330)
       })
 
       test('Get ZodiacEnd', () => {
-        expect(new Sign({id: 11, zodiac: 'astronomical'}).ZodiacEnd).toBe(24.1)
+        expect(new Sign({id: 11, zodiac: 'astronomical'}).ZodiacEnd).toBe(0)
       })
     })
   })

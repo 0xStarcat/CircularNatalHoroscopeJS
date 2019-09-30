@@ -53,11 +53,11 @@ describe('Midheaven & ascendant calculations', () => {
       zodiac: 'sidereal'
     })
 
-    expect(horoscope.Midheaven.DecimalDegrees).toBe(78.4576237174029)
-    expect(horoscope.Midheaven.ArcDegreesFormatted).toBe("78° 27' 27''")
+    expect(horoscope.Midheaven.DecimalDegrees).toBe(54.357623717402895)
+    expect(horoscope.Midheaven.ArcDegreesFormatted).toBe("54° 21' 27''")
     expect(horoscope.Midheaven.Sign.Name).toBe("Taurus")
-    expect(horoscope.Ascendant.DecimalDegrees).toBe(169.4304413315524)
-    expect(horoscope.Ascendant.ArcDegreesFormatted).toBe("169° 25' 50''")
+    expect(horoscope.Ascendant.DecimalDegrees).toBe(145.3304413315524)
+    expect(horoscope.Ascendant.ArcDegreesFormatted).toBe("145° 19' 50''")
     expect(horoscope.Ascendant.Sign.Name).toBe("Leo")
   })
 

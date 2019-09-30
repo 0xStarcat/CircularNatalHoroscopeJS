@@ -49,15 +49,14 @@ class Horoscope {
 
   get Midheaven() {
     // TODO - add zodiac system offset here
-    const decimalDegrees = getMidheavenSun({localSiderealTime: this.origin.localSiderealTime})
+    const decimalDegrees = getMidheavenSun({localSiderealTime: this.origin.localSiderealTime, zodiacOffset: Sign.ZodiacStartOffset(this._zodiac)})
     const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
-    console.log(decimalDegrees, sign)
     return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})
   }
 
   get Ascendant() {
     // TODO - add zodiac system offset here
-    const decimalDegrees = getAscendant({latitude: this.origin.latitude, localSiderealTime: this.origin.localSiderealTime})
+    const decimalDegrees = getAscendant({latitude: this.origin.latitude, localSiderealTime: this.origin.localSiderealTime, zodiacOffset: Sign.ZodiacStartOffset(this._zodiac)})
     const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
     return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})
   }
@@ -74,7 +73,7 @@ class Horoscope {
     let cuspsArray
     switch (string) {
       case 'equal house':
-        cuspsArray = calculateEqualHouseCusps({ascendant: this.Ascendant.DecimalDegrees, startingDegree: Sign.ZodiacStartOffset(this._zodiac)})
+        cuspsArray = calculateEqualHouseCusps({ascendant: this.Ascendant.DecimalDegrees})
         break
       case 'koch':
         cuspsArray = calculateKochHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
@@ -89,14 +88,13 @@ class Horoscope {
         cuspsArray = calculateTopocentricHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'whole sign':
-        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.Ascendant.DecimalDegrees, startingDegree: Sign.ZodiacStartOffset(this._zodiac)})
+        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.Ascendant.DecimalDegrees})
         break
       default:
         cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
     }
 
-    console.log(cuspsArray)
     return cuspsArray.map(cusp => new ZodiacPosition({decimalDegrees: cusp, sign: getZodiacSign({decimalDegrees: cusp, zodiac: this._zodiac})}))
   }
 
@@ -147,8 +145,7 @@ class Horoscope {
 
   calculateZodiacCusps() {
     return new Array(12).fill(undefined).map((c, index) => {
-      const zodiacOffset = Sign.ZodiacStartOffset(this._zodiac)
-      return parseFloat(modulo((this.Ascendant.DecimalDegrees - zodiacOffset) - (index * 30), 360).toFixed(4))
+      return parseFloat(modulo(this.Ascendant.DecimalDegrees - (index * 30), 360).toFixed(4))
     })
   }
 }
