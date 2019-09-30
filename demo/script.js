@@ -80,13 +80,13 @@ class DemoApp {
 
     this.sunSignElement.innerHTML = horoscope.SunSign.Name
 
-    this.midheavenElement.innerHTML = `${horoscope.Midheaven.DecimalDegrees} || ${horoscope.Midheaven.Sign.Name} ${horoscope.Midheaven.ArcDegreesFormatted}`
+    this.midheavenElement.innerHTML = `${horoscope.Midheaven.DecimalDegrees} || ${horoscope.Midheaven.Sign.Name} ${horoscope.Midheaven.ArcDegreesFormatted30}`
 
-    this.ascendantElement.innerHTML = `${horoscope.Ascendant.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.ArcDegreesFormatted}`
+    this.ascendantElement.innerHTML = `${horoscope.Ascendant.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.ArcDegreesFormatted30}`
 
     horoscope.HouseCusps.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.DecimalDegrees
-      document.querySelector(`#house-${index + 1}b`).innerHTML = `${cusp.Sign.Name} ${cusp.ArcDegreesFormatted}`
+      document.querySelector(`#house-${index + 1}b`).innerHTML = `${cusp.Sign.Name} ${cusp.ArcDegreesFormatted30}`
     })
 
     horoscope.ZodiacCusps.forEach((cusp, index) => {
