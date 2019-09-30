@@ -142,7 +142,10 @@ class Horoscope {
   }
 
   calculateZodiacCusps() {
-    return new Array(12).fill(undefined).map((c, index) => parseFloat(modulo((Sign.Formatted(this._zodiac).find((s => s.id === 0)).ZodiacStart - this.Ascendant.DecimalDegrees) + (index * 30), 360).toFixed(4)))
+    return new Array(12).fill(undefined).map((c, index) => {
+      const zodiacOffset = Sign.Formatted(this._zodiac).find((s => s.id === 0)).ZodiacStart
+      return parseFloat(modulo((this.Ascendant.DecimalDegrees - zodiacOffset) - (index * 30), 360).toFixed(4))
+    })
   }
 }
 

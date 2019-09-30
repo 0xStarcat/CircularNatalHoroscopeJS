@@ -16,6 +16,7 @@ class DemoApp {
     this.midheavenElement = document.querySelector('#midheaven')
     this.ascendantElement = document.querySelector('#ascendant')
     this.housesElement = document.querySelector('#houses')
+    this.zodiacCuspsElement = document.querySelector('#zodiacCusps')
 
     this.displayDateTime = this.displayDateTime.bind(this)
     this.loadHouseSystemSelect = this.loadHouseSystemSelect.bind(this)
@@ -73,6 +74,10 @@ class DemoApp {
     horoscope.HouseCusps.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.DecimalDegrees
       document.querySelector(`#house-${index + 1}b`).innerHTML = `${cusp.Sign.Name} ${cusp.ArcDegreesFormatted}`
+    })
+
+    horoscope.ZodiacCusps.forEach((cusp, index) => {
+      document.querySelector(`#zodiac-${index + 1}`).innerHTML = cusp
     })
   }
 }

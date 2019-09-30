@@ -182,19 +182,19 @@ describe('SunSign', () => {
 describe('ZodiacCusps', () => {
   describe('tropical', () => {
     test('origin 1', () => {
-      expect(new Horoscope({origin: defaultOrigin, zodiac: 'tropical'}).ZodiacCusps).toEqual([190.5696, 220.5696, 250.5696, 280.5696, 310.5696, 340.5696, 10.5696, 40.5696, 70.5696, 100.5696, 130.5696, 160.5696,])
+      expect(new Horoscope({origin: defaultOrigin, zodiac: 'tropical'}).ZodiacCusps).toEqual([169.4304,139.4304,109.4304,79.4304,49.4304,19.4304,349.4304,319.4304,289.4304,259.4304,229.4304,199.4304,])
     })
   })
 
   describe('sidereal', () => {
     test('origin 1', () => {
-      expect(new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'}).ZodiacCusps).toEqual([ 214.6696,244.6696,274.6696,304.6696,334.6696,4.6696,34.6696,64.6696,94.6696,124.6696,154.6696,184.6696,])
+      expect(new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'}).ZodiacCusps).toEqual([ 145.3304,115.3304,85.3304,55.3304,25.3304,355.3304,325.3304,295.3304,265.3304,235.3304,205.3304,175.3304,])
     })
   })
 
   describe('astronomical', () => {
     test('origin 1', () => {
-      expect(new Horoscope({origin: defaultOrigin, zodiac: 'astronomical'}).ZodiacCusps).toEqual([ 214.6696,244.6696,274.6696,304.6696,334.6696,4.6696,34.6696,64.6696,94.6696,124.6696,154.6696,184.6696,])
+      expect(new Horoscope({origin: defaultOrigin, zodiac: 'astronomical'}).ZodiacCusps).toEqual([ 145.3304,115.3304,85.3304,55.3304,25.3304,355.3304,325.3304,295.3304,265.3304,235.3304,205.3304,175.3304,])
     })
   })
 })
