@@ -138,6 +138,17 @@ class Sign {
     return Sign.Data.map(sign => new Sign({id: sign.id, zodiac: 'tropical'}))
   }
 
+  static Formatted(zodiac) {
+    switch(zodiac) {
+      case 'astronomical':
+        return Sign.Astronomical
+      case 'sidereal':
+        return Sign.Sidereal
+      case 'tropical':
+        return Sign.Tropical
+    }
+  }
+
   static get Zodiacs() {
     return ['astronomical', 'sidereal', 'tropical']
   }

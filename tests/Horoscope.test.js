@@ -45,6 +45,22 @@ describe('Midheaven & ascendant calculations', () => {
     expect(horoscope.Ascendant.Sign.Name).toBe("Virgo")
   })
 
+  test('Sidereal Northern Hemisphere Horoscope calculations', () => {
+    const origin = defaultOrigin
+
+    const horoscope = new Horoscope({
+      origin,
+      zodiac: 'sidereal'
+    })
+
+    expect(horoscope.Midheaven.DecimalDegrees).toBe(78.4576237174029)
+    expect(horoscope.Midheaven.ArcDegreesFormatted).toBe("78° 27' 27''")
+    expect(horoscope.Midheaven.Sign.Name).toBe("Taurus")
+    expect(horoscope.Ascendant.DecimalDegrees).toBe(169.4304413315524)
+    expect(horoscope.Ascendant.ArcDegreesFormatted).toBe("169° 25' 50''")
+    expect(horoscope.Ascendant.Sign.Name).toBe("Leo")
+  })
+
   test('Southern Hemisphere Horoscope calculations', () => {
     const origin = new Origin({
       year: 2019, // July 20, 2019 10:10am local time
@@ -95,7 +111,7 @@ describe('House cusp calculation', () => {
   })
 })
 
-describe('Zodiacs', () => {
+describe('SunSign', () => {
   const novOrigin = new Origin({
     year: 2019,
     month: 10,
@@ -159,6 +175,26 @@ describe('Zodiacs', () => {
   describe('Astronomical Zodiac', () => {
     test('Get sign for Nov. 10', () => {
       expect(new Horoscope({origin: novOrigin, zodiac: "astronomical"}).SunSign.Name).toBe('Libra')
+    })
+  })
+})
+
+describe('ZodiacCusps', () => {
+  describe('tropical', () => {
+    test('origin 1', () => {
+      expect(new Horoscope({origin: defaultOrigin, zodiac: 'tropical'}).ZodiacCusps).toEqual([190.5696, 220.5696, 250.5696, 280.5696, 310.5696, 340.5696, 10.5696, 40.5696, 70.5696, 100.5696, 130.5696, 160.5696,])
+    })
+  })
+
+  describe('sidereal', () => {
+    test('origin 1', () => {
+      expect(new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'}).ZodiacCusps).toEqual([ 214.6696,244.6696,274.6696,304.6696,334.6696,4.6696,34.6696,64.6696,94.6696,124.6696,154.6696,184.6696,])
+    })
+  })
+
+  describe('astronomical', () => {
+    test('origin 1', () => {
+      expect(new Horoscope({origin: defaultOrigin, zodiac: 'astronomical'}).ZodiacCusps).toEqual([ 214.6696,244.6696,274.6696,304.6696,334.6696,4.6696,34.6696,64.6696,94.6696,124.6696,154.6696,184.6696,])
     })
   })
 })

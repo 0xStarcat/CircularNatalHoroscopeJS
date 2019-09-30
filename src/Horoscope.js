@@ -1,7 +1,7 @@
 import Sign from './Sign'
 import ZodiacPosition from './ZodiacPosition'
 import { getMidheavenSun, getAscendant } from './utilities/astronomy'
-
+import { modulo } from './utilities/math'
 import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign } from './utilities/astrology'
 import moment from 'moment-timezone'
 
@@ -25,6 +25,8 @@ class Horoscope {
     this.getAstronomicalSign = this.getAstronomicalSign.bind(this)
     this.validateHouseSystem = this.validateHouseSystem.bind(this)
     this.validateZodiac = this.validateZodiac.bind(this)
+    this.calculateHouseCusps = this.calculateHouseCusps.bind(this)
+    this.calculateZodiacCusps = this.calculateZodiacCusps.bind(this)
   }
 
   static get HouseSystems() {
@@ -133,6 +135,14 @@ class Horoscope {
     })
 
     return sign
+  }
+
+  get ZodiacCusps() {
+    return this.calculateZodiacCusps()
+  }
+
+  calculateZodiacCusps() {
+    return new Array(12).fill(undefined).map((c, index) => parseFloat(modulo((Sign.Formatted(this._zodiac).find((s => s.id === 0)).ZodiacStart - this.Ascendant.DecimalDegrees) + (index * 30), 360).toFixed(4)))
   }
 }
 
