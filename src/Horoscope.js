@@ -48,6 +48,7 @@ class Horoscope {
   }
 
   get Midheaven() {
+    // TODO - add zodiac system offset here
     const decimalDegrees = getMidheavenSun({localSiderealTime: this.origin.localSiderealTime})
     const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
     console.log(decimalDegrees, sign)
@@ -55,6 +56,7 @@ class Horoscope {
   }
 
   get Ascendant() {
+    // TODO - add zodiac system offset here
     const decimalDegrees = getAscendant({latitude: this.origin.latitude, localSiderealTime: this.origin.localSiderealTime})
     const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
     return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})

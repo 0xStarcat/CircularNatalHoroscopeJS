@@ -9,6 +9,7 @@ class Sign {
   }
 
   static ZodiacStartOffset(zodiac) {
+    // TODO - Remove this when adding offset to ascendant
     return Sign.Formatted(zodiac).find((s => s.id === 0)).ZodiacStart
   }
 
@@ -167,6 +168,7 @@ class Sign {
   }
 
   get StartDate() {
+    // TODO - remove zodiac system differentiation when adding offset to ascendant
     const sign = Sign.Data.find(sign => sign.id === this.id)
     switch(this.zodiac) {
       case 'astronomical':
@@ -179,6 +181,7 @@ class Sign {
   }
 
   get EndDate() {
+    // TODO - remove zodiac system differentiation when adding offset to ascendant
     const sign = Sign.Data.find(sign => sign.id === this.id)
     let startDate
     switch(this.zodiac) {
