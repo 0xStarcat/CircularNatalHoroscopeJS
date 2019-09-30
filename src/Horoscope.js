@@ -50,6 +50,7 @@ class Horoscope {
   get Midheaven() {
     const decimalDegrees = getMidheavenSun({localSiderealTime: this.origin.localSiderealTime})
     const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
+    console.log(decimalDegrees, sign)
     return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})
   }
 
@@ -71,7 +72,7 @@ class Horoscope {
     let cuspsArray
     switch (string) {
       case 'equal house':
-        cuspsArray = calculateEqualHouseCusps({ascendant: this.Ascendant.DecimalDegrees})
+        cuspsArray = calculateEqualHouseCusps({ascendant: this.Ascendant.DecimalDegrees, startingDegree: Sign.ZodiacStartOffset(this._zodiac)})
         break
       case 'koch':
         cuspsArray = calculateKochHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
@@ -86,13 +87,14 @@ class Horoscope {
         cuspsArray = calculateTopocentricHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'whole sign':
-        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.Ascendant.DecimalDegrees})
+        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.Ascendant.DecimalDegrees, startingDegree: Sign.ZodiacStartOffset(this._zodiac)})
         break
       default:
         cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
     }
 
+    console.log(cuspsArray)
     return cuspsArray.map(cusp => new ZodiacPosition({decimalDegrees: cusp, sign: getZodiacSign({decimalDegrees: cusp, zodiac: this._zodiac})}))
   }
 
@@ -143,7 +145,7 @@ class Horoscope {
 
   calculateZodiacCusps() {
     return new Array(12).fill(undefined).map((c, index) => {
-      const zodiacOffset = Sign.Formatted(this._zodiac).find((s => s.id === 0)).ZodiacStart
+      const zodiacOffset = Sign.ZodiacStartOffset(this._zodiac)
       return parseFloat(modulo((this.Ascendant.DecimalDegrees - zodiacOffset) - (index * 30), 360).toFixed(4))
     })
   }

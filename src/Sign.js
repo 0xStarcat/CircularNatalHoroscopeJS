@@ -8,6 +8,10 @@ class Sign {
 
   }
 
+  static ZodiacStartOffset(zodiac) {
+    return Sign.Formatted(zodiac).find((s => s.id === 0)).ZodiacStart
+  }
+
   static get Data() {
     return [{
         id: 0,

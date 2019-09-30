@@ -18,7 +18,7 @@ The goal is to allow someone to:
 
   => the positions for all major bodies as they relate to the ecliptic for a given datetime and origin (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)
 
-  => the cusps of each astrological sign as they relate to the 2D ecliptic chart for a given datetime, origin, and a particular house system.
+  => ~~the cusps of each astrological sign as they relate to the 2D ecliptic chart for a given datetime, origin, and a particular house system.~~
 
   => ~~the cusps of each house within multiple house systems.~~ (Placidus, Koch, Topocentric, Regiomontanus, Whole Sign, and Equal House added.
 
@@ -32,7 +32,9 @@ The goal is to allow someone to:
 
 This is a work in progress. Progress is marked off by items above being ~~struck out~~.
 
-I'm open to requests for house systems. I'm currently stopped at 6 - we have 2 "modern" systems (Topocentric, Koch), 2 "medieval" systems (Placidus, Regiomontanus), and 2 "ancient" systems (Whole Sign, Equal House). My formula resource "An Astrological House Formulary" by Michael P. Munkasey has many more house formulas I can implement if wanted. Hopefully I covered the most popular ones.
+- I'm open to requests for house systems. I'm currently stopped at 6 - we have 2 "modern" systems (Topocentric, Koch), 2 "medieval" systems (Placidus, Regiomontanus), and 2 "ancient" systems (Whole Sign, Equal House). My formula resource "An Astrological House Formulary" by Michael P. Munkasey has many more house formulas I can implement if wanted. Hopefully I covered the most popular ones.
+
+- Need to refactor the way house cusps correspond to sidereal and astronomical zodiacs. This includes undoing how signs are determined in ZodiacPosition by zodiac, and instead setting Aries to 0deg for all zodiacs and adjusting the positions that are calculated in Horoscope.js accordingly.
 
 ## Installation
 

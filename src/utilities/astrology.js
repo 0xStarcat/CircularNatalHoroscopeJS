@@ -21,9 +21,13 @@ export const getSignFromDD = decimalDegree => {
 
 const getZodiacSignFromRange = (signs, decimalDegrees) => {
   return signs.find(sign => {
-    const start = sign.ZodiacStart
+    let start = sign.ZodiacStart
     let end = sign.ZodiacEnd
-    if (start > end) { end += 360 }
+    if (start > end) {
+      decimalDegrees = decimalDegrees < start ? decimalDegrees + 360 : decimalDegrees
+      end += 360
+    }
+    console.log(start, end, decimalDegrees)
     return start <= decimalDegrees && end > decimalDegrees
   })
 }
@@ -40,6 +44,7 @@ export const getZodiacSign = ({decimalDegrees=0.00, zodiac='tropical'}={}) => {
     case 'astronomical':
       return getZodiacSignFromRange(Sign.Astronomical, decimalDegrees)
     case 'sidereal':
+      console.log(getZodiacSignFromRange(Sign.Sidereal, decimalDegrees))
       return getZodiacSignFromRange(Sign.Sidereal, decimalDegrees)
     case 'tropical':
       return getZodiacSignFromRange(Sign.Tropical, decimalDegrees)
@@ -378,24 +383,25 @@ export const calculateTopocentricHouseCusps = ({rightAscensionMC=0.00, midheaven
   return calculateCusps1(ascendant, midheaven, calculatedCusp)
 }
 
-export const calculateEqualHouseCusps = ({ascendant=0.00}={}) => {
+export const calculateEqualHouseCusps = ({ascendant=0.00, zodiacStartOffset=0.00}={}) => {
   // The ascendant is taken as the first house and each house is 30 degrees further along the zodiac
   //////////
   // * float ascendant
   // returns => [1..12] (array of 12 floats marking the cusp of each house)
   /////////
   return new Array(12).fill(undefined).map((el, index) => {
-    return modulo(index ? (index * 30) + ascendant : index + ascendant, 360).toFixed(4)
+    const startingDegree = ascendant + zodiacStartOffset
+    return parseFloat(modulo(index ? (index * 30) + startingDegree : index + startingDegree, 360).toFixed(4))
   })
 }
 
-export const calculateWholeSignHouseCusps = ({ascendant=0.00}={}) => {
+export const calculateWholeSignHouseCusps = ({ascendant=0.00, zodiacStartOffset=0.00}={}) => {
   // The ascendant is taken as the first house and each house is assigned to each of the signs in zodiacal order, with each of the twelve houses exactly coinciding with the start and end of each sign
   //////////
   // * float ascendant
   // returns => [1..12] (array of 12 floats marking the cusp of each house)
   /////////
-  const startingDegree = Math.floor(ascendant / 30) * 30
+  const startingDegree = Math.floor(modulo(ascendant + zodiacStartOffset, 360) / 30) * 30
   return new Array(12).fill(undefined).map((el, index) => {
     return modulo(index ? (index * 30) + startingDegree : index + startingDegree, 360)
   })

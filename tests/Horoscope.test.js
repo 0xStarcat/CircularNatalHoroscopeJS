@@ -87,7 +87,7 @@ describe('Midheaven & ascendant calculations', () => {
 
 describe('House cusp calculation', () => {
   test('Equal House', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'equal house'}).HouseCusps.map(c => c.DecimalDegrees)).toEqual(["169.4304","199.4304","229.4304","259.4304","289.4304","319.4304","349.4304","19.4304","49.4304","79.4304","109.4304","139.4304"])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'equal house'}).HouseCusps.map(c => c.DecimalDegrees)).toEqual([169.4304, 199.4304, 229.4304, 259.4304, 289.4304, 319.4304, 349.4304, 19.4304, 49.4304, 79.4304, 109.4304, 139.4304,])
   })
 
   test('Koch', () => {
