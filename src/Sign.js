@@ -150,7 +150,7 @@ class Sign {
     return Sign.Data.map(sign => new Sign({id: sign.id, zodiac: 'tropical'}))
   }
 
-  static Formatted(zodiac) {
+  static OfType(zodiac) {
     switch(zodiac) {
       case 'astronomical':
         return Sign.Astronomical

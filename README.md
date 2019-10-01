@@ -94,3 +94,9 @@ To view, build the demo files locally with:
 `npm run build`
 
 and then open `dist/demo.html` in a browser.
+
+## Sources / Special Thanks
+- All formula for astronomical and astrological calculations are cited in the codebase.
+- Special thanks to Mivion for their javascript implementation of Moshier's ephemeris https://github.com/mivion/ephemeris
+- and to xErik for their work converting it into a module https://github.com/xErik/ephemeris-moshier/
+- and Moshier for creating and sharing their C implementation of an ephemeris 

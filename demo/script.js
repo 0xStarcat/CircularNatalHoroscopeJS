@@ -92,8 +92,6 @@ class DemoApp {
     horoscope.ZodiacCusps.forEach((cusp, index) => {
       document.querySelector(`#zodiac-${index + 1}`).innerHTML = cusp
     })
-
-    console.log(horoscope.Planets)
   }
 }
 
