@@ -1,5 +1,9 @@
+'use strict';
+
 import moment from 'moment'
 import { degreesToRadians, radiansToDegrees, modulo, arccot, sinFromDegrees, cosFromDegrees, tanFromDegrees } from './math'
+const eph = require('../../lib/ephemeris-0.1.0');
+
 
 export const getObliquityEcliptic = () => {
   return
@@ -90,4 +94,82 @@ export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSid
 
   const ascendant = modulo(radiansToDegrees(arccot(-c)), 360)
   return ascendant - zodiacOffset
+}
+
+export const getAllPlanets = ({year=0, month=0, date=0, hour=0, minute=0, second=0, geodeticalLongitude=0.00, geodeticalLatitude=0.00, height=0}={}) => {
+  // modified from source: https://github.com/xErik/ephemeris-moshier/blob/master/index.js
+
+    eph.const.tlong = parseFloat(geodeticalLongitude);
+    eph.const.glat = parseFloat(geodeticalLatitude);
+    eph.const.height = parseFloat(height);
+
+    const parsedDate = {
+        day: date,
+        month: month + 1, // Moment months are from 0 - 11 while this library uses 1 - 12
+        year: year,
+        hours: hour,
+        minutes: minute,
+        seconds: second
+    };
+
+    eph.const.date = parsedDate;
+
+    eph.processor.init();
+
+    var ret = {
+        date: undefined,
+        observer: undefined,
+        observed: {}
+    };
+
+    var observables = Object.keys(eph.moshier.body);
+
+    for (var i = 0; i < observables.length; i++) {
+
+        var observeMe = observables[i];
+        if (['earth', 'init'].indexOf(observeMe) >= 0) {
+            continue;
+        }
+
+        eph.const.body = eph.moshier.body[observeMe];
+
+        eph.processor.calc(parsedDate, eph.const.body);
+
+        if (ret.date === undefined) {
+            ret.date = {
+                gregorianTerrestrial: [parsedDate.day, parsedDate.month, parsedDate.year].join('.') + ' ' + [parsedDate.hours, parsedDate.minutes, parsedDate.seconds].join(':'),
+                gregorianTerrestrialRaw: date,
+                gregorianUniversal: (eph.const.date.universalDateString),
+                gregorianDelta: ("00:00:" + (eph.const.date.delta)),
+                julianTerrestrial: (eph.const.date.julian),
+                julianUniversal: (eph.const.date.universal),
+                julianDelta: (eph.const.date.delta / 86400)
+            };
+        }
+
+        if (ret.observer === undefined) {
+            ret.observer = {
+                name: "earth",
+                longitueGeodetic: (eph.const.tlong),
+                longitudeGeodecentric: (eph.const.tlong),
+                latitudeGeodetic: (eph.const.glat),
+                latitudeGeodecentric: (eph.const.tlat),
+                heightGeodetic: (eph.const.height),
+                heightGeodecentric: (eph.const.trho * eph.const.aearth / 1000),
+            };
+        }
+
+        var body = {
+            name: eph.const.body.key,
+            raw: eph.const.body,
+            apparentLongitudeDms30: (eph.const.body.position.apparentLongitude30String),
+            apparentLongitudeDms360: (eph.const.body.position.apparentLongitudeString),
+            apparentLongitudeDd: (eph.const.body.position.apparentLongitude),
+            geocentricDistanceKm: (eph.const.body.position.geocentricDistance)
+        };
+        ret.observed[body.name] = body;
+
+    }
+
+    return ret;
 }

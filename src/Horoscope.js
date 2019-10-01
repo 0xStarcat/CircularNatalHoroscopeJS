@@ -1,6 +1,6 @@
 import Sign from './Sign'
 import ZodiacPosition from './ZodiacPosition'
-import { getMidheavenSun, getAscendant } from './utilities/astronomy'
+import { getMidheavenSun, getAscendant, getAllPlanets } from './utilities/astronomy'
 import { modulo } from './utilities/math'
 import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign } from './utilities/astrology'
 import moment from 'moment-timezone'
@@ -67,6 +67,10 @@ class Horoscope {
 
   get HouseCusps() {
     return this.calculateHouseCusps(this._houseSystem)
+  }
+
+  get Planets() {
+    return getAllPlanets({year: this.origin.utcTime.year(), month: this.origin.utcTime.month(), date: this.origin.utcTime.date(), hour: this.origin.utcTime.hour(), minute: this.origin.utcTime.minute(), geodeticalLongitude: this.origin.longitude, geodeticalLatitude: this.origin.latitude})
   }
 
   calculateHouseCusps(string) {
