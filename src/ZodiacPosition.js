@@ -9,7 +9,7 @@ class ZodiacPosition {
     this.ArcDegrees = decimalDegreesToDMS(decimalDegrees)
     this.ArcDegreesFormatted = dmsString(decimalDegreesToDMS(decimalDegrees))
     this.ArcDegreesFormatted30 = dmsString(decimalDegreesToDMS(modulo(decimalDegrees, 30)))
-    this.Sign = validateString(sign)
+    this.Sign = sign
   }
 }
 

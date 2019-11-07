@@ -177,13 +177,17 @@ class Sign {
   get StartDate() {
     // TODO - remove zodiac system differentiation when adding offset to ascendant
     const sign = Sign.Data.find(sign => sign.id === this.id)
+    let endDate
     switch(this.zodiac) {
       case 'astronomical':
-        return moment.tz({month: sign.astronomicalStartMonth, date: sign.astronomicalStartDate, hour: 0}, 'UTC').startOf('day')
+        endDate = moment.tz({month: sign.astromicalEndMonth, date: sign.astromicalEndDate}, 'UTC').endOf('day')
+        return moment.tz({year: endDate.month() === 0 ? endDate.year() - 1 : endDate.year(), month: sign.astronomicalStartMonth, date: sign.astronomicalStartDate}, 'UTC').startOf('day')
       case 'sidereal':
-        return moment.tz({month: sign.siderealStartMonth, date: sign.siderealStartDate, hour: 0}, 'UTC').startOf('day')
+        endDate = moment.tz({month: sign.siderealEndMonth, date: sign.siderealEndDate}, 'UTC').endOf('day')
+        return moment.tz({year: endDate.month() === 0 ? endDate.year() - 1 : endDate.year(), month: sign.siderealStartMonth, date: sign.siderealStartDate}, 'UTC').startOf('day')
       case 'tropical':
-        return moment.tz({month: sign.tropicalStartMonth, date: sign.tropicalStartDate, hour: 0}, 'UTC').startOf('day')
+        endDate = moment.tz({month: sign.tropicalEndMonth, date: sign.tropicalEndDate}, 'UTC').endOf('day')
+        return moment.tz({year: endDate.month() === 0 ? endDate.year() - 1 : endDate.year(), month: sign.tropicalStartMonth, date: sign.tropicalStartDate}, 'UTC').startOf('day')
     }
   }
 
@@ -193,14 +197,14 @@ class Sign {
     let startDate
     switch(this.zodiac) {
       case 'astronomical':
-        startDate = moment({month: sign.astromicalStartMonth, date: sign.astromicalStartDate, hour: 0}).startOf('day')
+        startDate = moment.tz({month: sign.astromicalStartMonth, date: sign.astromicalStartDate}, 'UTC').startOf('day')
         return moment.tz({month: sign.astronomicalEndMonth, date: sign.astronomicalEndDate, year: startDate.month() === 11 && sign.tropicalEndMonth === 0 ? startDate.year() + 1 : startDate.year()}, 'UTC').endOf('day')
       case 'sidereal':
-        startDate = moment({month: sign.siderealStartMonth, date: sign.siderealStartDate, hour: 0}).startOf('day')
+        startDate = moment.tz({month: sign.siderealStartMonth, date: sign.siderealStartDate}, 'UTC').startOf('day')
         return moment.tz({month: sign.siderealEndMonth, date: sign.siderealEndDate, year: startDate.month() === 11 && sign.tropicalEndMonth === 0 ? startDate.year() + 1 : startDate.year()}, 'UTC').endOf('day')
       case 'tropical':
-        startDate = moment({month: sign.tropicalStartMonth, date: sign.tropicalStartDate, hour: 0}).startOf('day')
-        return moment.tz({month: sign.tropicalEndMonth, date: sign.tropicalEndDate, year: startDate.month() === 11 && sign.tropicalEndMonth === 0 ? startDate.year() + 1 : startDate.year()}, 'UTC').endOf('day')
+        startDate = moment.tz({month: sign.tropicalStartMonth, date: sign.tropicalStartDate}, 'UTC').startOf('day')
+        return moment.tz({month: sign.tropicalEndMonth, date: sign.tropicalEndDate, year: startDate.month() === 11 && sign.tropicalEndMonth === 0 ? startDate.year() : startDate.year()}, 'UTC').endOf('day')
     }
   }
 

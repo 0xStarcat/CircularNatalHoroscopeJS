@@ -198,3 +198,17 @@ describe('ZodiacCusps', () => {
     })
   })
 })
+
+describe('CelestialBodies', () => {
+  describe('tropical', () => {
+    test('origin 1', () => {
+      expect(new Horoscope({origin: defaultOrigin, zodiac: 'tropical'}).CelestialBodies).toEqual([169.4304,139.4304,109.4304,79.4304,49.4304,19.4304,349.4304,319.4304,289.4304,259.4304,229.4304,199.4304,])
+    })
+  })
+
+  describe('sidereal', () => {
+    test('origin 1', () => {
+      expect(new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'}).CelestialBodies).toEqual([ 145.3304,115.3304,85.3304,55.3304,25.3304,355.3304,325.3304,295.3304,265.3304,235.3304,205.3304,175.3304,])
+    })
+  })
+})

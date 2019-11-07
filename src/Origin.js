@@ -31,7 +31,7 @@ import {
 // * float longitude = longitude in decimal format (-180.00...180.00)
 
 class Origin {
-  constructor({year = 0, month = 0, date = 0, hour = 0, minute = 0, latitude = 0.00, longitude = 0.00}={}) {
+  constructor({year = 0, month = 0, date = 0, hour = 0, minute = 0, second=0, latitude = 0.00, longitude = 0.00}={}) {
 
     this.year = validateYear(year)
     this.month = validateMonth(month)
@@ -47,7 +47,7 @@ class Origin {
       date: date,
       hour: hour,
       minute: minute,
-      second: 0,
+      second: second,
       millisecond: 0
     }
 
@@ -60,7 +60,7 @@ class Origin {
       year: this.utcTime.year(),
       month: this.utcTime.month() + 1,
       date: this.utcTime.date(),
-      ut: hourTimeToDecimal({ hour: this.utcTime.hours(), minute: this.utcTime.minutes() })
+      ut: hourTimeToDecimal({ hour: this.utcTime.hours(), minute: this.utcTime.minutes(), second: this.utcTime.seconds() })
     })
     this.localSiderealTime = getLocalSiderealTime({
                                                     jd: this.julianDate,

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watch",
-    "build": "webpack",
-    "start:dev": "webpack --watch --mode=development"
+    "build": "webpack --mode=production",
+    "start:dev": "webpack --watch --mode=production"
   },
   "keywords": [
     "Astrology",

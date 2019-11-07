@@ -24,7 +24,7 @@ class DemoApp {
     this.loadZodiacSystemSelect = this.loadZodiacSystemSelect.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 
-    this.displayDateTime()
+    // this.displayDateTime()
     this.loadHouseSystemSelect()
     this.loadZodiacSystemSelect()
     this.form.addEventListener('submit', this.handleSubmit)
@@ -92,6 +92,14 @@ class DemoApp {
     horoscope.ZodiacCusps.forEach((cusp, index) => {
       document.querySelector(`#zodiac-${index + 1}`).innerHTML = cusp
     })
+
+    horoscope.CelestialBodies.forEach(result => {
+    const ddEl = document.querySelector(`#${result.key}-dd`)
+    if (ddEl) ddEl.innerHTML = result.DecimalDegrees.toFixed(4)
+
+    const dmsEl = document.querySelector(`#${result.key}-dms`)
+    if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.ArcDegreesFormatted30}`
+  })
   }
 }
 

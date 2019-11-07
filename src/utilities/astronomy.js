@@ -1,9 +1,7 @@
-'use strict';
+// 'use strict';
 
 import moment from 'moment'
 import { degreesToRadians, radiansToDegrees, modulo, arccot, sinFromDegrees, cosFromDegrees, tanFromDegrees } from './math'
-const eph = require('../../lib/ephemeris-0.1.0');
-
 
 export const getObliquityEcliptic = () => {
   return
@@ -94,44 +92,4 @@ export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSid
 
   const ascendant = modulo(radiansToDegrees(arccot(-c)), 360)
   return ascendant - zodiacOffset
-}
-
-export const allCelelstialObjects = ({year=0, month=0, date=0, hour=0, minute=0, second=0, longitude=0.00, latitude=0.00, height=0}={}) => {
-  // modified from source: https://github.com/xErik/ephemeris-moshier/blob/master/index.js
-
-    eph.const.tlong = parseFloat(longitude);
-    eph.const.glat = parseFloat(latitude);
-    eph.const.height = parseFloat(height);
-
-    const parsedDate = {
-        day: date,
-        month: month + 1, // Moment months are from 0 - 11 while this library uses 1 - 12
-        year: year,
-        hours: hour,
-        minutes: minute,
-        seconds: second
-    };
-
-    eph.const.date = parsedDate;
-
-    eph.processor.init();
-
-    var observables = Object.keys(eph.moshier.body).filter(k => k !== 'init' && k !== 'earth').map(k => eph.moshier.body[k])
-
-    const astroBodies = observables.map(astroBody => {
-        eph.processor.calc(parsedDate, astroBody);
-
-        var body = {
-            name: astroBody.key,
-            raw: astroBody,
-            apparentLongitudeDms30: (astroBody.position.apparentLongitude30String),
-            apparentLongitudeDms360: (astroBody.position.apparentLongitudeString),
-            apparentLongitudeDd: (astroBody.position.apparentLongitude),
-            geocentricDistanceKm: (astroBody.position.geocentricDistance)
-        };
-
-      return body;
-    })
-
-    return astroBodies;
 }

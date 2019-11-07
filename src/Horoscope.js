@@ -1,6 +1,7 @@
 import Sign from './Sign'
 import ZodiacPosition from './ZodiacPosition'
-import { getMidheavenSun, getAscendant, allCelelstialObjects } from './utilities/astronomy'
+import { getMidheavenSun, getAscendant } from './utilities/astronomy'
+import Ephemeris from '../lib/ephemeris-1.2.1.bundle.js'
 import { modulo } from './utilities/math'
 import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign } from './utilities/astrology'
 import moment from 'moment-timezone'
@@ -24,7 +25,14 @@ class Horoscope {
     this._sunSign = this.createSunSign(this._zodiac)
     this._houseCusps = this.createHouseCusps(this._houseSystem)
     this._zodiacCusps = this.createZodiacCusps()
-    this._celestialBodies = this.createCelestialBodies()
+    this.Ephemeris = new Ephemeris({
+      year: this.origin.year, month: this.origin.month, day: this.origin.date,
+      hours: this.origin.hour, minutes: this.origin.minute, seconds: this.origin.second,
+      latitude: parseFloat(this.origin.latitude), longitude: parseFloat(this.origin.longitude),
+      calculateShadows: false
+    })
+
+    this._celestialBodies = this.processEphemerisResults(this.Ephemeris.Results)
 
     this.validateHouseSystem = this.validateHouseSystem.bind(this)
     this.validateZodiac = this.validateZodiac.bind(this)
@@ -33,7 +41,7 @@ class Horoscope {
     this.createSunSign = this.createSunSign.bind(this)
     this.createHouseCusps = this.createHouseCusps.bind(this)
     this.createZodiacCusps = this.createZodiacCusps.bind(this)
-    this.createCelestialBodies = this.createCelestialBodies.bind(this)
+    this.processEphemerisResults = this.processEphemerisResults.bind(this)
   }
 
   static get HouseSystems() {
@@ -42,8 +50,7 @@ class Horoscope {
 
 
   static get ZodiacSystems() {
-    // 'astronomical' removed for now until better implementation
-    return ['sidereal', 'tropical']
+    return ['astronomical', 'sidereal', 'tropical']
   }
 
   get Ascendant() {
@@ -141,8 +148,18 @@ class Horoscope {
     })
   }
 
-  createCelestialBodies() {
-    return allCelelstialObjects({year: this.origin.utcTime.year(), month: this.origin.utcTime.month(), date: this.origin.utcTime.date(), hour: this.origin.utcTime.hour(), minute: this.origin.utcTime.minute(), longitude: this.origin.longitude, latitude: this.origin.latitude})
+  processEphemerisResults(ephemerisResults) {
+    const processedResults = ephemerisResults.map(result => {
+      return ({
+        key: result.key,
+        ...new ZodiacPosition({decimalDegrees: result.position.apparentLongitude, sign: getZodiacSign({decimalDegrees: result.position.apparentLongitude, zodiac: this._zodiac})}),
+        isRetrograde: result.motion.isRetrograde
+      })
+    })
+
+
+    console.log(processedResults)
+    return [...processedResults]
   }
 }
 
