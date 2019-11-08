@@ -96,7 +96,9 @@ describe('House cusp calculation', () => {
   })
 
   test('Placidus', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus'}).HouseCusps.map(c => c.Zodiac.DecimalDegrees)).toEqual([169.4304,195.8759,226.0562,258.4576,290.9246,321.6638,349.4304,15.8759,46.0562,78.4576,110.9246,141.6638])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus', zodiac: 'tropical'}).HouseCusps.map(c => c.Zodiac.DecimalDegrees)).toEqual([169.4304,195.8759,226.0562,258.4576,290.9246,321.6638,349.4304,15.8759,46.0562,78.4576,110.9246,141.6638])
+
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus', zodiac: 'sidereal'}).HouseCusps.map(c => c.Zodiac.DecimalDegrees)).toEqual([169.4304,195.8759,226.0562,258.4576,290.9246,321.6638,349.4304,15.8759,46.0562,78.4576,110.9246,141.6638])
   })
 
   test('Regiomontanus', () => {
@@ -108,8 +110,9 @@ describe('House cusp calculation', () => {
   })
 
   test('Whole sign', () => {
-    // TODO - Run again with sidereal
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign'}).HouseCusps.map(c => c.Zodiac.DecimalDegrees)).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign', zodiac: 'tropical'}).HouseCusps.map(c => c.Zodiac.DecimalDegrees)).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
+
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign', zodiac: 'sidereal'}).HouseCusps.map(c => c.Zodiac.DecimalDegrees)).toEqual([120.00, 150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00])
   })
 })
 
@@ -218,7 +221,8 @@ describe('CelestialBodies', () => {
 
   describe('tropical', () => {
     test('origin 1', () => {
-      expect(new Horoscope({origin: defaultOrigin, zodiac: 'tropical'}).CelestialBodies.map(b => b.DecimalDegrees)).toEqual(
+      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical'})
+      expect(horoscope.CelestialBodies.map(b => b.Zodiac.DecimalDegrees)).toEqual(
         [ 117.4277,
         336.3438,
         119.2327,
@@ -231,12 +235,27 @@ describe('CelestialBodies', () => {
         291.7519,
         5.9994,
         1.7714 ])
+
+      expect(horoscope.CelestialBodies.map(b => b.Ecliptic.DecimalDegrees)).toEqual(
+        [ 52.0027,
+          193.0866,
+          50.1977,
+          58.8471,
+          37.7088,
+          274.1763,
+          242.9962,
+          133.0254,
+          180.9234,
+          237.6785,
+          163.431,
+          167.659 ])
     })
   })
 
   describe('sidereal', () => { // same as tropical
     test('origin 1', () => {
-      expect(new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'}).CelestialBodies.map(b => b.DecimalDegrees)).toEqual(
+      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'})
+      expect(horoscope.CelestialBodies.map(b => b.Zodiac.DecimalDegrees)).toEqual(
         [
           117.4277,
           336.3438,
@@ -251,6 +270,20 @@ describe('CelestialBodies', () => {
           5.9994,
           1.7714
         ])
+
+      expect(horoscope.CelestialBodies.map(b => b.Ecliptic.DecimalDegrees)).toEqual(
+        [ 52.0027,
+          193.0866,
+          50.1977,
+          58.8471,
+          37.7088,
+          274.1763,
+          242.9962,
+          133.0254,
+          180.9234,
+          237.6785,
+          163.431,
+          167.659 ])
     })
   })
 })
