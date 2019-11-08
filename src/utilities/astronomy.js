@@ -54,7 +54,7 @@ export const getLocalSiderealTime = ({jd = 0, longitude = 0}={}) => {
 
 }
 
-export const getMidheavenSun = ({localSiderealTime=0.00, obliquityEcliptic=23.4367, zodiacOffset= 0.00}={}) => {
+export const getMidheavenSun = ({localSiderealTime=0.00, obliquityEcliptic=23.4367 }={}) => {
   // Also known as: Medium Coeli or M.C.
   //////////
   // * float localSiderealTime = local sidereal time in degrees
@@ -71,10 +71,10 @@ export const getMidheavenSun = ({localSiderealTime=0.00, obliquityEcliptic=23.43
   const cosOE = cosFromDegrees(obliquityEcliptic)
   const midheaven = modulo(radiansToDegrees(Math.atan(tanLST / cosOE)), 360)
 
-  return midheaven - zodiacOffset
+  return midheaven
 }
 
-export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSiderealTime=0.00, zodiacOffset=0.00} = {}) => {
+export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSiderealTime=0.00 } = {}) => {
   //////////
   // * float latitude
   // * float obliquityEcliptic
@@ -91,5 +91,5 @@ export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSid
   const c = (a + b) / cosFromDegrees(localSiderealTime)
 
   const ascendant = modulo(radiansToDegrees(arccot(-c)), 360)
-  return ascendant - zodiacOffset
+  return ascendant
 }

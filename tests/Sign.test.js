@@ -34,11 +34,11 @@ describe('Sign', () => {
   describe('Sidereal', () => {
     describe('getters', () => {
       test('Get StartDate', () => {
-        expect(new Sign({id: 11, zodiac: 'sidereal'}).StartDate.format('MM/DD')).toBe("03/13")
+        expect(new Sign({id: 11, zodiac: 'sidereal'}).StartDate.format('MM/DD')).toBe("03/16")
       })
 
       test('Get EndDate', () => {
-        expect(new Sign({id: 11, zodiac: 'sidereal'}).EndDate.format('MM/DD')).toBe("04/13")
+        expect(new Sign({id: 11, zodiac: 'sidereal'}).EndDate.format('MM/DD')).toBe("04/14")
       })
 
       test('Get ZodiacStart', () => {
@@ -54,11 +54,11 @@ describe('Sign', () => {
   describe('Astronomical', () => {
     describe('getters', () => {
       test('Get StartDate', () => {
-        expect(new Sign({id: 11, zodiac: 'astronomical'}).StartDate.format('MM/DD')).toBe("03/11")
+        expect(new Sign({id: 11, zodiac: 'astronomical'}).StartDate.format('MM/DD')).toBe("03/12")
       })
 
       test('Get EndDate', () => {
-        expect(new Sign({id: 11, zodiac: 'astronomical'}).EndDate.format('MM/DD')).toBe("04/17")
+        expect(new Sign({id: 11, zodiac: 'astronomical'}).EndDate.format('MM/DD')).toBe("04/18")
       })
 
       test('Get ZodiacStart', () => {

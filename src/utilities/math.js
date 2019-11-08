@@ -83,3 +83,12 @@ export const decimalDegreesToDMS = (decimalDegrees) => {
     seconds: seconds
   }
 }
+
+export const isDegreeWithinCircleArc = (arcLow, arcHigh, degree) => {
+  // Low Inclusive, high exclusive
+  if (arcLow < arcHigh) {
+    return degree >= arcLow && degree < arcHigh
+  } else {
+    return degree >= arcLow && degree < arcHigh + 360
+  }
+}

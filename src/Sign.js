@@ -20,119 +20,214 @@ class Sign {
     }
   }
 
+  // https://en.wikipedia.org/wiki/Zodiac#Table_of_dates
+
+  // https://www.inaoep.mx/~frosales/html/zodiac/index.html
+
+  // TODO - fill with real date objects using years 0 and 1
+  // TODO - reimplement sun sign calculation using real date objects
   static get Data() {
     return [{
         id: 0,
         name: 'Aries',
-        tropicalStartMonth: 2, tropicalStartDate: 21, tropicalEndMonth: 3, tropicalEndDate: 19,
-        siderealStartMonth: 3, siderealStartDate: 14, siderealEndMonth: 4, siderealEndDate: 14,
-        astronomicalStartMonth: 3, astronomicalStartDate: 18, astronomicalEndMonth: 4, astronomicalEndDate: 12,
+        startDate: {
+          tropical: moment.utc([0, 2, 21, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 3, 15, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 3, 19, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 3, 20, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 4, 15, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 4, 14, 0, 0, 0]).endOf('day')
+        },
         zodiacStart: 0,
         zodiacEnd: 30
       },
       {
         id: 1,
         name: 'Taurus',
-        tropicalStartMonth: 3, tropicalStartDate: 20, tropicalEndMonth: 4, tropicalEndDate: 20,
-        siderealStartMonth: 4, siderealStartDate: 15, siderealEndMonth: 5, siderealEndDate: 14,
-        astronomicalStartMonth: 4, astronomicalStartDate: 13, astronomicalEndMonth: 5, astronomicalEndDate: 20,
+        startDate: {
+          tropical: moment.utc([0, 3, 21, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 4, 16, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 4, 15, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 4, 20, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 5, 15, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 5, 21, 0, 0, 0]).endOf('day'),
+        },
         zodiacStart: 30,
         zodiacEnd: 60
       },
       {
         id: 2,
         name: 'Gemini',
-        tropicalStartMonth: 4, tropicalStartDate: 21, tropicalEndMonth: 5, tropicalEndDate: 20,
-        siderealStartMonth: 5, siderealStartDate: 15, siderealEndMonth: 6, siderealEndDate: 15,
-        astronomicalStartMonth: 5, astronomicalStartDate: 21, astronomicalEndMonth: 6, astronomicalEndDate: 19,
+        startDate: {
+          tropical: moment.utc([0, 4, 21, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 5, 16, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 5, 22, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 5, 21, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 6, 16, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 6, 20, 0, 0, 0]).endOf('day')
+        },
         zodiacStart: 60,
         zodiacEnd: 90
       },
       {
         id: 3,
         name: 'Cancer',
-        tropicalStartMonth: 5, tropicalStartDate: 21, tropicalEndMonth: 6, tropicalEndDate: 22,
-        siderealStartMonth: 6, siderealStartDate: 16, siderealEndMonth: 7, siderealEndDate: 16,
-        astronomicalStartMonth: 6, astronomicalStartDate: 20, astronomicalEndMonth: 7, astronomicalEndDate: 9,
+        startDate: {
+          tropical: moment.utc([0, 5, 22, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 6, 17, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 6, 21, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 6, 22, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 7, 16, 0, 0, 0]).endOf('day'),
+          astronomical:  moment.utc([0, 7, 10, 0, 0, 0]).endOf('day')
+        },
         zodiacStart: 90,
         zodiacEnd: 120
       },
       {
         id: 4,
         name: 'Leo',
-        tropicalStartMonth: 6, tropicalStartDate: 23, tropicalEndMonth: 7, tropicalEndDate: 22,
-        siderealStartMonth: 7, siderealStartDate: 17, siderealEndMonth: 8, siderealEndDate: 16,
-        astronomicalStartMonth: 7, astronomicalStartDate: 10, astronomicalEndMonth: 8, astronomicalEndDate: 15,
+        startDate: {
+          tropical: moment.utc([0, 6, 23, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 7, 17, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 7, 11, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 7, 23, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 8, 16, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 9, 16, 0, 0, 0]).endOf('day')
+        },
         zodiacStart: 120,
         zodiacEnd: 150
       },
       {
         id: 5,
         name: 'Virgo',
-        tropicalStartMonth: 7, tropicalStartDate: 23, tropicalEndMonth: 8, tropicalEndDate: 22,
-        siderealStartMonth: 8, siderealStartDate: 17, siderealEndMonth: 9, siderealEndDate: 16,
-        astronomicalStartMonth: 8, astronomicalStartDate: 16, astronomicalEndMonth: 9, astronomicalEndDate: 29,
+        startDate: {
+          tropical: moment.utc([0, 7, 24, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 8, 17, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 8, 17, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 8, 22, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 9, 17, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 9, 31, 0, 0, 0]).endOf('day')
+        },
         zodiacStart: 150,
         zodiacEnd: 180
       },
       {
         id: 6,
         name: 'Libra',
-        tropicalStartMonth: 8, tropicalStartDate: 23, tropicalEndMonth: 9, tropicalEndDate: 22,
-        siderealStartMonth: 9, siderealStartDate: 17, siderealEndMonth: 10, siderealEndDate: 15,
-        astronomicalStartMonth: 9, astronomicalStartDate: 30, astronomicalEndMonth: 10, astronomicalEndDate: 22,
+        startDate: {
+          tropical: moment.utc([0, 8, 23, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 9, 18, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 10, 1, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 9, 23, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 10, 16, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 10, 23, 0, 0, 0]).endOf('day')
+        },
         zodiacStart: 180,
         zodiacEnd: 210
       },
       {
         id: 7,
         name: 'Scorpio',
-        tropicalStartMonth: 9, tropicalStartDate: 23, tropicalEndMonth: 10, tropicalEndDate: 21,
-        siderealStartMonth: 10, siderealStartDate: 16, siderealEndMonth: 11, siderealEndDate: 15,
-        astronomicalStartMonth: 10, astronomicalStartDate: 23, astronomicalEndMonth: 10, astronomicalEndDate: 28,
+        startDate: {
+          tropical: moment.utc([0, 9, 24, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 10, 17, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 10, 23, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 10, 22, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 11, 16, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 11, 30, 0, 0, 0]).endOf('day')
+        },
         zodiacStart: 210,
         zodiacEnd: 240
       },
       {
         id: 12,
         name: 'Ophiuchus',
-        astronomicalStartMonth: 10, astronomicalStartDate: 29, astronomicalEndMonth: 11, astronomicalEndDate: 16,
+        startDate: {
+          astronomical: moment.utc([0, 11, 1, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          astronomical: moment.utc([0, 11, 18, 0, 0, 0]).endOf('day')
+        },
         zodiacStart: -1,
         zodiacEnd: -1
       },
       {
         id: 8,
+        startDate: {
+          tropical: moment.utc([0, 10, 23, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 11, 17, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 11, 19, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 11, 22, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([1, 0, 15, 0, 0, 0]).endOf('day'), // add 1 year due to overlap
+          astronomical: moment.utc([1, 0, 19, 0, 0, 0]).endOf('day') // add 1 year due to overlap
+        },
         name: 'Sagittarius',
-        tropicalStartMonth: 10, tropicalStartDate: 22, tropicalEndMonth: 11, tropicalEndDate: 21,
-        siderealStartMonth: 11, siderealStartDate: 16, siderealEndMonth: 0, siderealEndDate: 13,
-        astronomicalStartMonth: 11, astronomicalStartDate: 17, astronomicalEndMonth: 0, astronomicalEndDate: 19,
         zodiacStart: 240,
         zodiacEnd: 270
       },
       {
         id: 9,
+        startDate: {
+          tropical: moment.utc([0, 11, 23, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 0, 16, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 0, 20, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([1, 0, 20, 0, 0, 0]).endOf('day'), // add 1 year due to overlap
+          sidereal:  moment.utc([0, 1, 14, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 1, 16, 0, 0, 0]).endOf('day')
+        },
         name: 'Capricorn',
-        tropicalStartMonth: 11, tropicalStartDate: 22, tropicalEndMonth: 0, tropicalEndDate: 19,
-        siderealStartMonth: 0, siderealStartDate: 14, siderealEndMonth: 1, siderealEndDate: 12,
-        astronomicalStartMonth: 0, astronomicalStartDate: 20, astronomicalEndMonth: 1, astronomicalEndDate: 15,
         zodiacStart: 270,
         zodiacEnd: 300
       },
       {
         id: 10,
+        startDate: {
+          tropical: moment.utc([0, 0, 21, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 1, 15, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 1, 17, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 1, 18, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 2, 15, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 2, 11, 0, 0, 0]).endOf('day')
+        },
         name: 'Aquarius',
-        tropicalStartMonth: 0, tropicalStartDate: 20, tropicalEndMonth: 1, tropicalEndDate: 18,
-        siderealStartMonth: 1, siderealStartDate: 13, siderealEndMonth: 2, siderealEndDate: 12,
-        astronomicalStartMonth: 1, astronomicalStartDate: 16, astronomicalEndMonth: 2, astronomicalEndDate: 10,
         zodiacStart: 300,
         zodiacEnd: 330
       },
       {
         id: 11,
+        startDate: {
+          tropical: moment.utc([0, 1, 19, 0, 0, 0]).startOf('day'),
+          sidereal: moment.utc([0, 2, 16, 0, 0, 0]).startOf('day'),
+          astronomical: moment.utc([0, 2, 12, 0, 0, 0]).startOf('day')
+        },
+        endDate: {
+          tropical: moment.utc([0, 2, 20, 0, 0, 0]).endOf('day'),
+          sidereal: moment.utc([0, 3, 14, 0, 0, 0]).endOf('day'),
+          astronomical: moment.utc([0, 3, 18, 0, 0, 0]).endOf('day')
+        },
         name: 'Pisces',
-        tropicalStartMonth: 1, tropicalStartDate: 19, tropicalEndMonth: 2, tropicalEndDate: 20,
-        siderealStartMonth: 2, siderealStartDate: 13, siderealEndMonth: 3, siderealEndDate: 13,
-        astronomicalStartMonth: 2, astronomicalStartDate: 11, astronomicalEndMonth: 3, astronomicalEndDate: 17,
         zodiacStart: 330,
         zodiacEnd: 360
       }]
@@ -175,37 +270,13 @@ class Sign {
   }
 
   get StartDate() {
-    // TODO - remove zodiac system differentiation when adding offset to ascendant
     const sign = Sign.Data.find(sign => sign.id === this.id)
-    let endDate
-    switch(this.zodiac) {
-      case 'astronomical':
-        endDate = moment.tz({month: sign.astromicalEndMonth, date: sign.astromicalEndDate}, 'UTC').endOf('day')
-        return moment.tz({year: endDate.month() === 0 ? endDate.year() - 1 : endDate.year(), month: sign.astronomicalStartMonth, date: sign.astronomicalStartDate}, 'UTC').startOf('day')
-      case 'sidereal':
-        endDate = moment.tz({month: sign.siderealEndMonth, date: sign.siderealEndDate}, 'UTC').endOf('day')
-        return moment.tz({year: endDate.month() === 0 ? endDate.year() - 1 : endDate.year(), month: sign.siderealStartMonth, date: sign.siderealStartDate}, 'UTC').startOf('day')
-      case 'tropical':
-        endDate = moment.tz({month: sign.tropicalEndMonth, date: sign.tropicalEndDate}, 'UTC').endOf('day')
-        return moment.tz({year: endDate.month() === 0 ? endDate.year() - 1 : endDate.year(), month: sign.tropicalStartMonth, date: sign.tropicalStartDate}, 'UTC').startOf('day')
-    }
+    return sign.startDate[this.zodiac]
   }
 
   get EndDate() {
-    // TODO - remove zodiac system differentiation when adding offset to ascendant
     const sign = Sign.Data.find(sign => sign.id === this.id)
-    let startDate
-    switch(this.zodiac) {
-      case 'astronomical':
-        startDate = moment.tz({month: sign.astromicalStartMonth, date: sign.astromicalStartDate}, 'UTC').startOf('day')
-        return moment.tz({month: sign.astronomicalEndMonth, date: sign.astronomicalEndDate, year: startDate.month() === 11 && sign.tropicalEndMonth === 0 ? startDate.year() + 1 : startDate.year()}, 'UTC').endOf('day')
-      case 'sidereal':
-        startDate = moment.tz({month: sign.siderealStartMonth, date: sign.siderealStartDate}, 'UTC').startOf('day')
-        return moment.tz({month: sign.siderealEndMonth, date: sign.siderealEndDate, year: startDate.month() === 11 && sign.tropicalEndMonth === 0 ? startDate.year() + 1 : startDate.year()}, 'UTC').endOf('day')
-      case 'tropical':
-        startDate = moment.tz({month: sign.tropicalStartMonth, date: sign.tropicalStartDate}, 'UTC').startOf('day')
-        return moment.tz({month: sign.tropicalEndMonth, date: sign.tropicalEndDate, year: startDate.month() === 11 && sign.tropicalEndMonth === 0 ? startDate.year() : startDate.year()}, 'UTC').endOf('day')
-    }
+    return sign.endDate[this.zodiac]
   }
 
   get ZodiacStart() {

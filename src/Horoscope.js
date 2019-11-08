@@ -88,17 +88,15 @@ class Horoscope {
   }
 
   createAscendant() {
-    const decimalDegrees = getAscendant({latitude: this.origin.latitude, localSiderealTime: this.origin.localSiderealTime, zodiacOffset: Sign.ZodiacStartOffset(this._zodiac)})
-    const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
+    const decimalDegrees = getAscendant({latitude: this.origin.latitude, localSiderealTime: this.origin.localSiderealTime })
 
-    return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})
+    return new ZodiacPosition({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
   }
 
   createMidheaven() {
-    const decimalDegrees = getMidheavenSun({localSiderealTime: this.origin.localSiderealTime, zodiacOffset: Sign.ZodiacStartOffset(this._zodiac)})
-    const sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
+    const decimalDegrees = getMidheavenSun({localSiderealTime: this.origin.localSiderealTime })
 
-    return new ZodiacPosition({decimalDegrees: decimalDegrees, sign: sign})
+    return new ZodiacPosition({decimalDegrees: decimalDegrees, zodiac: this._zodiac})
   }
 
   createSunSign(zodiac) {
@@ -106,10 +104,14 @@ class Horoscope {
     // Astronomical dates from IAU and slightly altered to be computed without times.
     // Pending a better solution, all astronimical zodiac end dates are offset by -1
 
-    const standardizedDate = moment.tz({month: this.origin.utcTime.month(), date: this.origin.utcTime.date(), hour: this.origin.utcTime.hour(), minute: this.origin.utcTime.minute()}, 'UTC')
     const sign = Sign.OfType(zodiac).find(sign => {
-      return standardizedDate.isBetween(sign.StartDate, sign.EndDate, null, '[]')
+      if (!sign.StartDate) return
+      const originYear = this.origin.year
+      const startDate = sign.StartDate.add(originYear, 'year')
+      const endDate = sign.EndDate.add(originYear, 'year')
+      return this.origin.utcTime.isBetween(startDate, endDate, null, '[]')
     })
+
     return sign
   }
 
@@ -139,7 +141,7 @@ class Horoscope {
         break
     }
 
-    return cuspsArray.map(cusp => new ZodiacPosition({decimalDegrees: cusp, sign: getZodiacSign({decimalDegrees: cusp, zodiac: this._zodiac})}))
+    return cuspsArray.map(cusp => new ZodiacPosition({decimalDegrees: cusp, zodiac: this._zodiac}))
   }
 
   createZodiacCusps() {
@@ -152,13 +154,11 @@ class Horoscope {
     const processedResults = ephemerisResults.map(result => {
       return ({
         key: result.key,
-        ...new ZodiacPosition({decimalDegrees: result.position.apparentLongitude, sign: getZodiacSign({decimalDegrees: result.position.apparentLongitude, zodiac: this._zodiac})}),
+        ...new ZodiacPosition({decimalDegrees: result.position.apparentLongitude, zodiac: this._zodiac}),
         isRetrograde: result.motion.isRetrograde
       })
     })
 
-
-    console.log(processedResults)
     return [...processedResults]
   }
 }
