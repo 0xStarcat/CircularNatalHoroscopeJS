@@ -8,24 +8,8 @@ class Sign {
 
   }
 
-  static ZodiacStartOffset(zodiac) {
-    switch(zodiac) {
-      case 'astronomical':
-        return 24.1
-      case 'sidereal':
-        // conversion from https://vijayajyoti.com/sidereal-and-tropical-zodiac/
-        return 24.1
-      case 'tropical':
-        return 0
-    }
-  }
-
   // https://en.wikipedia.org/wiki/Zodiac#Table_of_dates
-
   // https://www.inaoep.mx/~frosales/html/zodiac/index.html
-
-  // TODO - fill with real date objects using years 0 and 1
-  // TODO - reimplement sun sign calculation using real date objects
   static get Data() {
     return [{
         id: 0,
@@ -229,7 +213,7 @@ class Sign {
         },
         name: 'Pisces',
         zodiacStart: 330,
-        zodiacEnd: 360
+        zodiacEnd: 0
       }]
   }
 
@@ -238,11 +222,11 @@ class Sign {
   }
 
   static get Sidereal() {
-    return Sign.Data.map(sign => new Sign({id: sign.id, zodiac: 'sidereal'}))
+    return Sign.Data.filter(sign => sign.id !== 12).map(sign => new Sign({id: sign.id, zodiac: 'sidereal'})) // no Ophiucus
   }
 
   static get Tropical() {
-    return Sign.Data.map(sign => new Sign({id: sign.id, zodiac: 'tropical'}))
+    return Sign.Data.filter(sign => sign.id !== 12).map(sign => new Sign({id: sign.id, zodiac: 'tropical'})) // no Ophiucus
   }
 
   static OfType(zodiac) {

@@ -21,6 +21,10 @@ describe ('isDegreeWithinCircleArc', () => {
     expect(isDegreeWithinCircleArc(330, 0, 340)).toEqual(true)
   })
 
+  it('returns true when arc values are modulo-ed & within 2', () => {
+    expect(isDegreeWithinCircleArc(350, 20, 1)).toEqual(true)
+  })
+
   it('returns false when arc values are modulo-ed & without', () => {
     expect(isDegreeWithinCircleArc(330, 0, 10)).toEqual(false)
   })

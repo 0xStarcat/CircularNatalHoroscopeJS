@@ -3,7 +3,7 @@ import ZodiacPosition from './ZodiacPosition'
 import { getMidheavenSun, getAscendant } from './utilities/astronomy'
 import Ephemeris from '../lib/ephemeris-1.2.1.bundle.js'
 import { modulo } from './utilities/math'
-import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign } from './utilities/astrology'
+import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign, convertCuspFromTropical, convertCuspFromTropicalForEcliptic } from './utilities/astrology'
 import moment from 'moment-timezone'
 
 //////////
@@ -50,7 +50,7 @@ class Horoscope {
 
 
   static get ZodiacSystems() {
-    return ['astronomical', 'sidereal', 'tropical']
+    return ['sidereal', 'tropical'] // not ready to implement 'astronomical'
   }
 
   get Ascendant() {
@@ -119,7 +119,7 @@ class Horoscope {
     let cuspsArray
     switch (string) {
       case 'equal house':
-        cuspsArray = calculateEqualHouseCusps({ascendant: this.Ascendant.DecimalDegrees})
+        cuspsArray = calculateEqualHouseCusps({ascendant: this.Ascendant.DecimalDegrees, zodiac: this._zodiac})
         break
       case 'koch':
         cuspsArray = calculateKochHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
@@ -134,7 +134,7 @@ class Horoscope {
         cuspsArray = calculateTopocentricHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'whole sign':
-        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.Ascendant.DecimalDegrees})
+        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.Ascendant.DecimalDegrees, zodiac: this._zodiac})
         break
       default:
         cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: this.origin.localSiderealTime, midheaven: this.Midheaven.DecimalDegrees, ascendant: this.Ascendant.DecimalDegrees, latitude: this.origin.latitude})
@@ -146,7 +146,7 @@ class Horoscope {
 
   createZodiacCusps() {
     return new Array(12).fill(undefined).map((c, index) => {
-      return parseFloat(modulo(this.Ascendant.DecimalDegrees - (index * 30), 360).toFixed(4))
+      return parseFloat(convertCuspFromTropicalForEcliptic(parseFloat(modulo(this.Ascendant.DecimalDegrees - (index * 30), 360)), this._zodiac).toFixed(4))
     })
   }
 
@@ -154,7 +154,7 @@ class Horoscope {
     const processedResults = ephemerisResults.map(result => {
       return ({
         key: result.key,
-        ...new ZodiacPosition({decimalDegrees: result.position.apparentLongitude, zodiac: this._zodiac}),
+        ...new ZodiacPosition({decimalDegrees: parseFloat(result.position.apparentLongitude), zodiac: this._zodiac}),
         isRetrograde: result.motion.isRetrograde
       })
     })

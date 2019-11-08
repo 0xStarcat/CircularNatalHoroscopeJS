@@ -89,6 +89,7 @@ export const isDegreeWithinCircleArc = (arcLow, arcHigh, degree) => {
   if (arcLow < arcHigh) {
     return degree >= arcLow && degree < arcHigh
   } else {
+    if (degree < arcLow) degree = degree + 360
     return degree >= arcLow && degree < arcHigh + 360
   }
 }
