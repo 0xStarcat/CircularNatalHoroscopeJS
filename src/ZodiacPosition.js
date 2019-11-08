@@ -5,12 +5,9 @@ import { modulo } from './utilities/math'
 import { getZodiacSign } from './utilities/astrology'
 class ZodiacPosition {
   constructor({ decimalDegrees=0.00, zodiac='tropical' }={}) {
-    this._decimalDegrees = decimalDegrees
-    this.DecimalDegrees = decimalDegrees
-    this.ArcDegrees = decimalDegreesToDMS(decimalDegrees)
-    this.ArcDegreesFormatted = dmsString(decimalDegreesToDMS(decimalDegrees))
-    this.ArcDegreesFormatted30 = dmsString(decimalDegreesToDMS(modulo(decimalDegrees, 30)))
-    this.Sign = getZodiacSign({decimalDegrees: this._decimalDegrees, zodiac: zodiac})
+    decimalDegrees = parseFloat(modulo(decimalDegrees, 360).toFixed(4))
+
+    this.Sign = getZodiacSign({decimalDegrees: decimalDegrees, zodiac: zodiac})
   }
 }
 

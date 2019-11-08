@@ -78,28 +78,34 @@ class DemoApp {
       zodiac: this.zodiacSystemSelect.value
     })
 
+    console.log(horoscope)
+
     this.sunSignElement.innerHTML = horoscope.SunSign.Name
 
-    this.midheavenElement.innerHTML = `${horoscope.Midheaven.DecimalDegrees} || ${horoscope.Midheaven.Sign.Name} ${horoscope.Midheaven.ArcDegreesFormatted30}`
+    this.midheavenElement.innerHTML = `${horoscope.Midheaven.Zodiac.DecimalDegrees} || ${horoscope.Midheaven.Sign.Name} ${horoscope.Midheaven.Zodiac.ArcDegreesFormatted30}`
 
-    this.ascendantElement.innerHTML = `${horoscope.Ascendant.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.ArcDegreesFormatted30}`
+    this.ascendantElement.innerHTML = `${horoscope.Ascendant.Zodiac.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.Zodiac.ArcDegreesFormatted30}`
 
-    console.log(horoscope)
     horoscope.HouseCusps.forEach((cusp, index) => {
-      document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.DecimalDegrees
-      document.querySelector(`#house-${index + 1}b`).innerHTML = `${cusp.Sign.Name} ${cusp.ArcDegreesFormatted30}`
+      document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.Ecliptic.DecimalDegrees
+      document.querySelector(`#house-${index + 1}b`).innerHTML = cusp.Zodiac.DecimalDegrees
+
     })
 
     horoscope.ZodiacCusps.forEach((cusp, index) => {
-      document.querySelector(`#zodiac-${index + 1}`).innerHTML = cusp
+      document.querySelector(`#zodiac-${index + 1}`).innerHTML = cusp.Ecliptic.DecimalDegrees
+      document.querySelector(`#zodiac-${index + 1}b`).innerHTML = cusp.Zodiac.DecimalDegrees
     })
 
     horoscope.CelestialBodies.forEach(result => {
-    const ddEl = document.querySelector(`#${result.key}-dd`)
-    if (ddEl) ddEl.innerHTML = result.DecimalDegrees.toFixed(4)
+    const ecEl = document.querySelector(`#${result.key}-a`)
+    if (ecEl) ecEl.innerHTML = result.Ecliptic.DecimalDegrees.toFixed(4)
+
+    const zEl = document.querySelector(`#${result.key}-b`)
+    if (zEl) zEl.innerHTML = result.Zodiac.DecimalDegrees.toFixed(4)
 
     const dmsEl = document.querySelector(`#${result.key}-dms`)
-    if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.ArcDegreesFormatted30}`
+    if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.Zodiac.ArcDegreesFormatted30}`
   })
   }
 }
