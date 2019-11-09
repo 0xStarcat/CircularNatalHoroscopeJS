@@ -88,17 +88,17 @@ describe('Midheaven & ascendant calculations', () => {
 describe('House cusp calculation', () => {
   // TODO - each house system - expect w Ecliptic Decimal Degrees too
   test('Equal House', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'equal house'}).HouseCusps.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([169.4304, 199.4304, 229.4304, 259.4304, 289.4304, 319.4304, 349.4304, 19.4304, 49.4304, 79.4304, 109.4304, 139.4304,])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'equal house'}).Houses.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([169.4304, 199.4304, 229.4304, 259.4304, 289.4304, 319.4304, 349.4304, 19.4304, 49.4304, 79.4304, 109.4304, 139.4304,])
   })
 
   test('Koch', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'koch'}).HouseCusps.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([ 169.4304, 199.3303, 228.7571, 258.4576, 290.4533, 319.8347, 349.4304, 19.3303, 48.7571, 78.4576, 110.4533, 139.8347 ])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'koch'}).Houses.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([ 169.4304, 199.3303, 228.7571, 258.4576, 290.4533, 319.8347, 349.4304, 19.3303, 48.7571, 78.4576, 110.4533, 139.8347 ])
   })
 
   test('Placidus', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus', zodiac: 'tropical'}).HouseCusps.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([169.4304,195.8759,226.0562,258.4576,290.9246,321.6638,349.4304,15.8759,46.0562,78.4576,110.9246,141.6638])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus', zodiac: 'tropical'}).Houses.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([169.4304,195.8759,226.0562,258.4576,290.9246,321.6638,349.4304,15.8759,46.0562,78.4576,110.9246,141.6638])
 
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus', zodiac: 'sidereal'}).HouseCusps.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'placidus', zodiac: 'sidereal'}).Houses.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([
       145.3304,
       173.9397,
       203.0406,
@@ -114,17 +114,17 @@ describe('House cusp calculation', () => {
   })
 
   test('Regiomontanus', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'regiomontanus'}).HouseCusps.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([ 169.4304, 195.1442, 224.3037, 258.4576, 293.2347, 323.3454, 349.4304, 15.1442, 44.3037, 78.4576, 113.2347, 143.3454 ])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'regiomontanus'}).Houses.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([ 169.4304, 195.1442, 224.3037, 258.4576, 293.2347, 323.3454, 349.4304, 15.1442, 44.3037, 78.4576, 113.2347, 143.3454 ])
   })
 
   test('Topocentric', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'topocentric'}).HouseCusps.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([169.4304,195.8759,226.0562,258.4576,290.9246,321.6638,349.4304,15.8759,46.0562,78.4576,110.9246,141.6638])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'topocentric'}).Houses.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([169.4304,195.8759,226.0562,258.4576,290.9246,321.6638,349.4304,15.8759,46.0562,78.4576,110.9246,141.6638])
   })
 
   test('Whole sign', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign', zodiac: 'tropical'}).HouseCusps.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign', zodiac: 'tropical'}).Houses.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
 
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign', zodiac: 'sidereal'}).HouseCusps.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([120.00, 150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign', zodiac: 'sidereal'}).Houses.map(c => c.StartPosition.Zodiac.DecimalDegrees)).toEqual([120.00, 150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00])
   })
 })
 
@@ -295,5 +295,15 @@ describe('CelestialBodies', () => {
           163.431,
           167.659 ])
     })
+  })
+
+  describe('tropical single planet', () => {
+    const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical'})
+    expect(horoscope.CelestialBodies[0].House.Id).toEqual(11)
+  })
+
+  describe('sidereal single planet', () => {
+    const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'})
+    expect(horoscope.CelestialBodies[0].House.Id).toEqual(11)
   })
 })

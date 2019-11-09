@@ -86,7 +86,7 @@ class DemoApp {
 
     this.ascendantElement.innerHTML = `${horoscope.Ascendant.Zodiac.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.Zodiac.ArcDegreesFormatted30}`
 
-    horoscope.HouseCusps.forEach((cusp, index) => {
+    horoscope.Houses.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.StartPosition.Ecliptic.DecimalDegrees
       document.querySelector(`#house-${index + 1}b`).innerHTML = cusp.StartPosition.Zodiac.DecimalDegrees
 
@@ -98,14 +98,17 @@ class DemoApp {
     })
 
     horoscope.CelestialBodies.forEach(result => {
-    const ecEl = document.querySelector(`#${result.key}-a`)
-    if (ecEl) ecEl.innerHTML = result.Ecliptic.DecimalDegrees.toFixed(4)
+      const ecEl = document.querySelector(`#${result.key}-a`)
+      if (ecEl) ecEl.innerHTML = result.Ecliptic.DecimalDegrees.toFixed(4)
 
-    const zEl = document.querySelector(`#${result.key}-b`)
-    if (zEl) zEl.innerHTML = result.Zodiac.DecimalDegrees.toFixed(4)
+      const zEl = document.querySelector(`#${result.key}-b`)
+      if (zEl) zEl.innerHTML = result.Zodiac.DecimalDegrees.toFixed(4)
 
-    const dmsEl = document.querySelector(`#${result.key}-dms`)
-    if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.Zodiac.ArcDegreesFormatted30}`
+      const dmsEl = document.querySelector(`#${result.key}-dms`)
+      if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.Zodiac.ArcDegreesFormatted30}`
+
+      const houseEl = document.querySelector(`#${result.key}-house`)
+      if (houseEl) houseEl.innerHTML = `${result.House.Name}`
   })
   }
 }

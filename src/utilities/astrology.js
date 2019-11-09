@@ -1,5 +1,7 @@
 import moment from 'moment-timezone'
 import Sign from '../Sign'
+import House from '../House'
+
 import {
   modulo, arccot, degreesToRadians, radiansToDegrees, tanFromDegrees, cosFromDegrees, sinFromDegrees, isDegreeWithinCircleArc
 } from './math'
@@ -9,14 +11,28 @@ import {
 
 
 
-export const getSignFromDD = decimalDegree => {
+export const getSignFromDD = decimalDegrees => {
   // Converts a decimal degree (0 - 359) into its astrological sign
   //////////
-  // * float decimalDegree
+  // * float decimalDegrees
   // => returns { <signObject> }
   //////////
 
-  return Sign.Data.find(sign => sign.zodiacStart <= decimalDegree && sign.zodiacEnd > decimalDegree)
+  return Sign.Data.find(sign => sign.zodiacStart <= decimalDegrees && sign.zodiacEnd > decimalDegrees)
+}
+
+export const getHouseFromDD = (houses, decimalDegrees) => {
+  decimalDegrees = modulo(decimalDegrees, 360)
+  return houses.find(house => {
+    return isDegreeWithinCircleArc(house.StartPosition.Zodiac.DecimalDegrees, house.EndPosition.Zodiac.DecimalDegrees, decimalDegrees)
+  })
+}
+
+export const constructHouses = (cuspsArray, ascendantDegrees) => {
+  return cuspsArray.map((cuspDegree, index) => {
+    const houseId = index + 1
+    return new House({ascendantDegrees: ascendantDegrees, zodiacDegreesStart: cuspDegree, zodiacDegreesEnd:cuspsArray[modulo(index + 1, cuspsArray.length + 1)], id: houseId})
+  })
 }
 
 export const applyZodiacOffsetClockwise = (tropicalZodiacLongitude, zodiac) => {

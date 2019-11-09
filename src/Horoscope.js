@@ -5,8 +5,8 @@ import House from './House'
 
 import { getMidheavenSun, getAscendant } from './utilities/astronomy'
 import Ephemeris from '../lib/ephemeris-1.2.1.bundle.js'
-import { modulo } from './utilities/math'
-import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign, applyZodiacOffsetClockwise, applyZodiacOffsetCounter, zodiacPositionToEcliptic } from './utilities/astrology'
+import { modulo, isDegreeWithinCircleArc } from './utilities/math'
+import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign, applyZodiacOffsetClockwise, applyZodiacOffsetCounter, zodiacPositionToEcliptic, getHouseFromDD, constructHouses } from './utilities/astrology'
 import moment from 'moment-timezone'
 
 //////////
@@ -26,7 +26,7 @@ class Horoscope {
     this._ascendant = this.createAscendant()
     this._midheaven = this.createMidheaven()
     this._sunSign = this.createSunSign(this._zodiac)
-    this._houseCusps = this.createHouseCusps(this._houseSystem)
+    this._houses = this.createHouses(this._houseSystem)
     this._zodiacCusps = this.createZodiacCusps()
     this.Ephemeris = new Ephemeris({
       year: this.origin.year, month: this.origin.month, day: this.origin.date,
@@ -42,7 +42,7 @@ class Horoscope {
     this.createAscendant = this.createAscendant.bind(this)
     this.createMidheaven = this.createMidheaven.bind(this)
     this.createSunSign = this.createSunSign.bind(this)
-    this.createHouseCusps = this.createHouseCusps.bind(this)
+    this.createHouses = this.createHouses.bind(this)
     this.createZodiacCusps = this.createZodiacCusps.bind(this)
     this.processEphemerisResults = this.processEphemerisResults.bind(this)
   }
@@ -68,8 +68,8 @@ class Horoscope {
     return this._sunSign
   }
 
-  get HouseCusps() {
-    return this._houseCusps
+  get Houses() {
+    return this._houses
   }
 
   get ZodiacCusps() {
@@ -137,7 +137,7 @@ class Horoscope {
   }
 
 
-  createHouseCusps(string) {
+  createHouses(string) {
     let cuspsArray
 
     switch (string) {
@@ -164,15 +164,15 @@ class Horoscope {
         break
     }
 
-    return cuspsArray.map((cuspDegree, index) => {
-      const name = `${index}`
-      return new House({ascendantDegrees: this.Ascendant.Zodiac.DecimalDegrees, zodiacDegreesStart: cuspDegree, zodiacDegreesEnd: modulo(cuspsArray[index + 1], cuspsArray.length), name: name})
-    })
+    return constructHouses(cuspsArray, this.Ascendant.Zodiac.DecimalDegrees)
+
   }
 
   processEphemerisResults(ephemerisResults) {
     const processedResults = ephemerisResults.map(result => {
       const zodiacDegrees = applyZodiacOffsetCounter(result.position.apparentLongitude, this._zodiac)
+      const house = getHouseFromDD(this.Houses, zodiacDegrees)
+
       return ({
         key: result.key,
         ...new ZodiacPosition({decimalDegrees: parseFloat(result.position.apparentLongitude), zodiac: this._zodiac}),
@@ -180,6 +180,7 @@ class Horoscope {
           eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.Zodiac.DecimalDegrees, zodiacDegrees),
           zodiacDegrees: zodiacDegrees
         }),
+        House: house,
         isRetrograde: result.motion.isRetrograde
       })
     })
