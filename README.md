@@ -20,7 +20,9 @@ The goal is to allow someone to:
 
 => ~~the positions for all major bodies as they relate to the ecliptic for a given datetime and origin (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)~~
 
-=> Positions of Lunar Nodes, Lilith, & Fortuna + Spirit Parts
+=> ~~Positions of Lunar Nodes, Lilith~~
+
+=> Positions of the lots (Fortune, Spirit, Eros, etc)
 
 => Data for retrograde planets
 
