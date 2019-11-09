@@ -51,8 +51,8 @@ export const applyZodiacOffsetCounter = (tropicalZodiacLongitude, zodiac) => {
 
 const getZodiacSignFromRange = (signs, decimalDegrees, zodiac) => {
   const zodiacSign = signs.find(sign => {
-    let start = applyZodiacOffsetClockwise(sign.ZodiacStart, zodiac)
-    let end = applyZodiacOffsetClockwise(sign.ZodiacEnd, zodiac)
+    let start = sign.ZodiacStart
+    let end = sign.ZodiacEnd
     return isDegreeWithinCircleArc(parseFloat(start), parseFloat(end), parseFloat(decimalDegrees))
   })
 
@@ -427,10 +427,14 @@ export const calculateWholeSignHouseCusps = ({ascendant=0.00, zodiac='tropical'}
   // * float ascendant
   // returns => [1..12] (array of 12 floats marking the cusp of each house)
   /////////
-  const startingDegree = Math.floor(applyZodiacOffsetCounter(ascendant, zodiac) / 30) * 30
+  // const startingDegree = Math.floor(applyZodiacOffsetCounter(ascendant, zodiac) / 30) * 30
+  // const startingDegree = Math.floor(ascendant / 30) * 30
+  const ascendantSign = getZodiacSign({decimalDegrees: ascendant, zodiac})
+  const startingDegree = ascendantSign.ZodiacStart
+
   return Sign.OfType(zodiac).map(sign => {
     const cuspStart = modulo(sign.ZodiacStart + startingDegree, 360)
 
-    return parseFloat(cuspStart.toFixed(4))
+    return cuspStart
   })
 }

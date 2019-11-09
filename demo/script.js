@@ -87,8 +87,8 @@ class DemoApp {
     this.ascendantElement.innerHTML = `${horoscope.Ascendant.Zodiac.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.Zodiac.ArcDegreesFormatted30}`
 
     horoscope.HouseCusps.forEach((cusp, index) => {
-      document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.Ecliptic.DecimalDegrees
-      document.querySelector(`#house-${index + 1}b`).innerHTML = cusp.Zodiac.DecimalDegrees
+      document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.StartPosition.Ecliptic.DecimalDegrees
+      document.querySelector(`#house-${index + 1}b`).innerHTML = cusp.StartPosition.Zodiac.DecimalDegrees
 
     })
 

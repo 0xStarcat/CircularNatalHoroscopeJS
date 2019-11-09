@@ -1,4 +1,3 @@
-
 import ChartPosition from '../src/ChartPosition'
 
 describe('ChartPosition', () => {
