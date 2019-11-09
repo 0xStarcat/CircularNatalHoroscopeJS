@@ -184,7 +184,7 @@ class Horoscope {
 
       return ({
         key: result.key,
-        Sign: getZodiacSign({decimalDegrees: applyZodiacOffsetCounter(zodiacDegrees, this._zodiac), zodiac: this._zodiac}),
+        Sign: getZodiacSign({decimalDegrees: zodiacDegrees, zodiac: this._zodiac}),
         ChartPosition: new ChartPosition({
           eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, zodiacDegrees),
           zodiacDegrees: zodiacDegrees
@@ -216,10 +216,12 @@ class Horoscope {
           break
       }
 
+      zodiacDegrees = applyZodiacOffsetCounter(result.position.apparentLongitude, this._zodiac)
+
       return {
         key,
-        ChartPosition: new ChartPosition({zodiacDegrees, eclipticDegrees:zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, zodiacDegrees) }),
-        Sign: getZodiacSign({decimalDegrees: applyZodiacOffsetCounter(zodiacDegrees, this._zodiac), zodiac: this._zodiac}),
+        ChartPosition: new ChartPosition({zodiacDegrees, eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, zodiacDegrees) }),
+        Sign: getZodiacSign({decimalDegrees: zodiacDegrees, zodiac: this._zodiac}),
         House: getHouseFromDD(this.Houses, zodiacDegrees),
       }
     })
