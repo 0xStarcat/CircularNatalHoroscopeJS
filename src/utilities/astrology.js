@@ -28,10 +28,10 @@ export const getHouseFromDD = (houses, decimalDegrees) => {
   })
 }
 
-export const constructHouses = (cuspsArray, ascendantDegrees) => {
+export const constructHouses = (cuspsArray, ascendantDegrees, zodiac) => {
   return cuspsArray.map((cuspDegree, index) => {
     const houseId = index + 1
-    return new House({ascendantDegrees: ascendantDegrees, zodiacDegreesStart: cuspDegree, zodiacDegreesEnd:cuspsArray[modulo(index + 1, cuspsArray.length + 1)], id: houseId})
+    return new House({ascendantDegrees: ascendantDegrees, zodiacDegreesStart: cuspDegree, zodiacDegreesEnd:cuspsArray[modulo(index + 1, cuspsArray.length + 1)], id: houseId, zodiac})
   })
 }
 

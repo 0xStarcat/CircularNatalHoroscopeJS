@@ -18,7 +18,7 @@ test('getZodiacSign - 3', () => {
 describe('getHouseFromDD', () => {
   const cuspsArray = calculateEqualHouseCusps({ascendant: 0, zodiac: 'tropical'})
 
-  const houses = constructHouses(cuspsArray, 0)
+  const houses = constructHouses(cuspsArray, 0, 'tropical')
 
   it('returns 1st house', () => {
     expect(getHouseFromDD(houses, 0).Id).toEqual(1)

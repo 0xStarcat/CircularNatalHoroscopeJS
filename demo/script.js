@@ -88,7 +88,10 @@ class DemoApp {
 
     horoscope.Houses.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.StartPosition.Ecliptic.DecimalDegrees
+
       document.querySelector(`#house-${index + 1}b`).innerHTML = cusp.StartPosition.Zodiac.DecimalDegrees
+
+      document.querySelector(`#house-${index + 1}-sign`).innerHTML = `${cusp.Sign.Name}`
 
     })
 

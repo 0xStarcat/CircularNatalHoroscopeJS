@@ -164,7 +164,7 @@ class Horoscope {
         break
     }
 
-    return constructHouses(cuspsArray, this.Ascendant.Zodiac.DecimalDegrees)
+    return constructHouses(cuspsArray, this.Ascendant.Zodiac.DecimalDegrees, this._zodiac)
 
   }
 
