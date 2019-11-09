@@ -82,37 +82,53 @@ class DemoApp {
 
     this.sunSignElement.innerHTML = horoscope.SunSign.Name
 
-    this.midheavenElement.innerHTML = `${horoscope.Midheaven.Zodiac.DecimalDegrees} || ${horoscope.Midheaven.Sign.Name} ${horoscope.Midheaven.Zodiac.ArcDegreesFormatted30}`
+    this.midheavenElement.innerHTML = `${horoscope.Midheaven.ChartPosition.Zodiac.DecimalDegrees} || ${horoscope.Midheaven.Sign.Name} ${horoscope.Midheaven.ChartPosition.Zodiac.ArcDegreesFormatted30}`
 
-    this.ascendantElement.innerHTML = `${horoscope.Ascendant.Zodiac.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.Zodiac.ArcDegreesFormatted30}`
+    this.ascendantElement.innerHTML = `${horoscope.Ascendant.ChartPosition.Zodiac.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.ChartPosition.Zodiac.ArcDegreesFormatted30}`
 
     horoscope.Houses.forEach((cusp, index) => {
-      document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.StartPosition.Ecliptic.DecimalDegrees
+      document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.ChartPosition.StartPosition.Ecliptic.DecimalDegrees
 
-      document.querySelector(`#house-${index + 1}b`).innerHTML = cusp.StartPosition.Zodiac.DecimalDegrees
+      document.querySelector(`#house-${index + 1}b`).innerHTML = cusp.ChartPosition.StartPosition.Zodiac.DecimalDegrees
 
       document.querySelector(`#house-${index + 1}-sign`).innerHTML = `${cusp.Sign.Name}`
 
     })
 
     horoscope.ZodiacCusps.forEach((cusp, index) => {
-      document.querySelector(`#zodiac-${index + 1}`).innerHTML = cusp.Ecliptic.DecimalDegrees
-      document.querySelector(`#zodiac-${index + 1}b`).innerHTML = cusp.Zodiac.DecimalDegrees
+      document.querySelector(`#zodiac-${index + 1}`).innerHTML = cusp.ChartPosition.Ecliptic.DecimalDegrees
+      document.querySelector(`#zodiac-${index + 1}b`).innerHTML = cusp.ChartPosition.Zodiac.DecimalDegrees
     })
 
     horoscope.CelestialBodies.forEach(result => {
       const ecEl = document.querySelector(`#${result.key}-a`)
-      if (ecEl) ecEl.innerHTML = result.Ecliptic.DecimalDegrees.toFixed(4)
+      if (ecEl) ecEl.innerHTML = result.ChartPosition.Ecliptic.DecimalDegrees.toFixed(4)
 
       const zEl = document.querySelector(`#${result.key}-b`)
-      if (zEl) zEl.innerHTML = result.Zodiac.DecimalDegrees.toFixed(4)
+      if (zEl) zEl.innerHTML = result.ChartPosition.Zodiac.DecimalDegrees.toFixed(4)
 
       const dmsEl = document.querySelector(`#${result.key}-dms`)
-      if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.Zodiac.ArcDegreesFormatted30}`
+      if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.ChartPosition.Zodiac.ArcDegreesFormatted30}`
 
       const houseEl = document.querySelector(`#${result.key}-house`)
       if (houseEl) houseEl.innerHTML = `${result.House.Name}`
-  })
+    })
+
+    Object.keys(horoscope.CelestialPoints).forEach(key => {
+      const result = horoscope.CelestialPoints[key]
+      
+      const ecEl = document.querySelector(`#${key.toLowerCase()}-a`)
+      if (ecEl) ecEl.innerHTML = result.ChartPosition.Ecliptic.DecimalDegrees.toFixed(4)
+
+      const zEl = document.querySelector(`#${key.toLowerCase()}-b`)
+      if (zEl) zEl.innerHTML = result.ChartPosition.Zodiac.DecimalDegrees.toFixed(4)
+
+      const dmsEl = document.querySelector(`#${key.toLowerCase()}-dms`)
+      if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.ChartPosition.Zodiac.ArcDegreesFormatted30}`
+
+      const houseEl = document.querySelector(`#${key.toLowerCase()}-house`)
+      if (houseEl) houseEl.innerHTML = `${result.House.Name}`
+    })
   }
 }
 

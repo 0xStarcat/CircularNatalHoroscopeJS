@@ -28,6 +28,7 @@ class Horoscope {
     this._sunSign = this.createSunSign(this._zodiac)
     this._houses = this.createHouses(this._houseSystem)
     this._zodiacCusps = this.createZodiacCusps()
+
     this.Ephemeris = new Ephemeris({
       year: this.origin.year, month: this.origin.month, day: this.origin.date,
       hours: this.origin.hour, minutes: this.origin.minute, seconds: this.origin.second,
@@ -35,7 +36,8 @@ class Horoscope {
       calculateShadows: false
     })
 
-    this._celestialBodies = this.processEphemerisResults(this.Ephemeris.Results)
+    this._celestialBodies = this.processCelestialBodies(this.Ephemeris.Results)
+    this._celestialPoints = this.processCelestialPoints(this.Ephemeris.Results)
 
     this.validateHouseSystem = this.validateHouseSystem.bind(this)
     this.validateZodiac = this.validateZodiac.bind(this)
@@ -44,7 +46,8 @@ class Horoscope {
     this.createSunSign = this.createSunSign.bind(this)
     this.createHouses = this.createHouses.bind(this)
     this.createZodiacCusps = this.createZodiacCusps.bind(this)
-    this.processEphemerisResults = this.processEphemerisResults.bind(this)
+    this.processCelestialBodies = this.processCelestialBodies.bind(this)
+    this.processCelestialPoints = this.processCelestialPoints.bind(this)
   }
 
   static get HouseSystems() {
@@ -80,6 +83,10 @@ class Horoscope {
     return this._celestialBodies
   }
 
+  get CelestialPoints() {
+    return this._celestialPoints
+  }
+
   validateHouseSystem(string) {
     if (Horoscope.HouseSystems.includes(string.toLowerCase())) return string.toLowerCase()
     else throw new Error(`The "${string}" house system is not included. Please choose from the following list: ${Horoscope.HouseSystems.join(', ')}.`)
@@ -95,7 +102,7 @@ class Horoscope {
 
     return {
       ...new ZodiacPosition({decimalDegrees: decimalDegrees, zodiac: this._zodiac}),
-      ...new ChartPosition({zodiacDegrees: decimalDegrees, eclipticDegrees: zodiacPositionToEcliptic(decimalDegrees, decimalDegrees) })
+      ChartPosition: new ChartPosition({zodiacDegrees: decimalDegrees, eclipticDegrees: zodiacPositionToEcliptic(decimalDegrees, decimalDegrees) })
     }
   }
 
@@ -104,7 +111,7 @@ class Horoscope {
 
     return {
       ...new ZodiacPosition({decimalDegrees: decimalDegrees, zodiac: this._zodiac}),
-      ...new ChartPosition({zodiacDegrees: decimalDegrees, eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.Zodiac.DecimalDegrees, decimalDegrees) })
+      ChartPosition: new ChartPosition({zodiacDegrees: decimalDegrees, eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, decimalDegrees) })
     }
   }
 
@@ -130,9 +137,12 @@ class Horoscope {
     // A sign's ecliptic position is therefore the ascendant's degrees minus the sign's starting zodiac position (with offset applied for sidereal).
     return Sign.OfType(this._zodiac).map(sign => {
       const zodiacStart = sign.ZodiacStart
-      const eclipticDegrees = zodiacPositionToEcliptic(this.Ascendant.Zodiac.DecimalDegrees, zodiacStart)
+      const eclipticDegrees = zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, zodiacStart)
 
-      return new ChartPosition({eclipticDegrees: eclipticDegrees, zodiacDegrees: zodiacStart})
+      return {
+        ChartPosition: new ChartPosition({eclipticDegrees: eclipticDegrees, zodiacDegrees: zodiacStart}),
+        Sign: getZodiacSign({decimalDegrees: applyZodiacOffsetCounter(zodiacStart, this._zodiac), zodiac: this._zodiac})
+      }
     })
   }
 
@@ -142,51 +152,83 @@ class Horoscope {
 
     switch (string) {
       case 'equal house':
-        cuspsArray = calculateEqualHouseCusps({ascendant: this.Ascendant.Zodiac.DecimalDegrees, zodiac: this._zodiac})
+        cuspsArray = calculateEqualHouseCusps({ascendant: this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, zodiac: this._zodiac})
         break
       case 'koch':
-        cuspsArray = calculateKochHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.Zodiac.DecimalDegrees, ascendant: this.Ascendant.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
+        cuspsArray = calculateKochHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.ChartPosition.Zodiac.DecimalDegrees, ascendant: this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'placidus':
-        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.Zodiac.DecimalDegrees, ascendant: this.Ascendant.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
+        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.ChartPosition.Zodiac.DecimalDegrees, ascendant: this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'regiomontanus':
-        cuspsArray = calculateRegiomontanusHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.Zodiac.DecimalDegrees, ascendant: this.Ascendant.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
+        cuspsArray = calculateRegiomontanusHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.ChartPosition.Zodiac.DecimalDegrees, ascendant: this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'topocentric':
-        cuspsArray = calculateTopocentricHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.Zodiac.DecimalDegrees, ascendant: this.Ascendant.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
+        cuspsArray = calculateTopocentricHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.ChartPosition.Zodiac.DecimalDegrees, ascendant: this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
         break
       case 'whole sign':
-        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.Ascendant.Zodiac.DecimalDegrees, zodiac: this._zodiac})
+        cuspsArray = calculateWholeSignHouseCusps({ascendant: this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, zodiac: this._zodiac})
         break
       default:
-        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.Zodiac.DecimalDegrees, ascendant: this.Ascendant.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
+        cuspsArray = calculatePlacidianHouseCusps({rightAscensionMC: applyZodiacOffsetCounter(this.origin.localSiderealTime, this._zodiac), midheaven: this.Midheaven.ChartPosition.Zodiac.DecimalDegrees, ascendant: this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, latitude: this.origin.latitude})
         break
     }
 
-    return constructHouses(cuspsArray, this.Ascendant.Zodiac.DecimalDegrees, this._zodiac)
+    return constructHouses(cuspsArray, this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, this._zodiac)
 
   }
 
-  processEphemerisResults(ephemerisResults) {
+  processCelestialBodies(ephemerisResults) {
     const processedResults = ephemerisResults.map(result => {
       const zodiacDegrees = applyZodiacOffsetCounter(result.position.apparentLongitude, this._zodiac)
-      const house = getHouseFromDD(this.Houses, zodiacDegrees)
 
       return ({
         key: result.key,
-        ...new ZodiacPosition({decimalDegrees: parseFloat(result.position.apparentLongitude), zodiac: this._zodiac}),
-        ...new ChartPosition({
-          eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.Zodiac.DecimalDegrees, zodiacDegrees),
+        Sign: getZodiacSign({decimalDegrees: applyZodiacOffsetCounter(zodiacDegrees, this._zodiac), zodiac: this._zodiac}),
+        ChartPosition: new ChartPosition({
+          eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, zodiacDegrees),
           zodiacDegrees: zodiacDegrees
         }),
-        House: house,
+        House: getHouseFromDD(this.Houses, zodiacDegrees),
         isRetrograde: result.motion.isRetrograde
       })
     })
 
     return [...processedResults]
   }
+
+  processCelestialPoints(ephemerisResults) {
+    const bodies = ['moon']
+    const keys = ['NorthNode', 'SouthNode', 'Lilith', 'PartFortune', 'PartSpirit']
+    ephemerisResults = ephemerisResults.filter(k => bodies.includes(k.key))
+
+    const points = keys.map(key => {
+      let zodiacDegrees
+      switch(key) {
+        case 'NorthNode':
+          zodiacDegrees = ephemerisResults.find(body => body.key === 'moon').orbit.meanAscendingNode.apparentLongitude
+          break
+        case 'SouthNode':
+          zodiacDegrees = ephemerisResults.find(body => body.key === 'moon').orbit.meanDescendingNode.apparentLongitude
+          break
+        case 'Lilith':
+          zodiacDegrees = ephemerisResults.find(body => body.key === 'moon').orbit.meanApogee.apparentLongitude
+          break
+      }
+
+      return {
+        key,
+        ChartPosition: new ChartPosition({zodiacDegrees, eclipticDegrees:zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Zodiac.DecimalDegrees, zodiacDegrees) }),
+        Sign: getZodiacSign({decimalDegrees: applyZodiacOffsetCounter(zodiacDegrees, this._zodiac), zodiac: this._zodiac}),
+        House: getHouseFromDD(this.Houses, zodiacDegrees),
+      }
+    })
+
+    return {
+      ...Object.assign({}, ...points.map(point => ({[point.key]: point})))
+    }
+  }
+
 }
 
 export default Horoscope

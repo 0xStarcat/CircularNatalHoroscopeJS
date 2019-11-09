@@ -24,7 +24,7 @@ export const getSignFromDD = decimalDegrees => {
 export const getHouseFromDD = (houses, decimalDegrees) => {
   decimalDegrees = modulo(decimalDegrees, 360)
   return houses.find(house => {
-    return isDegreeWithinCircleArc(house.StartPosition.Zodiac.DecimalDegrees, house.EndPosition.Zodiac.DecimalDegrees, decimalDegrees)
+    return isDegreeWithinCircleArc(house.ChartPosition.StartPosition.Zodiac.DecimalDegrees, house.ChartPosition.EndPosition.Zodiac.DecimalDegrees, decimalDegrees)
   })
 }
 
