@@ -1,3 +1,5 @@
+import { ASPECTS, BODIES, POINTS, ANGLES } from '../constants'
+
 export const validateYear = (year) => {
   if (year > 0) return year
   else throw new Error(`The year: "${year}" - must be an integer and > 0 (C.E.)`)
@@ -36,5 +38,95 @@ export const validateLongitude = (longitude) => {
 export const validateString = string => {
   if (!string) throw new Error(`Invalid string: ${string}`)
   return string
+}
 
+export const validateStringOrArray = stringOrArray => {
+  if(!Array.isArray(stringOrArray) && typeof stringOrArray !== 'string') {
+    throw new Error('Please pass a string or an array into aspectTypes')
+  } else if (typeof stringOrArray === 'string') {
+    stringOrArray = [stringOrArray]
+  }
+
+  return stringOrArray
+}
+
+const distinctArray = array => {
+  return array.filter((value, index) => array.indexOf(value) === index)
+}
+
+const getValidAspects = () => {
+  let validAspectKeysTypes = ['all']
+  Object.keys(ASPECTS).forEach(key => {
+    validAspectKeysTypes.push(ASPECTS[key].level)
+  })
+
+  Object.keys(ASPECTS).forEach(key => {
+    validAspectKeysTypes.push(key)
+  })
+
+  validAspectKeysTypes = distinctArray(validAspectKeysTypes)
+
+  return validAspectKeysTypes
+}
+
+
+export const validateAspectTypes = (stringOrArray) => {
+  stringOrArray = validateStringOrArray(stringOrArray)
+
+  const validAspectKeysTypes = getValidAspects()
+
+  if (!stringOrArray.every(value => validAspectKeysTypes.includes(value))) {
+    throw new Error(`'${stringOrArray}' is not a valid aspect choice. Please use values from the following: ${validAspectKeysTypes.join(', ')}`)
+  }
+
+  if (stringOrArray.includes('all')) {
+    stringOrArray = [...Object.keys(ASPECTS)]
+    stringOrArray = stringOrArray.filter(k => k !== 'all')
+  }
+
+  stringOrArray.forEach(key => {
+    if (Object.keys(ASPECTS).some(aspectKey => ASPECTS[aspectKey].level === key)) {
+      stringOrArray = [...stringOrArray, ...Object.keys(ASPECTS).filter(aspectKey => ASPECTS[aspectKey].level === key)]
+      stringOrArray = stringOrArray.filter(k => k !== key)
+    }
+  })
+
+  stringOrArray = distinctArray(stringOrArray)
+
+  return stringOrArray
+}
+
+
+export const validateAspectPoints = (stringOrArray) => {
+  stringOrArray = validateStringOrArray(stringOrArray)
+
+  const validAspectPoints = ['all', 'bodies', 'points', 'angles', ...Object.keys(BODIES), ...Object.keys(POINTS), ...Object.keys(ANGLES)]
+
+  if (!stringOrArray.every(value => validAspectPoints.includes(value))) {
+    throw new Error(`'${stringOrArray}' is not a valid aspectPoint choice. Please use values from the following: ${validAspectPoints.join(', ')}`)
+  }
+
+  if (stringOrArray.includes('all')) {
+    stringOrArray = [...Object.keys(BODIES), ...Object.keys(POINTS), ...Object.keys(ANGLES)]
+    stringOrArray = stringOrArray.filter(k => k !== 'all')
+  }
+
+  if (stringOrArray.includes('bodies')) {
+    stringOrArray = [...stringOrArray, ...Object.keys(BODIES)]
+    stringOrArray = stringOrArray.filter(k => k !== 'bodies')
+  }
+
+  if (stringOrArray.includes('points')) {
+    stringOrArray = [...stringOrArray, ...Object.keys(POINTS)]
+    stringOrArray = stringOrArray.filter(k => k !== 'points')
+  }
+
+  if (stringOrArray.includes('angles')) {
+    stringOrArray = [...stringOrArray, ...Object.keys(ANGLES)]
+    stringOrArray = stringOrArray.filter(k => k !== 'angles')
+  }
+
+  stringOrArray = distinctArray(stringOrArray)
+
+  return stringOrArray 
 }

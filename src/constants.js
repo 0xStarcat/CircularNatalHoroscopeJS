@@ -105,3 +105,12 @@ export const POINTS = {
     label: 'Lilith'
   }
 }
+
+export const ANGLES = {
+  'ascendant': {
+    label: 'Ascendant'
+  },
+  'midheaven': {
+    label: 'Midheaven'
+  }
+}

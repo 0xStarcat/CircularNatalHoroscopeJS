@@ -1,13 +1,17 @@
+import moment from 'moment-timezone'
+import Ephemeris from '../lib/ephemeris-1.2.1.bundle.js'
 import Sign from './Sign'
 import ZodiacPosition from './ZodiacPosition'
 import ChartPosition from './ChartPosition'
 import House from './House'
+import { ASPECTS } from './constants'
 
 import { getMidheavenSun, getAscendant } from './utilities/astronomy'
-import Ephemeris from '../lib/ephemeris-1.2.1.bundle.js'
 import { modulo, isDegreeWithinCircleArc } from './utilities/math'
+
+import { validateAspectTypes, validateAspectPoints } from './utilities/validators'
+
 import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign, applyZodiacOffsetClockwise, applyZodiacOffsetCounter, zodiacPositionToEcliptic, getHouseFromDD, constructHouses } from './utilities/astrology'
-import moment from 'moment-timezone'
 
 //////////
 // Horoscope
@@ -18,7 +22,7 @@ import moment from 'moment-timezone'
 // * string houseSystem: a string from the list assigned to Horoscope.HouseSystems in the constructor.
 
 class Horoscope {
-  constructor({origin = null, houseSystem='placidus', zodiac='tropical'}={}) {
+  constructor({origin = null, houseSystem='placidus', zodiac='tropical', aspectPoints=['bodies', 'points', 'angles'], aspectTypes=['major']}={}) {
     this.origin = origin
 
     this._houseSystem = this.validateHouseSystem(houseSystem)
@@ -28,6 +32,8 @@ class Horoscope {
     this._sunSign = this.createSunSign(this._zodiac)
     this._houses = this.createHouses(this._houseSystem)
     this._zodiacCusps = this.createZodiacCusps()
+    this._aspectTypes = validateAspectTypes(aspectTypes)
+    this._aspectPoints = validateAspectPoints(aspectPoints)
 
     this.Ephemeris = new Ephemeris({
       year: this.origin.year, month: this.origin.month, day: this.origin.date,
@@ -85,6 +91,12 @@ class Horoscope {
 
   get CelestialPoints() {
     return this._celestialPoints
+  }
+
+  get Aspects() {
+    let aspects = []
+
+    return aspects
   }
 
   validateHouseSystem(string) {

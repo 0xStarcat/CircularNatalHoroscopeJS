@@ -1,5 +1,6 @@
 import Origin from '../src/Origin'
 import Horoscope from '../src/Horoscope'
+import { ASPECTS } from '../src/constants'
 
 const defaultOrigin = new Origin({
   year: 2019, // July 20, 2019 10:10am local time
@@ -327,6 +328,23 @@ describe('CelestialBodies', () => {
         expect(horoscope.CelestialPoints.Lilith.Sign.Name).toEqual("Pisces")
         expect(horoscope.CelestialPoints.Lilith.House.Id).toEqual(6)
       })
+    })
+  })
+
+  describe('Aspects', () => {
+    it('returns all aspects', () => {
+      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical', aspects: 'all'})
+      expect(horoscope.Aspects).toHaveLength(Object.keys(ASPECTS).length)
+    })
+
+    it('returns all major aspects', () => {
+      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical', aspects: 'major'})
+      expect(horoscope.Aspects).toHaveLength(Object.keys(ASPECTS).filter(key => ASPECTS[key].level === 'major').length)
+    })
+
+    it('returns all minor aspects', () => {
+      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical', aspects: 'minor'})
+      expect(horoscope.Aspects).toHaveLength(Object.keys(ASPECTS).filter(key => ASPECTS[key].level === 'minor').length)
     })
   })
 })
