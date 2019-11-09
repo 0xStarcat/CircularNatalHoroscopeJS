@@ -216,7 +216,7 @@ class Horoscope {
           break
       }
 
-      zodiacDegrees = applyZodiacOffsetCounter(result.position.apparentLongitude, this._zodiac)
+      zodiacDegrees = applyZodiacOffsetCounter(zodiacDegrees, this._zodiac)
 
       return {
         key,
