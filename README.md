@@ -24,7 +24,7 @@ The goal is to allow someone to:
 
 => Positions of the lots (Fortune, Spirit, Eros, etc)
 
-=> Data for retrograde planets
+=> ~~Data for retrograde planets~~
 
 => ~~the cusps of each astrological sign as they relate to the 2D ecliptic chart for a given datetime, origin, and a particular house system.~~
 

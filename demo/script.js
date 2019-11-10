@@ -100,7 +100,7 @@ class DemoApp {
       document.querySelector(`#zodiac-${index + 1}b`).innerHTML = cusp.ChartPosition.Ecliptic.DecimalDegrees
     })
 
-    horoscope.CelestialBodies.forEach(result => {
+    horoscope.CelestialBodies.all.forEach(result => {
       const ecEl = document.querySelector(`#${result.key}-a`)
       if (ecEl) ecEl.innerHTML = result.ChartPosition.Horizon.DecimalDegrees.toFixed(4)
 
@@ -109,6 +109,9 @@ class DemoApp {
 
       const dmsEl = document.querySelector(`#${result.key}-dms`)
       if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
+
+      const retroEl = document.querySelector(`#${result.key}-retro`)
+      if (retroEl) retroEl.innerHTML = `${result.isRetrograde ? result.isRetrograde : ''}`
 
       const houseEl = document.querySelector(`#${result.key}-house`)
       if (houseEl) houseEl.innerHTML = `${result.House.Name}`
