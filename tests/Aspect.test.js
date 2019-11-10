@@ -7,7 +7,7 @@ describe('Aspect', () => {
 
       expect(aspect.aspectKey).toEqual('conjunction')
       expect(aspect.aspectLevel).toEqual('major')
-      expect(aspect.aspectLabel).toEqual('Conjunction')
+      expect(aspect.label).toEqual('Conjunction')
     })
   })
 })

@@ -4,7 +4,9 @@ import Sign from './Sign'
 import ZodiacPosition from './ZodiacPosition'
 import ChartPosition from './ChartPosition'
 import House from './House'
-import { ASPECTS, POINTS } from './constants'
+
+import { LANGUAGE } from './utilities/language'
+import { SIGNS, ASPECTS, BODIES, ANGLES, POINTS } from './constants'
 
 import { getMidheavenSun, getAscendant } from './utilities/astronomy'
 import { modulo, isDegreeWithinCircleArc } from './utilities/math'
@@ -22,9 +24,18 @@ import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHo
 // * string houseSystem: a string from the list assigned to Horoscope.HouseSystems in the constructor.
 
 class Horoscope {
-  constructor({origin = null, houseSystem='placidus', zodiac='tropical', aspectPoints=['bodies', 'points', 'angles'], aspectWithPoints=['bodies', 'points', 'angles'], aspectTypes=['major'], customOrbs={}}={}) {
+  constructor({
+    origin = null,
+    language = 'en',
+    houseSystem ='placidus',
+    zodiac ='tropical',
+    aspectPoints = ['bodies', 'points', 'angles'],
+    aspectWithPoints = ['bodies', 'points', 'angles'],
+    aspectTypes = ['major'],
+    customOrbs = {}
+  }={}) {
     this.origin = origin
-
+    this._language = language
     this._houseSystem = this.validateHouseSystem(houseSystem)
     this._zodiac = this.validateZodiac(zodiac.toLowerCase())
     this._ascendant = this.createAscendant()
@@ -122,8 +133,10 @@ class Horoscope {
   createAscendant() {
     const decimalDegrees = applyZodiacOffsetCounter(getAscendant({latitude: this.origin.latitude, localSiderealTime: this.origin.localSiderealTime }), this._zodiac)
 
+    const key = 'ascendant'
     return {
-      key: 'ascendant',
+      key: key,
+      label: LANGUAGE[this._language][key],
       ...new ZodiacPosition({decimalDegrees: decimalDegrees, zodiac: this._zodiac}),
       ChartPosition: new ChartPosition({zodiacDegrees: decimalDegrees, eclipticDegrees: zodiacPositionToEcliptic(decimalDegrees, decimalDegrees) })
     }
@@ -132,8 +145,10 @@ class Horoscope {
   createMidheaven() {
     const decimalDegrees = applyZodiacOffsetCounter(getMidheavenSun({localSiderealTime: this.origin.localSiderealTime }), this._zodiac)
 
+    const key = 'midheaven'
     return {
-      key: 'midheaven',
+      key: key,
+      label: LANGUAGE[this._language][key],
       ...new ZodiacPosition({decimalDegrees: decimalDegrees, zodiac: this._zodiac}),
       ChartPosition: new ChartPosition({zodiacDegrees: decimalDegrees, eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees, decimalDegrees) })
     }
@@ -141,17 +156,14 @@ class Horoscope {
 
   createSunSign(zodiac) {
     // Source: https://horoscopes.lovetoknow.com/about-astrology/new-horoscope-dates
-    // Astronomical dates from IAU and slightly altered to be computed without times.
-    // Pending a better solution, all astronimical zodiac end dates are offset by -1
-
     const sign = Sign.OfType(zodiac).find(sign => {
       if (!sign.StartDate) return
       const originYear = this.origin.year
-      const startDate = sign.StartDate.add(originYear, 'year')
-      const endDate = sign.EndDate.add(originYear, 'year')
+      const startDate = moment(sign.StartDate).add(originYear, 'year')
+      const endDate = moment(sign.EndDate).add(originYear, 'year')
+
       return this.origin.utcTime.isBetween(startDate, endDate, null, '[]')
     })
-
     return sign
   }
 
@@ -208,6 +220,7 @@ class Horoscope {
 
       return ({
         key: result.key,
+        label: LANGUAGE[this._language][result.key],
         Sign: getZodiacSign({decimalDegrees: zodiacDegrees, zodiac: this._zodiac}),
         ChartPosition: new ChartPosition({
           eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees, zodiacDegrees),
@@ -245,6 +258,7 @@ class Horoscope {
 
       return {
         key,
+        label: LANGUAGE[this._language][key],
         ChartPosition: new ChartPosition({zodiacDegrees, eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees, zodiacDegrees) }),
         Sign: getZodiacSign({decimalDegrees: zodiacDegrees, zodiac: this._zodiac}),
         House: getHouseFromDD(this.Houses, zodiacDegrees),

@@ -52,12 +52,13 @@ export const createAspects = horoscope => {
         let orb, aspect
         if (isAspect(point1Data.point, point2Data.point, aspectObject.angle, maxOrb)) {
           orb = aspectObject.angle - getModuloDifference(point1Data.point, point2Data.point)
-          aspect = new Aspect({aspectKey: type, point1Key: point1, point2Key: point2, orb, orbUsed: maxOrb})
+          aspect = new Aspect({ aspectKey: type, point1Key: point1, point2Key: point2, orb, orbUsed: maxOrb, language: horoscope._language })
         } else if (isAspect(point2Data.point, point1Data.point, aspectObject.angle, maxOrb)) {
           orb = aspectObject.angle - getModuloDifference(point2Data.point, point1Data.point)
-          aspect = new Aspect({aspectKey: type, point1Key: point1, point2Key: point2, orb, orbUsed: maxOrb})
+          aspect = new Aspect({ aspectKey: type, point1Key: point1, point2Key: point2, orb, orbUsed: maxOrb, language: horoscope._language })
         }
 
+        if (!aspect) return
         if (aspect) {
           if  (aspect.point1Key === 'northnode' && aspect.point2Key === 'southnode') return // no northnode-southnode aspect
           if  (aspect.point1Key === 'southnode' && aspect.point2Key === 'northnode') return // no southnode-northnode aspect

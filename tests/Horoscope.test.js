@@ -62,12 +62,14 @@ describe('Midheaven & ascendant calculations', () => {
       origin
     })
 
+    expect(horoscope.Midheaven.label).toBe("Midheaven")
     expect(horoscope.Midheaven.ChartPosition.Ecliptic.DecimalDegrees).toBe(78.4576)
     expect(horoscope.Midheaven.ChartPosition.Ecliptic.ArcDegreesFormatted).toBe("78° 27' 27''")
-    expect(horoscope.Midheaven.Sign.Name).toBe("Gemini")
+    expect(horoscope.Midheaven.Sign.label).toBe("Gemini")
+    expect(horoscope.Ascendant.label).toBe("Ascendant")
     expect(horoscope.Ascendant.ChartPosition.Ecliptic.DecimalDegrees).toBe(169.4304)
     expect(horoscope.Ascendant.ChartPosition.Ecliptic.ArcDegreesFormatted).toBe("169° 25' 49''")
-    expect(horoscope.Ascendant.Sign.Name).toBe("Virgo")
+    expect(horoscope.Ascendant.Sign.label).toBe("Virgo")
   })
 
   test('Sidereal Northern Hemisphere Horoscope calculations', () => {
@@ -80,10 +82,10 @@ describe('Midheaven & ascendant calculations', () => {
 
     expect(horoscope.Midheaven.ChartPosition.Ecliptic.DecimalDegrees).toBe(54.3576)
     expect(horoscope.Midheaven.ChartPosition.Ecliptic.ArcDegreesFormatted).toBe("54° 21' 27''")
-    expect(horoscope.Midheaven.Sign.Name).toBe("Taurus")
+    expect(horoscope.Midheaven.Sign.label).toBe("Taurus")
     expect(horoscope.Ascendant.ChartPosition.Ecliptic.DecimalDegrees).toBe(145.3304)
     expect(horoscope.Ascendant.ChartPosition.Ecliptic.ArcDegreesFormatted).toBe("145° 19' 49''")
-    expect(horoscope.Ascendant.Sign.Name).toBe("Leo")
+    expect(horoscope.Ascendant.Sign.label).toBe("Leo")
   })
 
   test('Southern Hemisphere Horoscope calculations', () => {
@@ -103,10 +105,10 @@ describe('Midheaven & ascendant calculations', () => {
 
     expect(horoscope.Midheaven.ChartPosition.Ecliptic.DecimalDegrees).toBe(78.1782)
     expect(horoscope.Midheaven.ChartPosition.Ecliptic.ArcDegreesFormatted).toBe("78° 10' 42''")
-    expect(horoscope.Midheaven.Sign.Name).toBe("Gemini")
+    expect(horoscope.Midheaven.Sign.label).toBe("Gemini")
     expect(horoscope.Ascendant.ChartPosition.Ecliptic.DecimalDegrees).toBe(160.2684)
     expect(horoscope.Ascendant.ChartPosition.Ecliptic.ArcDegreesFormatted).toBe("160° 16' 6''")
-    expect(horoscope.Ascendant.Sign.Name).toBe("Virgo")
+    expect(horoscope.Ascendant.Sign.label).toBe("Virgo")
   })
 })
 
@@ -192,33 +194,33 @@ describe('SunSign', () => {
 
   describe('Tropical Zodiac', () => {
     test('Get sign for Nov. 10', () => {
-      expect(new Horoscope({origin: novOrigin, zodiac: "tropical"}).SunSign.Name).toBe('Scorpio')
+      expect(new Horoscope({origin: novOrigin, zodiac: "tropical"}).SunSign.label).toBe('Scorpio')
     })
 
     test('Get sign for cusp start', () => {
-      expect(new Horoscope({origin: cuspStart, zodiac: "tropical"}).SunSign.Name).toBe('Libra')
+      expect(new Horoscope({origin: cuspStart, zodiac: "tropical"}).SunSign.label).toBe('Libra')
     })
 
     test('Get sign for cusp end', () => {
-      expect(new Horoscope({origin: cuspEnd, zodiac: "tropical"}).SunSign.Name).toBe('Virgo')
+      expect(new Horoscope({origin: cuspEnd, zodiac: "tropical"}).SunSign.label).toBe('Virgo')
     })
   })
 
   describe('Tropical Zodiac SunSign', () => {
     test('Get sign for Dec. 31', () => {
-      expect(new Horoscope({origin: decOrigin, zodiac: "tropical"}).SunSign.Name).toBe('Capricorn')
+      expect(new Horoscope({origin: decOrigin, zodiac: "tropical"}).SunSign.label).toBe('Capricorn')
     })
   })
 
   describe('Sidereal Zodiac SunSign', () => {
     test('Get sign for Nov. 10', () => {
-      expect(new Horoscope({origin: novOrigin, zodiac: "sidereal"}).SunSign.Name).toBe('Libra')
+      expect(new Horoscope({origin: novOrigin, zodiac: "sidereal"}).SunSign.label).toBe('Libra')
     })
   })
 
   // describe('Astronomical Zodiac SunSign', () => {
   //   test('Get sign for Nov. 10', () => {
-  //     expect(new Horoscope({origin: novOrigin, zodiac: "astronomical"}).SunSign.Name).toBe('Libra')
+  //     expect(new Horoscope({origin: novOrigin, zodiac: "astronomical"}).SunSign.label).toBe('Libra')
   //   })
   // })
 })
@@ -322,12 +324,12 @@ describe('CelestialBodies', () => {
 
   describe('tropical single planet', () => {
     const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical'})
-    expect(horoscope.CelestialBodies.all[0].House.Id).toEqual(11)
+    expect(horoscope.CelestialBodies.all[0].House.id).toEqual(11)
   })
 
   describe('sidereal single planet', () => {
     const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'})
-    expect(horoscope.CelestialBodies.all[0].House.Id).toEqual(11)
+    expect(horoscope.CelestialBodies.all[0].House.id).toEqual(11)
   })
 
   describe('CelestialPoints', () => {
@@ -336,21 +338,21 @@ describe('CelestialBodies', () => {
 
       it('returns north node', () => {
         expect(horoscope.CelestialPoints.northnode.ChartPosition.Ecliptic.DecimalDegrees).toEqual(106.9588)
-        expect(horoscope.CelestialPoints.northnode.Sign.Name).toEqual("Cancer")
-        expect(horoscope.CelestialPoints.northnode.House.Id).toEqual(10)
+        expect(horoscope.CelestialPoints.northnode.Sign.label).toEqual("Cancer")
+        expect(horoscope.CelestialPoints.northnode.House.id).toEqual(10)
 
       })
 
       it('returns south node', () => {
         expect(horoscope.CelestialPoints.southnode.ChartPosition.Ecliptic.DecimalDegrees).toEqual(286.9588)
-        expect(horoscope.CelestialPoints.southnode.Sign.Name).toEqual("Capricorn")
-        expect(horoscope.CelestialPoints.southnode.House.Id).toEqual(4)
+        expect(horoscope.CelestialPoints.southnode.Sign.label).toEqual("Capricorn")
+        expect(horoscope.CelestialPoints.southnode.House.id).toEqual(4)
       })
 
       it('returns lilith', () => {
         expect(horoscope.CelestialPoints.lilith.ChartPosition.Ecliptic.DecimalDegrees).toEqual(338.7655)
-        expect(horoscope.CelestialPoints.lilith.Sign.Name).toEqual("Pisces")
-        expect(horoscope.CelestialPoints.lilith.House.Id).toEqual(6)
+        expect(horoscope.CelestialPoints.lilith.Sign.label).toEqual("Pisces")
+        expect(horoscope.CelestialPoints.lilith.House.id).toEqual(6)
       })
     })
   })

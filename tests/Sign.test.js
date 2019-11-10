@@ -6,8 +6,8 @@ describe('Sign', () => {
       expect(() => new Sign({id: 11, zodiac: "TEST"})).toThrowError("The \"test\" zodiac is not included. Please choose from the following list: astronomical, sidereal, tropical.")
     })
 
-    test('Get Name', () => {
-      expect(new Sign({id: 11}).Name).toBe('Pisces')
+    test('Get label', () => {
+      expect(new Sign({id: 11}).label).toBe('Pisces')
     })
   })
 

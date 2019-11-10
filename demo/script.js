@@ -98,18 +98,18 @@ class DemoApp {
 
     console.log(horoscope)
 
-    this.sunSignElement.innerHTML = horoscope.SunSign.Name
+    this.sunSignElement.innerHTML = horoscope.SunSign.label
 
-    this.midheavenElement.innerHTML = `${horoscope.Midheaven.ChartPosition.Ecliptic.DecimalDegrees} || ${horoscope.Midheaven.Sign.Name} ${horoscope.Midheaven.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
+    this.midheavenElement.innerHTML = `${horoscope.Midheaven.ChartPosition.Ecliptic.DecimalDegrees} || ${horoscope.Midheaven.Sign.label} ${horoscope.Midheaven.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
 
-    this.ascendantElement.innerHTML = `${horoscope.Ascendant.ChartPosition.Ecliptic.DecimalDegrees} || ${horoscope.Ascendant.Sign.Name} ${horoscope.Ascendant.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
+    this.ascendantElement.innerHTML = `${horoscope.Ascendant.ChartPosition.Ecliptic.DecimalDegrees} || ${horoscope.Ascendant.Sign.label} ${horoscope.Ascendant.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
 
     horoscope.Houses.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.ChartPosition.StartPosition.Horizon.DecimalDegrees
 
       document.querySelector(`#house-${index + 1}b`).innerHTML = cusp.ChartPosition.StartPosition.Ecliptic.DecimalDegrees
 
-      document.querySelector(`#house-${index + 1}-sign`).innerHTML = `${cusp.Sign.Name}`
+      document.querySelector(`#house-${index + 1}-sign`).innerHTML = `${cusp.Sign.label}`
 
     })
 
@@ -126,13 +126,13 @@ class DemoApp {
       if (zEl) zEl.innerHTML = result.ChartPosition.Ecliptic.DecimalDegrees.toFixed(4)
 
       const dmsEl = document.querySelector(`#${result.key}-dms`)
-      if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
+      if (dmsEl) dmsEl.innerHTML = `${result.Sign.label} ${result.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
 
       const retroEl = document.querySelector(`#${result.key}-retro`)
       if (retroEl) retroEl.innerHTML = `${result.isRetrograde ? result.isRetrograde : ''}`
 
       const houseEl = document.querySelector(`#${result.key}-house`)
-      if (houseEl) houseEl.innerHTML = `${result.House.Name}`
+      if (houseEl) houseEl.innerHTML = `${result.House.label}`
     })
 
     Object.keys(horoscope.CelestialPoints).forEach(key => {
@@ -145,10 +145,10 @@ class DemoApp {
       if (zEl) zEl.innerHTML = result.ChartPosition.Ecliptic.DecimalDegrees.toFixed(4)
 
       const dmsEl = document.querySelector(`#${key.toLowerCase()}-dms`)
-      if (dmsEl) dmsEl.innerHTML = `${result.Sign.Name} ${result.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
+      if (dmsEl) dmsEl.innerHTML = `${result.Sign.label} ${result.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
 
       const houseEl = document.querySelector(`#${key.toLowerCase()}-house`)
-      if (houseEl) houseEl.innerHTML = `${result.House.Name}`
+      if (houseEl) houseEl.innerHTML = `${result.House.label}`
     })
 
     const aspectsTableBody = this.aspectsTable.querySelector('tbody')
@@ -156,9 +156,9 @@ class DemoApp {
     horoscope.Aspects.all.forEach(aspect => {
       const tableRow = document.createElement('tr')
       tableRow.innerHTML = `
-        <td>${aspect.point1Key}</td>
-        <td>${aspect.aspectLabel}</td>
-        <td>${aspect.point2Key}</td>
+        <td>${aspect.point1Label}</td>
+        <td>${aspect.label}</td>
+        <td>${aspect.point2Label}</td>
         <td>${aspect.orb}</td>
         <td>${aspect.orbUsed}</td>
         <td>${aspect.aspectLevel}</td>

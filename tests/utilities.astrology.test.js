@@ -2,17 +2,17 @@ import { getZodiacSign, getSignFromDD, getHouseFromDD, calculateEqualHouseCusps,
 
 test('getZodiacSign - 1', () => {
   const sign = getZodiacSign({decimalDegrees: 5.6789, zodiac: "tropical"})
-  expect(sign.Name).toBe("Aries")
+  expect(sign.label).toBe("Aries")
 })
 
 test('getZodiacSign - 2', () => {
   const sign = getZodiacSign({decimalDegrees: 180.6789, zodiac: "tropical"})
-  expect(sign.Name).toBe("Libra")
+  expect(sign.label).toBe("Libra")
 })
 
 test('getZodiacSign - 3', () => {
   const sign = getZodiacSign({decimalDegrees: 355.6789, zodiac: "tropical"})
-  expect(sign.Name).toBe("Pisces")
+  expect(sign.label).toBe("Pisces")
 })
 
 describe('getHouseFromDD', () => {
@@ -21,14 +21,14 @@ describe('getHouseFromDD', () => {
   const houses = constructHouses(cuspsArray, 0, 'tropical')
 
   it('returns 1st house', () => {
-    expect(getHouseFromDD(houses, 0).Id).toEqual(1)
+    expect(getHouseFromDD(houses, 0).id).toEqual(1)
   })
 
   it('returns 2th house', () => {
-    expect(getHouseFromDD(houses, 30).Id).toEqual(2)
+    expect(getHouseFromDD(houses, 30).id).toEqual(2)
   })
 
   it('returns 12th house', () => {
-    expect(getHouseFromDD(houses, 350).Id).toEqual(12)
+    expect(getHouseFromDD(houses, 350).id).toEqual(12)
   })
 })
