@@ -1,19 +1,15 @@
-import { modulo, getModuloDifference } from './math'
+import { modulo, getModuloDifference, isDegreeWithinCircleArc } from './math'
 import { ASPECTS } from '../constants'
 import Aspect from '../Aspect'
 
 export const isAspect = (point1, point2, angle, orb) => {
-  if (point2 >= point1) {
-    const computed = point2 - point1
+  const computed = modulo(point2 - point1, 360)
 
-    return (computed >= angle - orb && computed <= angle + orb)
 
-  } else if (point1 > point2) {
-    point2 = point2 + 360
+  const low = modulo(angle - orb, 360)
+  const high = modulo(angle + orb, 360)
 
-    const computed = point2 - point1
-    return (computed >= angle - orb && computed <= angle + orb)
-  }
+  return isDegreeWithinCircleArc(low, high, computed, '[]')
 }
 
 export const getAspectData = (horoscope) => {
@@ -40,7 +36,7 @@ export const createAspects = horoscope => {
   const aspectWithPoints = horoscope._aspectWithPoints
 
   const aspects = []
-  const createdAspectTypes = {}
+  const createdaspectTypes = {}
   const createdAspectPoints = {}
 
   aspectPoints.forEach(point1 => {
@@ -71,10 +67,10 @@ export const createAspects = horoscope => {
 
           aspects.push(aspect)
 
-          if (Array.isArray(createdAspectTypes[type])) {
-            createdAspectTypes[type].push(aspect)
+          if (Array.isArray(createdaspectTypes[type])) {
+            createdaspectTypes[type].push(aspect)
           } else {
-            createdAspectTypes[type] = [aspect]
+            createdaspectTypes[type] = [aspect]
           }
 
           if (Array.isArray(createdAspectPoints[point1])) {
@@ -95,7 +91,7 @@ export const createAspects = horoscope => {
 
   return {
     all: aspects,
-    types: createdAspectTypes,
+    types: createdaspectTypes,
     points: createdAspectPoints
   }
 }

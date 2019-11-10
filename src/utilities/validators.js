@@ -128,5 +128,5 @@ export const validateAspectPoints = (stringOrArray) => {
 
   stringOrArray = distinctArray(stringOrArray)
 
-  return stringOrArray 
+  return stringOrArray
 }

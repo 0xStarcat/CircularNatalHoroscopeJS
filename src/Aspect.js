@@ -1,4 +1,5 @@
 import { ASPECTS } from './constants'
+import { modulo } from './utilities/math'
 
 /** Class representing an aspect. */
 export default class Aspect {
@@ -18,7 +19,7 @@ export default class Aspect {
     this.aspectKey = aspectKey
     this.aspectLevel = ASPECTS[aspectKey].level
     this.aspectLabel = ASPECTS[aspectKey].label
-    this.orb = orb
+    this.orb = parseFloat(modulo(orb, orbUsed).toFixed(4))
     this.orbUsed = orbUsed
   }
 }

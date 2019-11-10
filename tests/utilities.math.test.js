@@ -1,4 +1,4 @@
-import { isDegreeWithinCircleArc } from '../src/utilities/math'
+import { getModuloDifference, isDegreeWithinCircleArc } from '../src/utilities/math'
 
 describe ('isDegreeWithinCircleArc', () => {
   it('returns true when degree equals lowArc', () => {
@@ -29,3 +29,17 @@ describe ('isDegreeWithinCircleArc', () => {
     expect(isDegreeWithinCircleArc(330, 0, 10)).toEqual(false)
   })
 })
+
+// describe('getModuloDifference', () => {
+//   describe('edge cases', () => {
+//     it ('returns value', () => {
+//
+//       expect(getModuloDifference(270, 260)).toEqual(-10)
+//     })
+//
+//     it ('returns value', () => {
+//
+//       expect(getModuloDifference(270, 1)).toEqual(91)
+//     })
+//   })
+// })

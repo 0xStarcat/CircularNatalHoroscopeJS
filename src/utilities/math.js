@@ -84,14 +84,26 @@ export const decimalDegreesToDMS = (decimalDegrees) => {
   }
 }
 
-export const isDegreeWithinCircleArc = (arcLow, arcHigh, degree) => {
-  // Low Inclusive, high exclusive
-  if (arcLow < arcHigh) {
-    return degree >= arcLow && degree < arcHigh
-  } else {
-    if (degree < arcLow) degree = degree + 360
-    return degree >= arcLow && degree < arcHigh + 360
+export const isDegreeWithinCircleArc = (arcLow, arcHigh, degree, edges='[)') => {
+  const operators = {
+    '[': (a, b) => a >= b,
+    '(': (a, b) => a > b,
+    ']': (a, b) => a <= b,
+    ')': (a, b) => a < b
   }
+
+  const lowComparison = operators[edges.split('')[0]]
+  const highComparison = operators[edges.split('')[1]]
+
+  if (arcLow > arcHigh) {
+    arcHigh = arcHigh + 360
+
+    if (degree < arcLow) {
+      degree = degree + 360
+    }
+  }
+
+  return lowComparison(degree, arcLow) && highComparison(degree, arcHigh)
 }
 
 export const getModuloDifference = (point1, point2) => {

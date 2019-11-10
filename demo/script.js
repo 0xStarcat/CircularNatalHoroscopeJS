@@ -19,6 +19,10 @@ class DemoApp {
     this.housesElement = document.querySelector('#houses')
     this.zodiacCuspsElement = document.querySelector('#zodiacCusps')
 
+    this.aspectsTable = document.querySelector('#aspects')
+    this.aspectsMajor = document.querySelector('#aspect-level-major')
+    this.aspectsMinor = document.querySelector('#aspect-level-minor')
+
     this.displayDateTime = this.displayDateTime.bind(this)
     this.loadHouseSystemSelect = this.loadHouseSystemSelect.bind(this)
     this.loadZodiacSystemSelect = this.loadZodiacSystemSelect.bind(this)
@@ -71,11 +75,11 @@ class DemoApp {
       longitude: this.longitudeInput.value
     })
 
-
     const horoscope = new Horoscope({
       origin: origin,
       houseSystem: this.houseSystemSelect.value,
-      zodiac: this.zodiacSystemSelect.value
+      zodiac: this.zodiacSystemSelect.value,
+      aspectTypes: [this.aspectsMajor.checked ? 'major' : undefined, this.aspectsMinor.checked ? 'minor' : undefined].filter(e => e)
     })
 
     console.log(horoscope)
@@ -131,6 +135,21 @@ class DemoApp {
 
       const houseEl = document.querySelector(`#${key.toLowerCase()}-house`)
       if (houseEl) houseEl.innerHTML = `${result.House.Name}`
+    })
+
+    const aspectsTableBody = this.aspectsTable.querySelector('tbody')
+    aspectsTableBody.innerHTML = ''
+    horoscope.Aspects.all.forEach(aspect => {
+      const tableRow = document.createElement('tr')
+      tableRow.innerHTML = `
+        <td>${aspect.point1Key}</td>
+        <td>${aspect.aspectLabel}</td>
+        <td>${aspect.point2Key}</td>
+        <td>${aspect.orb}</td>
+        <td>${aspect.orbUsed}</td>
+        <td>${aspect.aspectLevel}</td>
+      `
+      aspectsTableBody.appendChild(tableRow)
     })
   }
 }

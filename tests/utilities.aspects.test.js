@@ -34,6 +34,16 @@ describe('isAspect', () => {
   it ('returns false with modulo-ed comparison', () => {
     expect(isAspect(300, 29, 100, 10)).toEqual(false)
   })
+
+  describe('edge cases', () => {
+    it ('returns true', () => {
+      expect(isAspect(240.45, 239.61, 0, 8)).toEqual(true) // conjunction
+    })
+
+    it ('returns true', () => {
+      expect(isAspect(184.09, 240.45, 60, 6)).toEqual(true) // sextile
+    })
+  })
 })
 
 
