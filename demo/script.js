@@ -75,11 +75,25 @@ class DemoApp {
       longitude: this.longitudeInput.value
     })
 
+    const customOrbs = {
+      conjunction: document.querySelector('#conjunction-orb').value,
+      opposition: document.querySelector('#opposition-orb').value,
+      trine: document.querySelector('#trine-orb').value,
+      square: document.querySelector('#square-orb').value,
+      sextile: document.querySelector('#sextile-orb').value,
+      quincunx: document.querySelector('#quincunx-orb').value,
+      quintile: document.querySelector('#quintile-orb').value,
+      septile: document.querySelector('#septile-orb').value,
+      'semi-square': document.querySelector('#semi-square-orb').value,
+      'semi-sextile': document.querySelector('#semi-sextile-orb').value,
+    }
+
     const horoscope = new Horoscope({
       origin: origin,
       houseSystem: this.houseSystemSelect.value,
       zodiac: this.zodiacSystemSelect.value,
-      aspectTypes: [this.aspectsMajor.checked ? 'major' : undefined, this.aspectsMinor.checked ? 'minor' : undefined].filter(e => e)
+      aspectTypes: [this.aspectsMajor.checked ? 'major' : undefined, this.aspectsMinor.checked ? 'minor' : undefined].filter(e => e),
+      customOrbs: customOrbs
     })
 
     console.log(horoscope)

@@ -9,7 +9,7 @@ import { ASPECTS, POINTS } from './constants'
 import { getMidheavenSun, getAscendant } from './utilities/astronomy'
 import { modulo, isDegreeWithinCircleArc } from './utilities/math'
 import { createAspects } from './utilities/aspects'
-import { validateAspectTypes, validateAspectPoints } from './utilities/validators'
+import { validateAspectTypes, validateAspectPoints, validateCustomOrbs } from './utilities/validators'
 
 import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign, applyZodiacOffsetClockwise, applyZodiacOffsetCounter, zodiacPositionToEcliptic, getHouseFromDD, constructHouses } from './utilities/astrology'
 
@@ -35,7 +35,7 @@ class Horoscope {
     this._aspectTypes = validateAspectTypes(aspectTypes)
     this._aspectPoints = validateAspectPoints(aspectPoints)
     this._aspectWithPoints = validateAspectPoints(aspectWithPoints)
-    this._customOrbs = customOrbs
+    this._customOrbs = validateCustomOrbs(customOrbs)
 
     this.Ephemeris = new Ephemeris({
       year: this.origin.year, month: this.origin.month, day: this.origin.date,

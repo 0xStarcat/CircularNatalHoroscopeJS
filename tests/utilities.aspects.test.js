@@ -130,6 +130,36 @@ describe('createAspects', () => {
     expect(aspects.points.midheaven).toHaveLength(2)
   })
 
+  it('returns all formatted aspect data and uses customOrbs', () => {
+    const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['all'], customOrbs: { conjunction: 10 }})
+    const aspects = createAspects(horoscope)
+
+    expect(aspects.all).toHaveLength(41)
+    expect(aspects.types.conjunction).toHaveLength(10)
+    expect(aspects.types.opposition).toHaveLength(9)
+    expect(aspects.types.trine).toHaveLength(10)
+    expect(aspects.types.square).toHaveLength(5)
+    expect(aspects.types.sextile).toHaveLength(7)
+    expect(aspects.types.quincunx).toBe(undefined)
+
+    expect(aspects.points.sun).toHaveLength(4)
+    expect(aspects.points.moon).toHaveLength(2)
+    expect(aspects.points.mercury).toHaveLength(5)
+    expect(aspects.points.venus).toHaveLength(8)
+    expect(aspects.points.mars).toHaveLength(3)
+    expect(aspects.points.jupiter).toHaveLength(5)
+    expect(aspects.points.saturn).toHaveLength(6)
+    expect(aspects.points.uranus).toHaveLength(3)
+    expect(aspects.points.neptune).toHaveLength(9)
+    expect(aspects.points.pluto).toHaveLength(8)
+    expect(aspects.points.chiron).toHaveLength(3)
+    expect(aspects.points.sirius).toHaveLength(3)
+    expect(aspects.points.northnode).toHaveLength(5)
+    expect(aspects.points.southnode).toHaveLength(5)
+    expect(aspects.points.ascendant).toHaveLength(7)
+    expect(aspects.points.midheaven).toHaveLength(2)
+  })
+
   it('returns specified aspectPoints with aspectWithPoints', () => {
     const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['all'], aspectWithPoints: ['mercury']})
     const aspects = createAspects(horoscope)

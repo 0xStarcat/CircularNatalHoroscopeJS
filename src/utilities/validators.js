@@ -96,7 +96,6 @@ export const validateAspectTypes = (stringOrArray) => {
   return stringOrArray
 }
 
-
 export const validateAspectPoints = (stringOrArray) => {
   stringOrArray = validateStringOrArray(stringOrArray)
 
@@ -129,4 +128,15 @@ export const validateAspectPoints = (stringOrArray) => {
   stringOrArray = distinctArray(stringOrArray)
 
   return stringOrArray
+}
+
+export const validateCustomOrbs = customOrbs => {
+  Object.keys(customOrbs).forEach(orbKey => {
+    if (!ASPECTS[orbKey]) throw new Error(`"${orbKey}" is not a valid custom orb.`)
+    customOrbs[orbKey] = parseFloat(customOrbs[orbKey])
+    if (customOrbs[orbKey] < 0 ) throw new Error(`Custom orb "${orbKey}" must be > 0.`)
+    if (customOrbs[orbKey] > 12 ) throw new Error(`Custom orb "${orbKey}" must be <= 12.`)
+  })
+
+  return customOrbs
 }

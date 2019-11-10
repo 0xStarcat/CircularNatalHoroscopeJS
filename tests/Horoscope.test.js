@@ -28,6 +28,30 @@ describe('Construction Validation & Errors', () => {
       expect(() => new Horoscope({origin: origin, zodiac: "TEST"})).toThrowError("The \"test\" zodiac is not included. Please choose from the following list: sidereal, tropical.")
     })
   })
+
+  describe('custom orb validation', () => {
+    const origin = defaultOrigin
+
+    test('Passing in an invalid houseSystem string', () => {
+      expect(() => new Horoscope({
+        origin: origin,
+        aspectTypes: ['conjunction'],
+        aspectPoints: ['sun'],
+        aspectWithPoints: ['moon'],
+        customOrbs: { conjunction: "-1" }
+    })).toThrowError(/Custom orb \"conjunction\" must be > 0./)
+    })
+
+    test('Passing in an invalid houseSystem string', () => {
+      expect(() => new Horoscope({
+        origin: origin,
+        aspectTypes: ['conjunction'],
+        aspectPoints: ['sun'],
+        aspectWithPoints: ['moon'],
+        customOrbs: { conjunction: "13" }
+    })).toThrowError(/Custom orb \"conjunction\" must be <= 12./)
+    })
+  })
 })
 
 describe('Midheaven & ascendant calculations', () => {

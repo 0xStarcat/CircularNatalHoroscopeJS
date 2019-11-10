@@ -38,26 +38,83 @@
               <label>Local Time of birth</label>
               <input class="form-control" id="time" name="time" type="time" value="19:00:00"></input>
             </div>
-            <div class="form-group">
-              <label>Zodiac System:</label>
-              <select id="zodiacSystem"></select>
-            </div>
-            <div class="form-group">
-              <label>House System:</label>
-              <select id="houseSystem"></select>
-            </div>
-            <div class="form-group">
-              <label>Aspect Levels:</label>
-              <div>
+            <div class="row">
 
-                <label for ="aspect-level-major">
-                  Major
-                  <input id="aspect-level-major" type="checkbox" checked>
-                </label>
-                <label for="aspect-level-minor">
-                  Minor
-                  <input id="aspect-level-minor" type="checkbox">
-                </label>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Zodiac System:</label>
+                  <select id="zodiacSystem"></select>
+                </div>
+                <div class="form-group">
+                  <label>House System:</label>
+                  <select id="houseSystem"></select>
+                </div>
+                <div class="form-group">
+                  <label>Aspect Levels:</label>
+                  <div>
+                    <label for ="aspect-level-major">
+                      Major
+                      <input id="aspect-level-major" type="checkbox" checked>
+                    </label>
+                    <label for="aspect-level-minor">
+                      Minor
+                      <input id="aspect-level-minor" type="checkbox">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Aspect Orbs:</label>
+                  <div class="row">
+                    <div class="col-6">
+                      <label>Major Aspects</label>
+                      <div class="form-group">
+                        <label>Conjunction (0°)</label>
+                        <input class="form-control" id="conjunction-orb" type="number" step="any" min="0" max="12" value="8"></input>
+                      </div>
+                      <div class="form-group">
+                        <label>Opposition (180°)</label>
+                        <input class="form-control" id="opposition-orb" type="number" step="any" min="0" max="12" value="8"></input>
+                      </div>
+                      <div class="form-group">
+                        <label>Trine (120°)</label>
+                        <input class="form-control" id="trine-orb" type="number" step="any" min="0" max="12" value="8"></input>
+                      </div>
+                      <div class="form-group">
+                        <label>Square (90°)</label>
+                        <input class="form-control" id="square-orb" type="number" step="any" min="0" max="12" value="7"></input>
+                      </div>
+                      <div class="form-group">
+                        <label>Sextile (60°)</label>
+                        <input class="form-control" id="sextile-orb" type="number" step="any" min="0" max="12" value="6"></input>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <label>Minor Aspects</label>
+                      <div class="form-group">
+                        <label>Quincunx (150°)</label>
+                        <input class="form-control" id="quincunx-orb" type="number" step="any" min="0" max="12" value="5"></input>
+                      </div>
+                      <div class="form-group">
+                        <label>Quintile (72°)</label>
+                        <input class="form-control" id="quintile-orb" type="number" step="any" min="0" max="12" value="1"></input>
+                      </div>
+                      <div class="form-group">
+                        <label>Septile (51.5°)</label>
+                        <input class="form-control" id="septile-orb" type="number" step="any" min="0" max="12" value="1"></input>
+                      </div>
+                      <div class="form-group">
+                        <label>Semi-Square (45°)</label>
+                        <input class="form-control" id="semi-square-orb" type="number" step="any" min="0" max="12" value="1"></input>
+                      </div>
+                      <div class="form-group">
+                        <label>Semi-Sextile (30°)</label>
+                        <input class="form-control" id="semi-sextile-orb" type="number" step="any" min="0" max="12" value="1"></input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
