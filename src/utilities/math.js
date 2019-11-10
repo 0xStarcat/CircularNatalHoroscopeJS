@@ -93,3 +93,12 @@ export const isDegreeWithinCircleArc = (arcLow, arcHigh, degree) => {
     return degree >= arcLow && degree < arcHigh + 360
   }
 }
+
+export const getModuloDifference = (point1, point2) => {
+  if (point2 >= point1) {
+    return point2 - point1
+  } else if (point1 > point2) {
+    point2 = point2 + 360
+    return point2 - point1
+  }
+}

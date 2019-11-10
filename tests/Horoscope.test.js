@@ -233,7 +233,7 @@ describe('CelestialBodies', () => {
   describe('tropical', () => {
     test('origin 1', () => {
       const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical'})
-      expect(horoscope.CelestialBodies.map(b => b.ChartPosition.Ecliptic.DecimalDegrees)).toEqual(
+      expect(horoscope.CelestialBodies.all.map(b => b.ChartPosition.Ecliptic.DecimalDegrees)).toEqual(
         [ 117.4277,
         336.3438,
         119.2327,
@@ -247,7 +247,7 @@ describe('CelestialBodies', () => {
         5.9994,
         1.7714 ])
 
-      expect(horoscope.CelestialBodies.map(b => b.ChartPosition.Horizon.DecimalDegrees)).toEqual(
+      expect(horoscope.CelestialBodies.all.map(b => b.ChartPosition.Horizon.DecimalDegrees)).toEqual(
         [ 52.0027,
           193.0866,
           50.1977,
@@ -266,7 +266,7 @@ describe('CelestialBodies', () => {
   describe('sidereal', () => { // same as tropical
     test('origin 1', () => {
       const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'})
-      expect(horoscope.CelestialBodies.map(b => b.ChartPosition.Ecliptic.DecimalDegrees)).toEqual(
+      expect(horoscope.CelestialBodies.all.map(b => b.ChartPosition.Ecliptic.DecimalDegrees)).toEqual(
         [ 93.3277,
         312.2438,
         95.1327,
@@ -280,7 +280,7 @@ describe('CelestialBodies', () => {
         341.8994,
         337.6714 ])
 
-      expect(horoscope.CelestialBodies.map(b => b.ChartPosition.Horizon.DecimalDegrees)).toEqual(
+      expect(horoscope.CelestialBodies.all.map(b => b.ChartPosition.Horizon.DecimalDegrees)).toEqual(
         [ 52.0027,
           193.0866,
           50.1977,
@@ -298,12 +298,12 @@ describe('CelestialBodies', () => {
 
   describe('tropical single planet', () => {
     const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical'})
-    expect(horoscope.CelestialBodies[0].House.Id).toEqual(11)
+    expect(horoscope.CelestialBodies.all[0].House.Id).toEqual(11)
   })
 
   describe('sidereal single planet', () => {
     const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'sidereal'})
-    expect(horoscope.CelestialBodies[0].House.Id).toEqual(11)
+    expect(horoscope.CelestialBodies.all[0].House.Id).toEqual(11)
   })
 
   describe('CelestialPoints', () => {
@@ -311,40 +311,40 @@ describe('CelestialBodies', () => {
       const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical'})
 
       it('returns north node', () => {
-        expect(horoscope.CelestialPoints.NorthNode.ChartPosition.Ecliptic.DecimalDegrees).toEqual(106.9588)
-        expect(horoscope.CelestialPoints.NorthNode.Sign.Name).toEqual("Cancer")
-        expect(horoscope.CelestialPoints.NorthNode.House.Id).toEqual(10)
+        expect(horoscope.CelestialPoints.northnode.ChartPosition.Ecliptic.DecimalDegrees).toEqual(106.9588)
+        expect(horoscope.CelestialPoints.northnode.Sign.Name).toEqual("Cancer")
+        expect(horoscope.CelestialPoints.northnode.House.Id).toEqual(10)
 
       })
 
       it('returns south node', () => {
-        expect(horoscope.CelestialPoints.SouthNode.ChartPosition.Ecliptic.DecimalDegrees).toEqual(286.9588)
-        expect(horoscope.CelestialPoints.SouthNode.Sign.Name).toEqual("Capricorn")
-        expect(horoscope.CelestialPoints.SouthNode.House.Id).toEqual(4)
+        expect(horoscope.CelestialPoints.southnode.ChartPosition.Ecliptic.DecimalDegrees).toEqual(286.9588)
+        expect(horoscope.CelestialPoints.southnode.Sign.Name).toEqual("Capricorn")
+        expect(horoscope.CelestialPoints.southnode.House.Id).toEqual(4)
       })
 
       it('returns lilith', () => {
-        expect(horoscope.CelestialPoints.Lilith.ChartPosition.Ecliptic.DecimalDegrees).toEqual(338.7655)
-        expect(horoscope.CelestialPoints.Lilith.Sign.Name).toEqual("Pisces")
-        expect(horoscope.CelestialPoints.Lilith.House.Id).toEqual(6)
+        expect(horoscope.CelestialPoints.lilith.ChartPosition.Ecliptic.DecimalDegrees).toEqual(338.7655)
+        expect(horoscope.CelestialPoints.lilith.Sign.Name).toEqual("Pisces")
+        expect(horoscope.CelestialPoints.lilith.House.Id).toEqual(6)
       })
     })
   })
 
   describe('Aspects', () => {
     it('returns all aspects', () => {
-      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical', aspects: 'all'})
-      expect(horoscope.Aspects).toHaveLength(Object.keys(ASPECTS).length)
+      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical', aspectTypes: 'all', aspectPoints: ['bodies', 'points', 'angles'], aspectWithPoints: ['bodies', 'points', 'angles']})
+      expect(horoscope.Aspects.all).toHaveLength(52)
     })
 
     it('returns all major aspects', () => {
-      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical', aspects: 'major'})
-      expect(horoscope.Aspects).toHaveLength(Object.keys(ASPECTS).filter(key => ASPECTS[key].level === 'major').length)
+      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical', aspectTypes: 'major', aspectPoints: ['bodies', 'points', 'angles'], aspectWithPoints: ['bodies', 'points', 'angles']})
+      expect(horoscope.Aspects.all).toHaveLength(39)
     })
 
     it('returns all minor aspects', () => {
-      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical', aspects: 'minor'})
-      expect(horoscope.Aspects).toHaveLength(Object.keys(ASPECTS).filter(key => ASPECTS[key].level === 'minor').length)
+      const horoscope = new Horoscope({origin: defaultOrigin, zodiac: 'tropical', aspectTypes: 'minor', aspectPoints: ['bodies', 'points', 'angles'], aspectWithPoints: ['bodies', 'points', 'angles']})
+      expect(horoscope.Aspects.all).toHaveLength(13)
     })
   })
 })

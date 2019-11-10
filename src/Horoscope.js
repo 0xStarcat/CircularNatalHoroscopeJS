@@ -4,11 +4,11 @@ import Sign from './Sign'
 import ZodiacPosition from './ZodiacPosition'
 import ChartPosition from './ChartPosition'
 import House from './House'
-import { ASPECTS } from './constants'
+import { ASPECTS, POINTS } from './constants'
 
 import { getMidheavenSun, getAscendant } from './utilities/astronomy'
 import { modulo, isDegreeWithinCircleArc } from './utilities/math'
-
+import { createAspects } from './utilities/aspects'
 import { validateAspectTypes, validateAspectPoints } from './utilities/validators'
 
 import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign, applyZodiacOffsetClockwise, applyZodiacOffsetCounter, zodiacPositionToEcliptic, getHouseFromDD, constructHouses } from './utilities/astrology'
@@ -22,7 +22,7 @@ import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHo
 // * string houseSystem: a string from the list assigned to Horoscope.HouseSystems in the constructor.
 
 class Horoscope {
-  constructor({origin = null, houseSystem='placidus', zodiac='tropical', aspectPoints=['bodies', 'points', 'angles'], aspectTypes=['major']}={}) {
+  constructor({origin = null, houseSystem='placidus', zodiac='tropical', aspectPoints=['bodies', 'points', 'angles'], aspectWithPoints=['bodies', 'points', 'angles'], aspectTypes=['major'], customOrbs={}}={}) {
     this.origin = origin
 
     this._houseSystem = this.validateHouseSystem(houseSystem)
@@ -34,6 +34,8 @@ class Horoscope {
     this._zodiacCusps = this.createZodiacCusps()
     this._aspectTypes = validateAspectTypes(aspectTypes)
     this._aspectPoints = validateAspectPoints(aspectPoints)
+    this._aspectWithPoints = validateAspectPoints(aspectWithPoints)
+    this._customOrbs = customOrbs
 
     this.Ephemeris = new Ephemeris({
       year: this.origin.year, month: this.origin.month, day: this.origin.date,
@@ -45,13 +47,15 @@ class Horoscope {
     this._celestialBodies = this.processCelestialBodies(this.Ephemeris.Results)
     this._celestialPoints = this.processCelestialPoints(this.Ephemeris.Results)
 
+    this._aspects = createAspects(this)
+
     this.validateHouseSystem = this.validateHouseSystem.bind(this)
     this.validateZodiac = this.validateZodiac.bind(this)
     this.createAscendant = this.createAscendant.bind(this)
     this.createMidheaven = this.createMidheaven.bind(this)
     this.createSunSign = this.createSunSign.bind(this)
-    this.createHouses = this.createHouses.bind(this)
     this.createZodiacCusps = this.createZodiacCusps.bind(this)
+    this.createHouses = this.createHouses.bind(this)
     this.processCelestialBodies = this.processCelestialBodies.bind(this)
     this.processCelestialPoints = this.processCelestialPoints.bind(this)
   }
@@ -85,6 +89,14 @@ class Horoscope {
     return this._zodiacCusps
   }
 
+  get Angles() {
+    const angles = [this.Ascendant, this.Midheaven]
+    return {
+      all: angles,
+      ...Object.assign({}, ...angles.map(angle => ({[angle.key]: angle})))
+    }
+  }
+
   get CelestialBodies() {
     return this._celestialBodies
   }
@@ -94,9 +106,7 @@ class Horoscope {
   }
 
   get Aspects() {
-    let aspects = []
-
-    return aspects
+    return this._aspects
   }
 
   validateHouseSystem(string) {
@@ -113,6 +123,7 @@ class Horoscope {
     const decimalDegrees = applyZodiacOffsetCounter(getAscendant({latitude: this.origin.latitude, localSiderealTime: this.origin.localSiderealTime }), this._zodiac)
 
     return {
+      key: 'ascendant',
       ...new ZodiacPosition({decimalDegrees: decimalDegrees, zodiac: this._zodiac}),
       ChartPosition: new ChartPosition({zodiacDegrees: decimalDegrees, eclipticDegrees: zodiacPositionToEcliptic(decimalDegrees, decimalDegrees) })
     }
@@ -122,6 +133,7 @@ class Horoscope {
     const decimalDegrees = applyZodiacOffsetCounter(getMidheavenSun({localSiderealTime: this.origin.localSiderealTime }), this._zodiac)
 
     return {
+      key: 'midheaven',
       ...new ZodiacPosition({decimalDegrees: decimalDegrees, zodiac: this._zodiac}),
       ChartPosition: new ChartPosition({zodiacDegrees: decimalDegrees, eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees, decimalDegrees) })
     }
@@ -206,22 +218,25 @@ class Horoscope {
       })
     })
 
-    return [...processedResults]
+    return {
+      all: processedResults,
+      ...Object.assign({}, ...processedResults.map(result => ({[result.key]: result})))
+    }
   }
 
   processCelestialPoints(ephemerisResults) {
-    const keys = ['NorthNode', 'SouthNode', 'Lilith', 'PartFortune', 'PartSpirit']
+    const keys = Object.keys(POINTS)
 
     const points = keys.map(key => {
       let zodiacDegrees
       switch(key) {
-        case 'NorthNode':
+        case 'northnode':
           zodiacDegrees = ephemerisResults.find(body => body.key === 'moon').orbit.meanAscendingNode.apparentLongitude
           break
-        case 'SouthNode':
+        case 'southnode':
           zodiacDegrees = ephemerisResults.find(body => body.key === 'moon').orbit.meanDescendingNode.apparentLongitude
           break
-        case 'Lilith':
+        case 'lilith':
           zodiacDegrees = ephemerisResults.find(body => body.key === 'moon').orbit.meanApogee.apparentLongitude
           break
       }
@@ -237,6 +252,7 @@ class Horoscope {
     })
 
     return {
+      all: points,
       ...Object.assign({}, ...points.map(point => ({[point.key]: point})))
     }
   }

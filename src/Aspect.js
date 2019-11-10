@@ -11,14 +11,14 @@ export default class Aspect {
      * @param {string} aspectKey - The key of the aspect - please refer to ASPECTS constant
   */
 
-  constructor({id='', isPrimary=true, point1Key='', point2Key='', aspectKey=''}={}) {
+  constructor({point1Key='', point2Key='', aspectKey='', orb=0, orbUsed=0}={}) {
     //
-    this.id = id
-    this.isPrimary = isPrimary
     this.point1Key = point1Key
     this.point2Key = point2Key
     this.aspectKey = aspectKey
     this.aspectLevel = ASPECTS[aspectKey].level
     this.aspectLabel = ASPECTS[aspectKey].label
+    this.orb = orb
+    this.orbUsed = orbUsed
   }
 }
