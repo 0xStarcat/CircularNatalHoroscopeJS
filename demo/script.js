@@ -56,6 +56,7 @@ class DemoApp {
 
   handleLanguageChange() {
     this.loadUI()
+    this.handleSubmit()
   }
 
   loadTableTitles() {
@@ -169,7 +170,7 @@ class DemoApp {
   }
 
   handleSubmit(e) {
-    e.preventDefault()
+    if (e) { e.preventDefault() }
     const timestamp = moment(`${this.dateInput.value} ${this.timeInput.value}`)
     const origin = new Origin({
       year: timestamp.year(),
