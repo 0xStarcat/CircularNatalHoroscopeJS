@@ -259,7 +259,7 @@ export const SIGNS = [
     zodiacEnd: -1
   },
   {
-    key: 'sagitarrius',
+    key: 'sagittarius',
     startDate: {
       tropical: moment.utc([0, 10, 23, 0, 0, 0]).startOf('day'),
       sidereal: moment.utc([0, 11, 17, 0, 0, 0]).startOf('day'),
