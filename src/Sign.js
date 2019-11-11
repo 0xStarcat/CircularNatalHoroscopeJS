@@ -1,38 +1,34 @@
 import moment from 'moment-timezone'
 import { modulo } from './utilities/math'
 import { SIGNS } from './constants'
+import { LANGUAGE } from './utilities/language'
+import { validateZodiac } from './utilities/validators'
 
 class Sign {
-  constructor({id=0, zodiac="tropical"}={}) {
-    const signData = SIGNS.find(sign => sign.id === id)
+  constructor({key='', zodiac="tropical", language='en'}={}) {
+    const signData = SIGNS.find(sign => sign.key === key)
 
-    this.id = id
-    this.zodiac = this.validateZodiac(zodiac.toLowerCase())
+    this.key = key
+    this.zodiac = validateZodiac(zodiac.toLowerCase(), language)
 
     if (signData) {
-      this.label = signData.name
+      this.label = LANGUAGE[language][key]
       Object.keys(signData).forEach(key => {
         this[key] = signData[key]
       })
     }
   }
 
-  // https://en.wikipedia.org/wiki/Zodiac#Table_of_dates
-  // https://www.inaoep.mx/~frosales/html/zodiac/index.html
-  static get Data() {
-    return []
-  }
-
   static get Astronomical() {
-    return SIGNS.map(sign => new Sign({id: sign.id, zodiac: 'astronomical'}))
+    return SIGNS.map(sign => new Sign({key: sign.key, zodiac: 'astronomical'}))
   }
 
   static get Sidereal() {
-    return SIGNS.filter(sign => sign.id !== 12).map(sign => new Sign({id: sign.id, zodiac: 'sidereal'})) // no Ophiucus
+    return SIGNS.filter(sign => sign.key !== 'ophiuchus').map(sign => new Sign({key: sign.key, zodiac: 'sidereal'})) // no Ophiucus
   }
 
   static get Tropical() {
-    return SIGNS.filter(sign => sign.id !== 12).map(sign => new Sign({id: sign.id, zodiac: 'tropical'})) // no Ophiucus
+    return SIGNS.filter(sign => sign.key !== 'ophiuchus').map(sign => new Sign({key: sign.key, zodiac: 'tropical'})) // no Ophiucus
   }
 
   static OfType(zodiac) {
@@ -44,15 +40,6 @@ class Sign {
       case 'tropical':
         return Sign.Tropical
     }
-  }
-
-  static get ZodiacSystems() {
-    return ['astronomical', 'sidereal', 'tropical']
-  }
-
-  validateZodiac(string) {
-    if (Sign.ZodiacSystems.includes(string.toLowerCase())) return string.toLowerCase()
-    else throw new Error(`The "${string}" zodiac is not included. Please choose from the following list: ${Sign.ZodiacSystems.join(', ')}.`)
   }
 
   get StartDate() {

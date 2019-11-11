@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-8">
           <form id="form">
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -38,8 +38,11 @@
               <label>Local Time of birth</label>
               <input class="form-control" id="time" name="time" type="time" value="19:00:00"></input>
             </div>
+            <div class="form-group">
+              <label>Language</label>
+              <select id="language-select"></select>
+            </div>
             <div class="row">
-
               <div class="col-6">
                 <div class="form-group">
                   <label>Zodiac System:</label>
@@ -69,48 +72,14 @@
                   <div class="row">
                     <div class="col-6">
                       <label>Major Aspects</label>
-                      <div class="form-group">
-                        <label><span>Conjunction</span> (0°)</label>
-                        <input class="form-control" id="conjunction-orb" type="number" step="any" min="0" max="12" value="8"></input>
-                      </div>
-                      <div class="form-group">
-                        <label><span>Opposition</span> (180°)</label>
-                        <input class="form-control" id="opposition-orb" type="number" step="any" min="0" max="12" value="8"></input>
-                      </div>
-                      <div class="form-group">
-                        <label><span>Trine</span> (120°)</label>
-                        <input class="form-control" id="trine-orb" type="number" step="any" min="0" max="12" value="8"></input>
-                      </div>
-                      <div class="form-group">
-                        <label><span>Square</span> (90°)</label>
-                        <input class="form-control" id="square-orb" type="number" step="any" min="0" max="12" value="7"></input>
-                      </div>
-                      <div class="form-group">
-                        <label><span>Sextile</span> (60°)</label>
-                        <input class="form-control" id="sextile-orb" type="number" step="any" min="0" max="12" value="6"></input>
+                      <div id="major-aspect-inputs">
+
                       </div>
                     </div>
                     <div class="col-6">
                       <label>Minor Aspects</label>
-                      <div class="form-group">
-                        <label><span>Quincunx</span> (150°)</label>
-                        <input class="form-control" id="quincunx-orb" type="number" step="any" min="0" max="12" value="5"></input>
-                      </div>
-                      <div class="form-group">
-                        <label><span>Quintile</span> (72°)</label>
-                        <input class="form-control" id="quintile-orb" type="number" step="any" min="0" max="12" value="1"></input>
-                      </div>
-                      <div class="form-group">
-                        <label><span>Septile</span> (51.5°)</label>
-                        <input class="form-control" id="septile-orb" type="number" step="any" min="0" max="12" value="1"></input>
-                      </div>
-                      <div class="form-group">
-                        <label><span>Semi-Square</span> (45°)</label>
-                        <input class="form-control" id="semi-square-orb" type="number" step="any" min="0" max="12" value="1"></input>
-                      </div>
-                      <div class="form-group">
-                        <label><span>Semi-Sextile</span> (30°)</label>
-                        <input class="form-control" id="semi-sextile-orb" type="number" step="any" min="0" max="12" value="1"></input>
+                      <div id="minor-aspect-inputs">
+
                       </div>
                     </div>
                   </div>
@@ -131,17 +100,42 @@
             </p>
           </div>
           <div class="form-group">
-            <label>Calculated Midheaven:</label>
-            <p id="midheaven">
-
-            </p>
+            <label>Angles: </label>
+            <table id="angles" class="table table-dark">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>ascendant</th>
+                  <th>m.c.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Horizon Degrees
+                  </td>
+                  <td id="ascendant-a"></td>
+                  <td id="midheaven-a"></td>
+                </tr>
+                <tr>
+                  <td>
+                    Ecliptic Degrees
+                  </td>
+                  <td id="ascendant-b"></td>
+                  <td id="midheaven-b"></td>
+                </tr>
+                <tr>
+                  <td>
+                    Sign - D/M/S
+                  </td>
+                  <td id="ascendant-c"></td>
+                  <td id="midheaven-c"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="form-group">
-            <label>Calculated Ascendant:</label>
-            <p id="ascendant">
+          <hr/>
 
-            </p>
-          </div>
           <div class="form-group">
             <label>Zodiac Cusps:</label>
             <table id="zodiacCusps" class="table table-dark">
@@ -457,40 +451,40 @@
 
                     </th>
                     <th>
-                      Sun
+                      sun
                     </th>
                     <th>
-                      Moon
+                      moon
                     </th>
                     <th>
-                      Mercury
+                      mercury
                     </th>
                     <th>
-                      Venus
+                      venus
                     </th>
                     <th>
-                      Mars
+                      mars
                     </th>
                     <th>
-                      Jupiter
+                      jupiter
                     </th>
                     <th>
-                      Saturn
+                      saturn
                     </th>
                     <th>
-                      Uranus
+                      uranus
                     </th>
                     <th>
-                      Neptune
+                      neptune
                     </th>
                     <th>
-                      Pluto
+                      pluto
                     </th>
                     <th>
-                      Chiron
+                      chiron
                     </th>
                     <th>
-                      Sirius
+                      sirius
                     </th>
                   </tr>
                 </thead>
@@ -712,13 +706,13 @@
 
                     </th>
                     <th>
-                      North Node
+                      n. node
                     </th>
                     <th>
-                      South Node
+                      s. node
                     </th>
                     <th>
-                      Lilith
+                      lilith
                     </th>
                   </tr>
                 </thead>

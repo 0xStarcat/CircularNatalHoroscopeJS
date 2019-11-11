@@ -20,6 +20,20 @@ export const LANGUAGE = {
     'northnode': 'North Node',
     'southnode': 'South Node',
     'lilith': 'Lilith',
+    // Signs
+    'aries': 'Aries',
+    'taurus': 'Taurus',
+    'gemini': 'Gemini',
+    'cancer': 'Cancer',
+    'leo': 'Leo',
+    'virgo': 'Virgo',
+    'libra': 'Libra',
+    'scorpio': 'Scorpio',
+    'sagittarius': 'Sagittarius',
+    'capricorn': 'Capricorn',
+    'aquarius': 'Aquarius',
+    'pisces': 'Pisces',
+    'ophiuchus': 'Ophiuchus',
     // Houses
     'house1': 'First',
     'house2': 'Second',
@@ -39,10 +53,25 @@ export const LANGUAGE = {
     'trine': 'Trine',
     'square': 'Square',
     'sextile': 'Sextile',
-    'quincrux': 'Quincrux',
+    'quincunx': 'Quincunx',
     'quintile': 'Quintile',
     'septile': 'Septile',
     'semi-square': 'Semi-Square',
-    'semi-sextile': 'Semi-Sextile'
+    'semi-sextile': 'Semi-Sextile',
+    // Language labels
+    'english-language': 'English',
+    // Zodiac Choice Labels
+    'tropical-zodiac': 'Tropical',
+    'sidereal-zodiac': 'Sidereal',
+    // House System labels
+    'equal-house': 'Equal House',
+    'koch': 'Koch',
+    'placidus': 'Placidus',
+    'regiomontanus': 'Regiomontanus',
+    'topocentric': 'Topocentric',
+    'whole-sign': 'Whole Sign',
+    //Aspect level labels
+    'major': 'Major',
+    'minor': 'Minor',
   }
 }

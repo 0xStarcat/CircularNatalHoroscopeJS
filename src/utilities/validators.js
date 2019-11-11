@@ -1,4 +1,5 @@
 import { ASPECTS, BODIES, POINTS, ANGLES } from '../constants'
+import Horoscope from '../Horoscope'
 
 export const validateYear = (year) => {
   if (year > 0) return year
@@ -94,6 +95,16 @@ export const validateAspectTypes = (stringOrArray) => {
   stringOrArray = distinctArray(stringOrArray)
 
   return stringOrArray
+}
+
+export const validateHouseSystem = (string, language) => {
+  if (Horoscope.HouseSystems(language).map(l => l.value).includes(string.toLowerCase())) return string.toLowerCase()
+  else throw new Error(`The "${string}" house system is not included. Please choose from the following list: ${Horoscope.HouseSystems(language).map(l => l.value).join(', ')}.`)
+}
+
+export const validateZodiac = (string, language) => {
+  if (Horoscope.ZodiacSystems(language).map(l => l.value).includes(string.toLowerCase())) return string.toLowerCase()
+  else throw new Error(`The "${string}" zodiac is not included. Please choose from the following list: ${Horoscope.ZodiacSystems(language).map(l => l.value).join(', ')}.`)
 }
 
 export const validateAspectPoints = (stringOrArray) => {

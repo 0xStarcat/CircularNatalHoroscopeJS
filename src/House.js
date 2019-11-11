@@ -10,7 +10,7 @@ export default class House {
     zodiacDegreesEnd = parseFloat(modulo(zodiacDegreesEnd, 360).toFixed(4))
 
     this.id = id
-    this.label = LANGUAGE[this._language][this.convertIdToKey(id)]
+    this.label = LANGUAGE[this._language][House.convertIdToKey(id)]
 
     const eclipticDegreesStart = zodiacPositionToEcliptic(ascendantDegrees, zodiacDegreesStart)
     const eclipticDegreesEnd = zodiacPositionToEcliptic(ascendantDegrees, zodiacDegreesEnd)
@@ -23,7 +23,7 @@ export default class House {
     this.Sign = getZodiacSign({decimalDegrees: zodiacDegreesStart, zodiac: zodiac})
   }
 
-  convertIdToKey(id) {
+  static convertIdToKey(id) {
     let name = ''
     switch(id) {
       case 1:

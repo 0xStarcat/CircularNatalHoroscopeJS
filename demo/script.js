@@ -12,26 +12,79 @@ class DemoApp {
     this.longitudeInput = document.querySelector('#longitude')
     this.houseSystemSelect = document.querySelector('#houseSystem')
     this.zodiacSystemSelect = document.querySelector('#zodiacSystem')
+    this.languageSelect = document.querySelector('#language-select')
 
     this.sunSignElement = document.querySelector('#sunsign')
     this.midheavenElement = document.querySelector('#midheaven')
     this.ascendantElement = document.querySelector('#ascendant')
-    this.housesElement = document.querySelector('#houses')
-    this.zodiacCuspsElement = document.querySelector('#zodiacCusps')
+    this.housesTableElement = document.querySelector('#houses')
+    this.zodiacTableElement = document.querySelector('#zodiacCusps')
+    this.bodiesTable = document.querySelector('#bodies')
+    this.pointsTable = document.querySelector('#points')
+    this.anglesTable = document.querySelector('#angles')
 
     this.aspectsTable = document.querySelector('#aspects')
-    this.aspectsMajor = document.querySelector('#aspect-level-major')
-    this.aspectsMinor = document.querySelector('#aspect-level-minor')
+    this.aspectsMajorInput = document.querySelector('#aspect-level-major')
+    this.aspectsMinorInput = document.querySelector('#aspect-level-minor')
+
+    this.majorAspectSection = document.querySelector('#major-aspect-inputs')
+    this.minorAspectSection = document.querySelector('#minor-aspect-inputs')
 
     this.displayDateTime = this.displayDateTime.bind(this)
     this.loadHouseSystemSelect = this.loadHouseSystemSelect.bind(this)
     this.loadZodiacSystemSelect = this.loadZodiacSystemSelect.bind(this)
+    this.loadAspectInputs = this.loadAspectInputs.bind(this)
+    this.handleLanguageChange = this.handleLanguageChange.bind(this)
+    this.loadUI = this.loadUI.bind(this)
+    this.loadTableTitles = this.loadTableTitles.bind(this)
+
     this.handleSubmit = this.handleSubmit.bind(this)
 
     // this.displayDateTime()
+    this.loadUI()
+    this.languageSelect.addEventListener('change', this.handleLanguageChange)
+    this.form.addEventListener('submit', this.handleSubmit)
+  }
+
+  loadUI() {
+    this.loadLanguageSelect()
     this.loadHouseSystemSelect()
     this.loadZodiacSystemSelect()
-    this.form.addEventListener('submit', this.handleSubmit)
+    this.loadAspectInputs()
+    this.loadTableTitles()
+  }
+
+  handleLanguageChange() {
+    this.loadUI()
+  }
+
+  loadTableTitles() {
+    const language = this.loadLanguageSelect.value
+    const zTHeadTH = this.zodiacTableElement.querySelectorAll('th')
+    const hTHeadTH = this.housesTableElement.querySelectorAll('th')
+    const bTHeadTH = this.bodiesTable.querySelectorAll('th')
+    const pTHeadTH = this.pointsTable.querySelectorAll('th')
+    const aTHeadTH = this.anglesTable.querySelectorAll('th')
+
+    Horoscope.ZodiacLabels(language).forEach((zodiac, index) => {
+      zTHeadTH[index + 1].innerHTML = zodiac.label
+    })
+
+    Horoscope.HouseLabels(language).forEach((house, index) => {
+      hTHeadTH[index + 1].innerHTML = house.label
+    })
+
+    Horoscope.CelestialLabels(language).filter(object => object.type === 'body').forEach((object, index) => {
+      bTHeadTH[index + 1].innerHTML = object.label
+    })
+
+    Horoscope.CelestialLabels(language).filter(object => object.type === 'point').forEach((object, index) => {
+      pTHeadTH[index + 1].innerHTML = object.label
+    })
+
+    Horoscope.CelestialLabels(language).filter(object => object.type === 'angle').forEach((object, index) => {
+      aTHeadTH[index + 1].innerHTML = object.label
+    })
   }
 
   displayDateTime() {
@@ -40,11 +93,26 @@ class DemoApp {
     this.timeInput.value = today.format('HH:mm:00')
   }
 
-  loadHouseSystemSelect() {
-    Horoscope.HouseSystems.forEach(system => {
+  loadLanguageSelect() {
+    const language = this.loadLanguageSelect.value
+    this.languageSelect.innerHTML = ''
+    Horoscope.Languages(language).forEach(language => {
       var opt = document.createElement('option');
-      opt.value = system
-      opt.appendChild(document.createTextNode(system))
+      opt.value = language.value
+      opt.appendChild(document.createTextNode(language.label))
+      this.languageSelect.appendChild(opt)
+    })
+
+    this.languageSelect.value = "en"
+  }
+
+  loadHouseSystemSelect() {
+    const language = this.loadLanguageSelect.value
+    this.houseSystemSelect.innerHTML = ''
+    Horoscope.HouseSystems(language).forEach(system => {
+      var opt = document.createElement('option');
+      opt.value = system.value
+      opt.appendChild(document.createTextNode(system.label))
       this.houseSystemSelect.appendChild(opt)
     })
 
@@ -52,14 +120,51 @@ class DemoApp {
   }
 
   loadZodiacSystemSelect() {
-    Horoscope.ZodiacSystems.forEach(system => {
-      var opt = document.createElement('option');
-      opt.value = system
-      opt.appendChild(document.createTextNode(system))
+    const language = this.loadLanguageSelect.value
+    this.zodiacSystemSelect.innerHTML = ''
+    Horoscope.ZodiacSystems(language).forEach(system => {
+      const opt = document.createElement('option');
+      opt.value = system.value
+      opt.appendChild(document.createTextNode(system.label))
       this.zodiacSystemSelect.appendChild(opt)
     })
 
     this.zodiacSystemSelect.value = "tropical"
+  }
+
+  loadAspectInputs() {
+    const language = this.loadLanguageSelect.value
+    this.majorAspectSection.innerHTML = ''
+    this.minorAspectSection.innerHTML = ''
+
+    const majorAspects = Horoscope.AspectLabels(language).filter(aspect => {
+      return aspect.level === 'major'
+    })
+
+    const minorAspects = Horoscope.AspectLabels(language).filter(aspect => {
+      return aspect.level === 'minor'
+    })
+
+    const aspectInputEl = aspect => {
+      return `<label>${aspect.label} (${aspect.angle}°)</label>
+                         <input class="form-control" id="${aspect.key}-orb" type="number" step="any" min="0" max="12" value="${aspect.defaultOrb}"></input>`
+    }
+
+    majorAspects.forEach(aspect => {
+      const inputContainer = document.createElement('div');
+      inputContainer.class = "form-group"
+      inputContainer.innerHTML = aspectInputEl(aspect)
+
+      this.majorAspectSection.appendChild(inputContainer)
+    })
+
+    minorAspects.forEach(aspect => {
+      const inputContainer = document.createElement('div');
+      inputContainer.class = "form-group"
+      inputContainer.innerHTML = aspectInputEl(aspect)
+
+      this.minorAspectSection.appendChild(inputContainer)
+    })
   }
 
   handleSubmit(e) {
@@ -92,7 +197,7 @@ class DemoApp {
       origin: origin,
       houseSystem: this.houseSystemSelect.value,
       zodiac: this.zodiacSystemSelect.value,
-      aspectTypes: [this.aspectsMajor.checked ? 'major' : undefined, this.aspectsMinor.checked ? 'minor' : undefined].filter(e => e),
+      aspectTypes: [this.aspectsMajorInput.checked ? 'major' : undefined, this.aspectsMinorInput.checked ? 'minor' : undefined].filter(e => e),
       customOrbs: customOrbs
     })
 
@@ -100,9 +205,17 @@ class DemoApp {
 
     this.sunSignElement.innerHTML = horoscope.SunSign.label
 
-    this.midheavenElement.innerHTML = `${horoscope.Midheaven.ChartPosition.Ecliptic.DecimalDegrees} || ${horoscope.Midheaven.Sign.label} ${horoscope.Midheaven.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
+    document.querySelector('#midheaven-a').innerHTML = `${horoscope.Midheaven.ChartPosition.Horizon.DecimalDegrees}`
 
-    this.ascendantElement.innerHTML = `${horoscope.Ascendant.ChartPosition.Ecliptic.DecimalDegrees} || ${horoscope.Ascendant.Sign.label} ${horoscope.Ascendant.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
+    document.querySelector('#midheaven-b').innerHTML = `${horoscope.Midheaven.ChartPosition.Ecliptic.DecimalDegrees}`
+
+    document.querySelector('#midheaven-c').innerHTML = `${horoscope.Midheaven.Sign.label} ${horoscope.Midheaven.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
+
+    document.querySelector('#ascendant-a').innerHTML = `${horoscope.Ascendant.ChartPosition.Horizon.DecimalDegrees}`
+
+    document.querySelector('#ascendant-b').innerHTML = `${horoscope.Ascendant.ChartPosition.Ecliptic.DecimalDegrees}`
+
+    document.querySelector('#ascendant-c').innerHTML = `${horoscope.Ascendant.Sign.label} ${horoscope.Ascendant.ChartPosition.Ecliptic.ArcDegreesFormatted30}`
 
     horoscope.Houses.forEach((cusp, index) => {
       document.querySelector(`#house-${index + 1}a`).innerHTML = cusp.ChartPosition.StartPosition.Horizon.DecimalDegrees

@@ -115,7 +115,7 @@ describe('Midheaven & ascendant calculations', () => {
 describe('Houses', () => {
   // TODO - each house system - expect w Ecliptic Decimal Degrees too
   test('Equal House', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'equal house'}).Houses.map(c => c.ChartPosition.StartPosition.Ecliptic.DecimalDegrees)).toEqual([169.4304, 199.4304, 229.4304, 259.4304, 289.4304, 319.4304, 349.4304, 19.4304, 49.4304, 79.4304, 109.4304, 139.4304,])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'equal-house'}).Houses.map(c => c.ChartPosition.StartPosition.Ecliptic.DecimalDegrees)).toEqual([169.4304, 199.4304, 229.4304, 259.4304, 289.4304, 319.4304, 349.4304, 19.4304, 49.4304, 79.4304, 109.4304, 139.4304,])
   })
 
   test('Koch', () => {
@@ -149,9 +149,9 @@ describe('Houses', () => {
   })
 
   test('Whole sign', () => {
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign', zodiac: 'tropical'}).Houses.map(c => c.ChartPosition.StartPosition.Ecliptic.DecimalDegrees)).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole-sign', zodiac: 'tropical'}).Houses.map(c => c.ChartPosition.StartPosition.Ecliptic.DecimalDegrees)).toEqual([150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00, 120.00])
 
-    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole sign', zodiac: 'sidereal'}).Houses.map(c => c.ChartPosition.StartPosition.Ecliptic.DecimalDegrees)).toEqual([120.00, 150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00])
+    expect(new Horoscope({origin: defaultOrigin, houseSystem: 'whole-sign', zodiac: 'sidereal'}).Houses.map(c => c.ChartPosition.StartPosition.Ecliptic.DecimalDegrees)).toEqual([120.00, 150.00, 180.00, 210.00, 240.00, 270.00, 300.00, 330.00, 0.00, 30.00, 60.00, 90.00])
   })
 })
 
