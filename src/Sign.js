@@ -19,26 +19,26 @@ class Sign {
     }
   }
 
-  static get Astronomical() {
-    return SIGNS.map(sign => new Sign({key: sign.key, zodiac: 'astronomical'}))
+  static Astronomical(language) {
+    return SIGNS.map(sign => new Sign({key: sign.key, zodiac: 'astronomical', language}))
   }
 
-  static get Sidereal() {
-    return SIGNS.filter(sign => sign.key !== 'ophiuchus').map(sign => new Sign({key: sign.key, zodiac: 'sidereal'})) // no Ophiucus
+  static Sidereal(language) {
+    return SIGNS.filter(sign => sign.key !== 'ophiuchus').map(sign => new Sign({key: sign.key, zodiac: 'sidereal', language})) // no Ophiucus
   }
 
-  static get Tropical() {
-    return SIGNS.filter(sign => sign.key !== 'ophiuchus').map(sign => new Sign({key: sign.key, zodiac: 'tropical'})) // no Ophiucus
+  static Tropical(language) {
+    return SIGNS.filter(sign => sign.key !== 'ophiuchus').map(sign => new Sign({key: sign.key, zodiac: 'tropical', language})) // no Ophiucus
   }
 
-  static OfType(zodiac) {
+  static OfType(zodiac, language='en') {
     switch(zodiac) {
       case 'astronomical':
-        return Sign.Astronomical
+        return Sign.Astronomical(language)
       case 'sidereal':
-        return Sign.Sidereal
+        return Sign.Sidereal(language)
       case 'tropical':
-        return Sign.Tropical
+        return Sign.Tropical(language)
     }
   }
 

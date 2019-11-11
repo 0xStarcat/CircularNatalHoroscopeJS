@@ -21,6 +21,7 @@ export default class Aspect {
     this.point2Key = point2Key
     this.aspectKey = aspectKey
     this.aspectLevel = ASPECTS[aspectKey].level
+    this.aspectLevelLabel = LANGUAGE[language][ASPECTS[aspectKey].level]
     this.label = LANGUAGE[language][aspectKey]
     this.orb = parseFloat(modulo(orb, orbUsed).toFixed(4))
     this.orbUsed = orbUsed

@@ -28,10 +28,10 @@ export const getHouseFromDD = (houses, decimalDegrees) => {
   })
 }
 
-export const constructHouses = (cuspsArray, ascendantDegrees, zodiac) => {
+export const constructHouses = (cuspsArray, ascendantDegrees, zodiac, language='en') => {
   return cuspsArray.map((cuspDegree, index) => {
     const houseId = index + 1
-    return new House({ascendantDegrees: ascendantDegrees, zodiacDegreesStart: cuspDegree, zodiacDegreesEnd:cuspsArray[modulo(index + 1, cuspsArray.length + 1)], id: houseId, zodiac})
+    return new House({ascendantDegrees: ascendantDegrees, zodiacDegreesStart: cuspDegree, zodiacDegreesEnd:cuspsArray[modulo(index + 1, cuspsArray.length + 1)], id: houseId, zodiac, language})
   })
 }
 
@@ -75,7 +75,7 @@ const getZodiacSignFromRange = (signs, decimalDegrees, zodiac) => {
   return zodiacSign
 }
 
-export const getZodiacSign = ({decimalDegrees=0.00, zodiac='tropical'}={}) => {
+export const getZodiacSign = ({decimalDegrees=0.00, zodiac='tropical', language='en'}={}) => {
   // Converts a decimal degree (0 - 359) of the zodiac sphere
   // and its corresponding zodiac type into an astrological sign
   //////////
@@ -85,11 +85,11 @@ export const getZodiacSign = ({decimalDegrees=0.00, zodiac='tropical'}={}) => {
   //////////
   switch(zodiac) {
     case 'astronomical':
-      return getZodiacSignFromRange(Sign.Astronomical, decimalDegrees, zodiac)
+      return getZodiacSignFromRange(Sign.Astronomical(language), decimalDegrees, zodiac)
     case 'sidereal':
-      return getZodiacSignFromRange(Sign.Sidereal, decimalDegrees, zodiac)
+      return getZodiacSignFromRange(Sign.Sidereal(language), decimalDegrees, zodiac)
     case 'tropical':
-      return getZodiacSignFromRange(Sign.Tropical, decimalDegrees, zodiac)
+      return getZodiacSignFromRange(Sign.Tropical(language), decimalDegrees, zodiac)
   }
 }
 

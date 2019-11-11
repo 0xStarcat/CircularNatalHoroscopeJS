@@ -20,7 +20,7 @@ export default class House {
       EndPosition: new ChartPosition({eclipticDegrees: eclipticDegreesEnd, zodiacDegrees: zodiacDegreesEnd})
     }
 
-    this.Sign = getZodiacSign({decimalDegrees: zodiacDegreesStart, zodiac: zodiac})
+    this.Sign = getZodiacSign({decimalDegrees: zodiacDegreesStart, zodiac: zodiac, language})
   }
 
   static convertIdToKey(id) {

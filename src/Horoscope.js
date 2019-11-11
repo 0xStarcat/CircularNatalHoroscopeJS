@@ -40,7 +40,7 @@ class Horoscope {
     this._zodiac = validateZodiac(zodiac.toLowerCase(), this._language)
     this._ascendant = this.createAscendant()
     this._midheaven = this.createMidheaven()
-    this._sunSign = this.createSunSign(this._zodiac)
+    this._sunSign = this.createSunSign(this._zodiac, this._language)
     this._houses = this.createHouses(this._houseSystem)
     this._zodiacCusps = this.createZodiacCusps()
     this._aspectTypes = validateAspectTypes(aspectTypes)
@@ -135,8 +135,8 @@ class Horoscope {
 
   static Languages(language='en') {
     return [
-      { key: 'english-language', value: 'en', label: LANGUAGE[language]['english-language'] },
-      { key: 'spanish-language', value: 'es', label: LANGUAGE[language]['spanish-language'] }
+      { key: 'en', value: 'en', label: LANGUAGE[language]['en'] },
+      { key: 'es', value: 'es', label: LANGUAGE[language]['es'] }
     ]
   }
 
@@ -217,9 +217,9 @@ class Horoscope {
     }
   }
 
-  createSunSign(zodiac) {
+  createSunSign(zodiac, language) {
     // Source: https://horoscopes.lovetoknow.com/about-astrology/new-horoscope-dates
-    const sign = Sign.OfType(zodiac).find(sign => {
+    const sign = Sign.OfType(zodiac, language).find(sign => {
       if (!sign.StartDate) return
       const originYear = this.origin.year
       const startDate = moment(sign.StartDate).add(originYear, 'year')
@@ -234,13 +234,13 @@ class Horoscope {
     // Ascendant is a # in degrees longitude along the zodiac
     // Ascendant is always 0 on the ecliptic
     // A sign's ecliptic position is therefore the ascendant's degrees minus the sign's starting zodiac position (with offset applied for sidereal).
-    return Sign.OfType(this._zodiac).map(sign => {
+    return Sign.OfType(this._zodiac, this._language).map(sign => {
       const zodiacStart = sign.ZodiacStart
       const eclipticDegrees = zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees, zodiacStart)
 
       return {
         ChartPosition: new ChartPosition({eclipticDegrees: eclipticDegrees, zodiacDegrees: zodiacStart}),
-        Sign: getZodiacSign({decimalDegrees: applyZodiacOffsetCounter(zodiacStart, this._zodiac), zodiac: this._zodiac})
+        Sign: getZodiacSign({decimalDegrees: applyZodiacOffsetCounter(zodiacStart, this._zodiac), zodiac: this._zodiac, language: this._language})
       }
     })
   }
@@ -273,7 +273,7 @@ class Horoscope {
         break
     }
 
-    return constructHouses(cuspsArray, this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees, this._zodiac)
+    return constructHouses(cuspsArray, this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees, this._zodiac, this._language)
 
   }
 
@@ -284,7 +284,7 @@ class Horoscope {
       return ({
         key: result.key,
         label: LANGUAGE[this._language][result.key],
-        Sign: getZodiacSign({decimalDegrees: zodiacDegrees, zodiac: this._zodiac}),
+        Sign: getZodiacSign({decimalDegrees: zodiacDegrees, zodiac: this._zodiac, language: this._language}),
         ChartPosition: new ChartPosition({
           eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees, zodiacDegrees),
           zodiacDegrees: zodiacDegrees
@@ -323,7 +323,7 @@ class Horoscope {
         key,
         label: LANGUAGE[this._language][key],
         ChartPosition: new ChartPosition({zodiacDegrees, eclipticDegrees: zodiacPositionToEcliptic(this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees, zodiacDegrees) }),
-        Sign: getZodiacSign({decimalDegrees: zodiacDegrees, zodiac: this._zodiac}),
+        Sign: getZodiacSign({decimalDegrees: zodiacDegrees, zodiac: this._zodiac, language: this._language}),
         House: getHouseFromDD(this.Houses, zodiacDegrees),
       }
     })

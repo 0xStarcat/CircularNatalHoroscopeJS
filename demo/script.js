@@ -41,13 +41,13 @@ class DemoApp {
     this.handleSubmit = this.handleSubmit.bind(this)
 
     // this.displayDateTime()
+    this.loadLanguageSelect()
     this.loadUI()
     this.languageSelect.addEventListener('change', this.handleLanguageChange)
     this.form.addEventListener('submit', this.handleSubmit)
   }
 
   loadUI() {
-    this.loadLanguageSelect()
     this.loadHouseSystemSelect()
     this.loadZodiacSystemSelect()
     this.loadAspectInputs()
@@ -59,7 +59,7 @@ class DemoApp {
   }
 
   loadTableTitles() {
-    const language = this.loadLanguageSelect.value
+    const language = this.languageSelect.value
     const zTHeadTH = this.zodiacTableElement.querySelectorAll('th')
     const hTHeadTH = this.housesTableElement.querySelectorAll('th')
     const bTHeadTH = this.bodiesTable.querySelectorAll('th')
@@ -94,20 +94,21 @@ class DemoApp {
   }
 
   loadLanguageSelect() {
-    const language = this.loadLanguageSelect.value
     this.languageSelect.innerHTML = ''
-    Horoscope.Languages(language).forEach(language => {
+    Horoscope.Languages().forEach(language => {
       var opt = document.createElement('option');
       opt.value = language.value
       opt.appendChild(document.createTextNode(language.label))
       this.languageSelect.appendChild(opt)
     })
 
-    this.languageSelect.value = "en"
+    if (!this.languageSelect.value) {
+      this.languageSelect.value = "en"
+    }
   }
 
   loadHouseSystemSelect() {
-    const language = this.loadLanguageSelect.value
+    const language = this.languageSelect.value
     this.houseSystemSelect.innerHTML = ''
     Horoscope.HouseSystems(language).forEach(system => {
       var opt = document.createElement('option');
@@ -120,7 +121,7 @@ class DemoApp {
   }
 
   loadZodiacSystemSelect() {
-    const language = this.loadLanguageSelect.value
+    const language = this.languageSelect.value
     this.zodiacSystemSelect.innerHTML = ''
     Horoscope.ZodiacSystems(language).forEach(system => {
       const opt = document.createElement('option');
@@ -133,7 +134,7 @@ class DemoApp {
   }
 
   loadAspectInputs() {
-    const language = this.loadLanguageSelect.value
+    const language = this.languageSelect.value
     this.majorAspectSection.innerHTML = ''
     this.minorAspectSection.innerHTML = ''
 
@@ -198,7 +199,8 @@ class DemoApp {
       houseSystem: this.houseSystemSelect.value,
       zodiac: this.zodiacSystemSelect.value,
       aspectTypes: [this.aspectsMajorInput.checked ? 'major' : undefined, this.aspectsMinorInput.checked ? 'minor' : undefined].filter(e => e),
-      customOrbs: customOrbs
+      customOrbs: customOrbs,
+      language: this.languageSelect.value
     })
 
     console.log(horoscope)
@@ -274,7 +276,7 @@ class DemoApp {
         <td>${aspect.point2Label}</td>
         <td>${aspect.orb}</td>
         <td>${aspect.orbUsed}</td>
-        <td>${aspect.aspectLevel}</td>
+        <td>${aspect.aspectLevelLabel}</td>
       `
       aspectsTableBody.appendChild(tableRow)
     })

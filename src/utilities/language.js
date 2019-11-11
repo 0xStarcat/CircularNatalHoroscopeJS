@@ -1,4 +1,5 @@
 export const LANGUAGE = {
+  // English
   'en': {
     // Angles
     'ascendant': 'Ascendant',
@@ -59,7 +60,8 @@ export const LANGUAGE = {
     'semi-square': 'Semi-Square',
     'semi-sextile': 'Semi-Sextile',
     // Language labels
-    'english-language': 'English',
+    'en': 'English',
+    'es': 'Español',
     // Zodiac Choice Labels
     'tropical-zodiac': 'Tropical',
     'sidereal-zodiac': 'Sidereal',
@@ -73,5 +75,82 @@ export const LANGUAGE = {
     //Aspect level labels
     'major': 'Major',
     'minor': 'Minor',
+  },
+  // Spanish
+  es: {
+    // Angles
+    'ascendant': 'Ascendente',
+    'midheaven': 'Medio Cielo',
+    // Bodies
+    'sun': 'Sol',
+    'moon': 'Luna',
+    'mercury': 'Mercurio',
+    'venus': 'Venus',
+    'mars': 'Marte',
+    'jupiter': 'Júpiter',
+    'saturn': 'Saturno',
+    'uranus': 'Urano',
+    'neptune': 'Neptuno',
+    'pluto': 'Plutón',
+    'chiron': 'Quirón',
+    'sirius': 'Sirio',
+    // Points
+    'northnode': 'Nodo Norte',
+    'southnode': 'Nodo Sur',
+    'lilith': 'Lilith',
+    // Signs
+    'aries': 'Aries',
+    'taurus': 'Tauro',
+    'gemini': 'Géminis',
+    'cancer': 'Cáncer',
+    'leo': 'Leo',
+    'virgo': 'Virgo',
+    'libra': 'Libra',
+    'scorpio': 'Escorpio',
+    'sagittarius': 'Sagitario',
+    'capricorn': 'Capricornio',
+    'aquarius': 'Acuario',
+    'pisces': 'Piscis',
+    'ophiuchus': 'Ofiuco',
+    // Houses
+    'house1': 'Primera',
+    'house2': 'Segunda',
+    'house3': 'Tercera',
+    'house4': 'Cuarta',
+    'house5': 'Quinta',
+    'house6': 'Sexta',
+    'house7': 'Séptima',
+    'house8': 'Octava',
+    'house9': 'Novena',
+    'house10': 'Décima',
+    'house11': 'Undécima',
+    'house12': 'Duodécima',
+    // Aspects
+    'conjunction': 'Conjunción',
+    'opposition': 'Oposición',
+    'trine': 'Trígono',
+    'square': 'Cuadrado',
+    'sextile': 'Sextil',
+    'quincunx': 'Tresbolillo',
+    'quintile': 'Quintil',
+    'septile': 'Septil',
+    'semi-square': 'Semi-cuadrado',
+    'semi-sextile': 'Semi-sextil',
+    // Language labels
+    'en': 'English',
+    'es': 'Español',
+    // Zodiac Choice Labels
+    'tropical-zodiac': 'Tropical',
+    'sidereal-zodiac': 'Sideral',
+    // House System labels
+    'equal-house': 'Casa igual',
+    'koch': 'Koch',
+    'placidus': 'Placidus',
+    'regiomontanus': 'Regiomontanus',
+    'topocentric': 'Topocéntrico',
+    'whole-sign': 'Signo Entero',
+    //Aspect level labels
+    'major': 'Mayor',
+    'minor': 'Menor',
   }
 }
