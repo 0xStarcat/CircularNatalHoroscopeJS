@@ -1,7 +1,7 @@
 // 'use strict';
 
 import moment from 'moment'
-import { degreesToRadians, radiansToDegrees, modulo, arccot, sinFromDegrees, cosFromDegrees, tanFromDegrees } from './math'
+import { degreesToRadians, radiansToDegrees, modulo, arccot, sinFromDegrees, cosFromDegrees, tanFromDegrees, decimalDegreesToDMS } from './math'
 
 export const getObliquityEcliptic = () => {
   return
@@ -79,28 +79,72 @@ export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSid
   obliquityEcliptic = parseFloat(obliquityEcliptic)
   localSiderealTime = parseFloat(localSiderealTime)
 
-  // TODO - reimplement with meeus calc Astronomical Algorithms, p99
-  // test lat 42.37 and lst 90.808 should turn into libra 180.06... not Aries 0.06
+  const a = -cosFromDegrees(localSiderealTime)
+  const b = sinFromDegrees(obliquityEcliptic) * tanFromDegrees(latitude)
+  const c = cosFromDegrees(obliquityEcliptic) * sinFromDegrees(localSiderealTime)
+  const d = b + c
+  const e = a / d
+  const f = Math.atan(e)
 
-  //////////
-  // * float latitude
-  // * float obliquityEcliptic
-  // * float localSiderealTime
-  // returns => Float as degrees
-  //////////
-  // ARCCOT (- ( (TAN f x SIN e) + (SIN RAMC x COS e) ) ÷ COS RAMC)
-  // source: An Astrological House Formulary by Michael P. Munkasey
-  // verified with https://cafeastrology.com/ascendantcalculator.html and https://www.astrosofa.com/horoscope/ascendant
-  // Default obliquityEcliptic value from http://www.neoprogrammics.com/obliquity_of_the_ecliptic/
-  // for Mean Obliquity on Sept. 22 2019 at 0000 UTC
+  // console.log(latitude, localSiderealTime, a, b, c, d, e, f)
+  let ascendant = radiansToDegrees(f)
 
-  const a = tanFromDegrees(parseFloat(latitude)) * sinFromDegrees(obliquityEcliptic)
-  const b = sinFromDegrees(localSiderealTime) * cosFromDegrees(obliquityEcliptic)
-  const c = (a + b) / cosFromDegrees(localSiderealTime)
+  // modulation from wikipedia
+  // https://en.wikipedia.org/wiki/Ascendant
+  // citation Peter Duffett-Smith, Jonathan Zwart, Practical astronomy with your calculator or spreadsheet-4th ed., p47, 2011
 
-  console.log(latitude, localSiderealTime, a, b, c)
-  const ascendant = modulo(radiansToDegrees(arccot(-c)), 360)
+  if (ascendant < 0) {
+    ascendant += 180
+  } else {
+    ascendant += 360
+  }
 
-  console.log(arccot(-c), radiansToDegrees(arccot(-c)), ascendant)
-  return ascendant
+  if (ascendant >= 180) {
+    ascendant -= 180
+  }
+
+  return modulo(ascendant, 360)
 }
+
+//
+// * Legacy method - has issues *
+// export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSiderealTime=0.00 } = {}) => {
+//   latitude = parseFloat(latitude)
+//   obliquityEcliptic = parseFloat(obliquityEcliptic)
+//   localSiderealTime = parseFloat(localSiderealTime)
+//
+//   // TODO - reimplement with meeus calc Astronomical Algorithms, p99
+//   // test lat 42.37 and lst 90.808 should turn into libra 180.06... not Aries 0.06
+//
+//   //////////
+//   // * float latitude
+//   // * float obliquityEcliptic
+//   // * float localSiderealTime
+//   // returns => Float as degrees
+//   //////////
+//   // ARCCOT (- ( (TAN f x SIN e) + (SIN RAMC x COS e) ) ÷ COS RAMC)
+//   // source: An Astrological House Formulary by Michael P. Munkasey
+//   // verified with https://cafeastrology.com/ascendantcalculator.html and https://www.astrosofa.com/horoscope/ascendant
+//   // Default obliquityEcliptic value from http://www.neoprogrammics.com/obliquity_of_the_ecliptic/
+//   // for Mean Obliquity on Sept. 22 2019 at 0000 UTC
+//
+//   const a = tanFromDegrees(parseFloat(latitude)) * sinFromDegrees(obliquityEcliptic)
+//   const b = sinFromDegrees(localSiderealTime) * cosFromDegrees(obliquityEcliptic)
+//   const c = (a + b) / cosFromDegrees(localSiderealTime)
+//
+//   let ascendant = radiansToDegrees(arccot(-c))
+//
+//   if (ascendant < 0) {
+//     ascendant += 180
+//   } else {
+//     ascendant += 360
+//   }
+//
+//   if (ascendant < 180) {
+//     ascendant += 180
+//   } else {
+//     ascendant -= 180
+//   }
+//
+//   return modulo(ascendant, 360)
+// }
