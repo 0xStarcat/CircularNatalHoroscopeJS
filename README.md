@@ -32,7 +32,9 @@ The goal is to allow someone to:
 
 => ~~Data containing the sign major body, and house occupy~~.
 
-=> A list containing all the computed aspects of all major bodies.
+=> ~~A list containing all the computed major and minor aspects of all bodies / points / angles.~~
+
+=> ~~Capacity for language translations~~
 
 ## Future work
 

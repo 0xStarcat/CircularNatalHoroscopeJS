@@ -1,18 +1,30 @@
-import { getZodiacSign, getSignFromDD, getHouseFromDD, calculateEqualHouseCusps, constructHouses } from '../src/utilities/astrology'
+import { zodiacPositionToHorizon, getZodiacSign, getSignFromDD, getHouseFromDD, calculateEqualHouseCusps, constructHouses } from '../src/utilities/astrology'
 
-test('getZodiacSign - 1', () => {
-  const sign = getZodiacSign({decimalDegrees: 5.6789, zodiac: "tropical"})
-  expect(sign.label).toBe("Aries")
+describe('zodiacPositionToHorizon', () => {
+  it('returns converted value - 1', () => {
+    expect(zodiacPositionToHorizon(100, 100)).toEqual(0)
+  })
+
+  it('returns converted value - 2', () => {
+    expect(zodiacPositionToHorizon(100, 100)).toEqual(0)
+  })
 })
 
-test('getZodiacSign - 2', () => {
-  const sign = getZodiacSign({decimalDegrees: 180.6789, zodiac: "tropical"})
-  expect(sign.label).toBe("Libra")
-})
+describe('getZodiacSign', () => {
+  test('getZodiacSign - 1', () => {
+    const sign = getZodiacSign({decimalDegrees: 5.6789, zodiac: "tropical"})
+    expect(sign.label).toBe("Aries")
+  })
 
-test('getZodiacSign - 3', () => {
-  const sign = getZodiacSign({decimalDegrees: 355.6789, zodiac: "tropical"})
-  expect(sign.label).toBe("Pisces")
+  test('getZodiacSign - 2', () => {
+    const sign = getZodiacSign({decimalDegrees: 180.6789, zodiac: "tropical"})
+    expect(sign.label).toBe("Libra")
+  })
+
+  test('getZodiacSign - 3', () => {
+    const sign = getZodiacSign({decimalDegrees: 355.6789, zodiac: "tropical"})
+    expect(sign.label).toBe("Pisces")
+  })
 })
 
 describe('getHouseFromDD', () => {

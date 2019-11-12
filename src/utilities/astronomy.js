@@ -75,21 +75,32 @@ export const getMidheavenSun = ({localSiderealTime=0.00, obliquityEcliptic=23.43
 }
 
 export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSiderealTime=0.00 } = {}) => {
+  latitude = parseFloat(latitude)
+  obliquityEcliptic = parseFloat(obliquityEcliptic)
+  localSiderealTime = parseFloat(localSiderealTime)
+
+  // TODO - reimplement with meeus calc Astronomical Algorithms, p99
+  // test lat 42.37 and lst 90.808 should turn into libra 180.06... not Aries 0.06
+
   //////////
   // * float latitude
   // * float obliquityEcliptic
   // * float localSiderealTime
   // returns => Float as degrees
   //////////
+  // ARCCOT (- ( (TAN f x SIN e) + (SIN RAMC x COS e) ) ÷ COS RAMC)
   // source: An Astrological House Formulary by Michael P. Munkasey
   // verified with https://cafeastrology.com/ascendantcalculator.html and https://www.astrosofa.com/horoscope/ascendant
   // Default obliquityEcliptic value from http://www.neoprogrammics.com/obliquity_of_the_ecliptic/
   // for Mean Obliquity on Sept. 22 2019 at 0000 UTC
 
-  const a = tanFromDegrees(latitude) * sinFromDegrees(obliquityEcliptic)
+  const a = tanFromDegrees(parseFloat(latitude)) * sinFromDegrees(obliquityEcliptic)
   const b = sinFromDegrees(localSiderealTime) * cosFromDegrees(obliquityEcliptic)
   const c = (a + b) / cosFromDegrees(localSiderealTime)
 
+  console.log(latitude, localSiderealTime, a, b, c)
   const ascendant = modulo(radiansToDegrees(arccot(-c)), 360)
+
+  console.log(arccot(-c), radiansToDegrees(arccot(-c)), ascendant)
   return ascendant
 }

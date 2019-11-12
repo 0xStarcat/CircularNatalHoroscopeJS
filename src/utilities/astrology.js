@@ -31,7 +31,7 @@ export const getHouseFromDD = (houses, decimalDegrees) => {
 export const constructHouses = (cuspsArray, ascendantDegrees, zodiac, language='en') => {
   return cuspsArray.map((cuspDegree, index) => {
     const houseId = index + 1
-    return new House({ascendantDegrees: ascendantDegrees, zodiacDegreesStart: cuspDegree, zodiacDegreesEnd:cuspsArray[modulo(index + 1, cuspsArray.length + 1)], id: houseId, zodiac, language})
+    return new House({ascendantDegrees: ascendantDegrees, eclipticDegreesStart: cuspDegree, eclipticDegreesEnd:cuspsArray[modulo(index + 1, cuspsArray.length + 1)], id: houseId, zodiac, language})
   })
 }
 
@@ -48,7 +48,7 @@ export const applyZodiacOffsetClockwise = (tropicalZodiacLongitude, zodiac) => {
   }
 }
 
-export const zodiacPositionToEcliptic = (ascendantZodiacDegrees, zodiacDegrees) => {
+export const zodiacPositionToHorizon = (ascendantZodiacDegrees, zodiacDegrees) => {
   return parseFloat(modulo(ascendantZodiacDegrees - zodiacDegrees, 360))
 }
 

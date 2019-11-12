@@ -1,26 +1,26 @@
-import { zodiacPositionToEcliptic, getZodiacSign, applyZodiacOffsetCounter } from './utilities/astrology'
+import { zodiacPositionToHorizon, getZodiacSign, applyZodiacOffsetCounter } from './utilities/astrology'
 import { modulo } from './utilities/math'
 import ChartPosition from './ChartPosition'
 import { LANGUAGE } from './utilities/language'
 
 export default class House {
-  constructor({ascendantDegrees=0, zodiacDegreesStart=0, zodiacDegreesEnd=0, id=0, zodiac='tropical', language='en'}={}) {
+  constructor({ascendantDegrees=0, eclipticDegreesStart=0, eclipticDegreesEnd=0, id=0, zodiac='tropical', language='en'}={}) {
     this._language = language
-    zodiacDegreesStart = parseFloat(modulo(zodiacDegreesStart, 360).toFixed(4))
-    zodiacDegreesEnd = parseFloat(modulo(zodiacDegreesEnd, 360).toFixed(4))
+    eclipticDegreesStart = parseFloat(modulo(eclipticDegreesStart, 360).toFixed(4))
+    eclipticDegreesEnd = parseFloat(modulo(eclipticDegreesEnd, 360).toFixed(4))
 
     this.id = id
     this.label = LANGUAGE[this._language][House.convertIdToKey(id)]
 
-    const eclipticDegreesStart = zodiacPositionToEcliptic(ascendantDegrees, zodiacDegreesStart)
-    const eclipticDegreesEnd = zodiacPositionToEcliptic(ascendantDegrees, zodiacDegreesEnd)
+    const horizonDegreesStart = zodiacPositionToHorizon(ascendantDegrees, eclipticDegreesStart)
+    const horizonDegreesEnd = zodiacPositionToHorizon(ascendantDegrees, eclipticDegreesEnd)
 
     this.ChartPosition = {
-      StartPosition: new ChartPosition({eclipticDegrees: eclipticDegreesStart, zodiacDegrees: zodiacDegreesStart}),
-      EndPosition: new ChartPosition({eclipticDegrees: eclipticDegreesEnd, zodiacDegrees: zodiacDegreesEnd})
+      StartPosition: new ChartPosition({horizonDegrees: horizonDegreesStart, eclipticDegrees: eclipticDegreesStart}),
+      EndPosition: new ChartPosition({horizonDegrees: horizonDegreesEnd, eclipticDegrees: eclipticDegreesEnd})
     }
 
-    this.Sign = getZodiacSign({decimalDegrees: zodiacDegreesStart, zodiac: zodiac, language})
+    this.Sign = getZodiacSign({decimalDegrees: eclipticDegreesStart, zodiac: zodiac, language})
   }
 
   static convertIdToKey(id) {
