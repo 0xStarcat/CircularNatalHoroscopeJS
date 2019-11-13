@@ -66,12 +66,28 @@ export const getMidheavenSun = ({localSiderealTime=0.00, obliquityEcliptic=23.43
   // Default obliquityEcliptic value from http://www.neoprogrammics.com/obliquity_of_the_ecliptic/
   // for Mean Obliquity on Sept. 22 2019 at 0000 UTC
 
-
   const tanLST = tanFromDegrees(localSiderealTime)
   const cosOE = cosFromDegrees(obliquityEcliptic)
-  const midheaven = modulo(radiansToDegrees(Math.atan(tanLST / cosOE)), 360)
+  let midheaven = radiansToDegrees(Math.atan(tanLST / cosOE))
 
-  return midheaven
+  // Correcting the quadrant
+  if (midheaven < 0) {
+    midheaven += 360
+  }
+
+  if (midheaven > localSiderealTime) {
+    midheaven -= 180
+  }
+
+  if (midheaven < 0) {
+    midheaven += 180
+  }
+
+  if (midheaven < 180 && localSiderealTime >= 180) {
+    midheaven += 180
+  }
+
+  return modulo(midheaven, 360)
 }
 
 export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSiderealTime=0.00 } = {}) => {
