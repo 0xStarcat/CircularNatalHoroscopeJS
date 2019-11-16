@@ -1,4 +1,4 @@
-# Western Horoscope JS
+# Circular Natal Horoscope JS
 
 By **horoscope**, we're talking about astrological **birth charts**. **Not  horoscope readings** or **interpretations**.
 
@@ -43,17 +43,7 @@ The goal is to allow someone to:
 
 ## Installation
 
-If installing from a package manager (NPM, Yarn, etc), run the following command in terminal:
-
-```
-npm install western-horoscope-js
-
-// or
-
-yarn add western-horoscope-js
-```
-
-If installing from source, the main file can be found at `dist/main.bundle.js` and included in your codebase.
+If installing from source, clone this repo load the main file found at `dist/main.bundle.js`.
 
 ## Development
 
