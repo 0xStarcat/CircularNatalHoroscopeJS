@@ -1,11 +1,12 @@
 import moment from 'moment-timezone'
 import Origin from '../src/Origin'
 import Horoscope from '../src/Horoscope'
-import { decimalDegreesToDMS } from '../src/utilities/math'
+import { Chart } from '../lib/astrochart-2.0.0.min.js'
 
 class DemoApp {
   constructor() {
     this.form = document.querySelector('#form')
+    this.chart = document.querySelector('#chart')
     this.dateInput = document.querySelector('#date')
     this.timeInput = document.querySelector('#time')
     this.latitudeInput = document.querySelector('#latitude')
@@ -281,6 +282,31 @@ class DemoApp {
       `
       aspectsTableBody.appendChild(tableRow)
     })
+
+
+    const chartPlanets = Object.assign({}, ...horoscope.CelestialBodies.all.map(body => {
+      const key = body.key.charAt(0).toUpperCase() + body.key.slice(1)
+      return ({[key]: [body.ChartPosition.Ecliptic.DecimalDegrees] })
+    }))
+
+    const asc = horoscope.Ascendant.ChartPosition.Horizon.DecimalDegrees
+    const desc = (asc + 180) % 360
+    const mc = horoscope.Midheaven.ChartPosition.Horizon.DecimalDegrees
+    const ic = (horoscope.Midheaven.ChartPosition.Horizon.DecimalDegrees + 180) % 360
+
+    const chartCusps = horoscope.ZodiacCusps.map(cusp => {
+      return cusp.ChartPosition.Horizon.DecimalDegrees
+    })
+
+    const chart = new astrology.Chart( this.chart.id, 800, 800);
+    const data = {
+      "planets": chartPlanets,
+      "cusps": chartCusps
+    }
+
+		const radix = chart.radix( data );
+    radix.addPointsOfInterest( {"As":[asc], "Mc":[mc],"Ds":[desc],"Ic":[ic]});
+    radix.aspects()
   }
 }
 
