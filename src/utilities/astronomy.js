@@ -109,7 +109,7 @@ export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSid
   // https://en.wikipedia.org/wiki/Ascendant
   // citation Peter Duffett-Smith, Jonathan Zwart, Practical astronomy with your calculator or spreadsheet-4th ed., p47, 2011
 
-  if (ascendant < 0) {
+  if (d < 0) {
     ascendant += 180
   } else {
     ascendant += 360
