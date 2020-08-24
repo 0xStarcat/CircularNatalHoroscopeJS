@@ -1,48 +1,131 @@
 import Origin from '../src/Origin'
 import Horoscope from '../src/Horoscope'
-import { isAspect, getAspectData, createAspects } from '../src/utilities/aspects'
+import { isAspect, getAspectData, createAspects, calculateOrb } from '../src/utilities/aspects'
 
 describe('isAspect', () => {
-  it ('returns true when comparison is linear', () => {
+  it('returns true when comparison is linear', () => {
     expect(isAspect(100, 200, 100, 0)).toEqual(true)
   })
 
-  it ('returns true when comparison is modulo-ed', () => {
+  it('returns true when comparison is modulo-ed', () => {
     expect(isAspect(300, 40, 100, 0)).toEqual(true)
   })
 
-  it ('returns true within upper orb when comparison is linear', () => {
+  it('returns true within upper orb when comparison is linear', () => {
     expect(isAspect(100, 210, 100, 10)).toEqual(true)
   })
 
-  it ('returns true within lower orb when comparison is linear', () => {
+  it('returns true within lower orb when comparison is linear', () => {
     expect(isAspect(100, 190, 100, 10)).toEqual(true)
   })
 
-  it ('returns true within upper orb when comparison is modulo-ed', () => {
+  it('returns true within upper orb when comparison is modulo-ed', () => {
     expect(isAspect(300, 50, 100, 10)).toEqual(true)
   })
 
-  it ('returns true within lower orb when comparison is modulo-ed', () => {
+  it('returns true within lower orb when comparison is modulo-ed', () => {
     expect(isAspect(300, 30, 100, 10)).toEqual(true)
   })
 
-  it ('returns false with linear comparison', () => {
+  it('returns false with linear comparison', () => {
     expect(isAspect(100, 211, 100, 10)).toEqual(false)
   })
 
-  it ('returns false with modulo-ed comparison', () => {
+  it('returns false with modulo-ed comparison', () => {
     expect(isAspect(300, 29, 100, 10)).toEqual(false)
   })
 
   describe('edge cases', () => {
-    it ('returns true', () => {
+    it('returns true', () => {
       expect(isAspect(240.45, 239.61, 0, 8)).toEqual(true) // conjunction
     })
 
-    it ('returns true', () => {
+    it('returns true', () => {
       expect(isAspect(184.09, 240.45, 60, 6)).toEqual(true) // sextile
     })
+  })
+})
+
+describe('calculateOrb', () => {
+  it('calculates correctly when point 1 is > point 2', () => {
+    const aspectAngle = 0 // conjunction
+    const maxOrb = 8
+    const point1 = 180
+    const point2 = 179
+
+    expect(calculateOrb(aspectAngle, maxOrb, point1, point2)).toEqual(1)
+  })
+
+  it('calculates correctly when point 1 is < point 2', () => {
+    const aspectAngle = 0 // conjunction
+    const maxOrb = 8
+    const point1 = 180
+    const point2 = 182
+
+    expect(calculateOrb(aspectAngle, maxOrb, point1, point2)).toEqual(2)
+  })
+
+  it('calculates correctly when point 1 is = point 2', () => {
+    const aspectAngle = 0 // conjunction
+    const maxOrb = 8
+    const point1 = 180
+    const point2 = 180
+
+    expect(calculateOrb(aspectAngle, maxOrb, point1, point2)).toEqual(0)
+  })
+
+  it('calculates correctly when point 1 is on the other side of the circle and < point 2', () => {
+    const aspectAngle = 0 // conjunction
+    const maxOrb = 8
+    const point1 = 359
+    const point2 = 1
+
+    expect(calculateOrb(aspectAngle, maxOrb, point1, point2)).toEqual(2)
+  })
+
+  it('calculates correctly when point 1 is on the other side of the circle and > point 2', () => {
+    const aspectAngle = 0 // conjunction
+    const maxOrb = 8
+    const point1 = 4
+    const point2 = 359
+
+    expect(calculateOrb(aspectAngle, maxOrb, point1, point2)).toEqual(5)
+  })
+
+  it('With an opposition aspect', () => {
+    const aspectAngle = 180 // opposition
+    const maxOrb = 8
+    const point1 = 180
+    const point2 = 359
+
+    expect(calculateOrb(aspectAngle, maxOrb, point1, point2)).toEqual(1)
+  })
+
+  it('With a trine aspect', () => {
+    const aspectAngle = 120 // trine
+    const maxOrb = 8
+    const point1 = 61
+    const point2 = 300
+
+    expect(calculateOrb(aspectAngle, maxOrb, point1, point2)).toEqual(1)
+  })
+
+  it('With a square aspect', () => {
+    const aspectAngle = 90 // square
+    const maxOrb = 8
+    const point1 = 60
+    const point2 = 152
+
+    expect(calculateOrb(aspectAngle, maxOrb, point1, point2)).toEqual(2)
+  })
+
+  it('With a sextile aspect', () => {
+    const aspectAngle = 60 // sextile
+    const maxOrb = 8
+    const point1 = 330
+    const point2 = 25
+
+    expect(calculateOrb(aspectAngle, maxOrb, point1, point2)).toEqual(5)
   })
 })
 
@@ -59,31 +142,31 @@ describe('getAspectData', () => {
   })
 
   it('returns all formatted aspect data', () => {
-    const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['all']})
+    const horoscope = new Horoscope({ origin: defaultOrigin, aspectPoints: ['all'] })
 
     expect(Object.keys(getAspectData(horoscope))).toHaveLength(17)
   })
 
   it('returns formatted aspect data for bodies', () => {
-    const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['bodies'], aspectWithPoints: ['bodies']})
+    const horoscope = new Horoscope({ origin: defaultOrigin, aspectPoints: ['bodies'], aspectWithPoints: ['bodies'] })
 
     expect(Object.keys(getAspectData(horoscope))).toHaveLength(12)
   })
 
   it('returns formatted aspect data for points and angles', () => {
-    const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['points', 'angles'], aspectWithPoints: ['points', 'angles']})
+    const horoscope = new Horoscope({ origin: defaultOrigin, aspectPoints: ['points', 'angles'], aspectWithPoints: ['points', 'angles'] })
 
     expect(Object.keys(getAspectData(horoscope))).toHaveLength(5)
   })
 
   it('returns formatted aspect data for single entries', () => {
-    const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['mercury', 'ascendant'], aspectWithPoints: ['mercury', 'ascendant']})
+    const horoscope = new Horoscope({ origin: defaultOrigin, aspectPoints: ['mercury', 'ascendant'], aspectWithPoints: ['mercury', 'ascendant'] })
 
     expect(Object.keys(getAspectData(horoscope))).toHaveLength(2)
   })
 
   it('returns formatted aspect data combined aspectPoints and aspectWithPoints', () => {
-    const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['mercury', 'ascendant'], aspectWithPoints: ['angles']})
+    const horoscope = new Horoscope({ origin: defaultOrigin, aspectPoints: ['mercury', 'ascendant'], aspectWithPoints: ['angles'] })
 
     expect(Object.keys(getAspectData(horoscope))).toHaveLength(3)
   })
@@ -101,7 +184,7 @@ describe('createAspects', () => {
   })
 
   it('returns all formatted aspect data', () => {
-    const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['all']})
+    const horoscope = new Horoscope({ origin: defaultOrigin, aspectPoints: ['all'] })
     const aspects = createAspects(horoscope)
 
     expect(aspects.all).toHaveLength(39)
@@ -131,7 +214,7 @@ describe('createAspects', () => {
   })
 
   it('returns all formatted aspect data and uses customOrbs', () => {
-    const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['all'], customOrbs: { conjunction: 10 }})
+    const horoscope = new Horoscope({ origin: defaultOrigin, aspectPoints: ['all'], customOrbs: { conjunction: 10 } })
     const aspects = createAspects(horoscope)
 
     expect(aspects.all).toHaveLength(41)
@@ -161,7 +244,7 @@ describe('createAspects', () => {
   })
 
   it('returns specified aspectPoints with aspectWithPoints', () => {
-    const horoscope = new Horoscope({origin: defaultOrigin, aspectPoints: ['all'], aspectWithPoints: ['mercury']})
+    const horoscope = new Horoscope({ origin: defaultOrigin, aspectPoints: ['all'], aspectWithPoints: ['mercury'] })
     const aspects = createAspects(horoscope)
 
     expect(aspects.all).toHaveLength(4)

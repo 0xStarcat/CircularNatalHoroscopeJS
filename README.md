@@ -57,6 +57,15 @@ npm install
 yarn install
 ```
 
+Then run
+
+```
+
+yarn start:dev
+```
+
+and any changes you make should be reflected in `dist/demo.html` if you open the file in a browser.
+
 Run tests with
 
 ```
@@ -66,7 +75,6 @@ npm test
 
 yarn test
 ```
-
 
 ## Building
 
