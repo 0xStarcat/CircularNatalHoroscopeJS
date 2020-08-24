@@ -34,6 +34,16 @@ export const getAspectData = (horoscope) => {
   };
 };
 
+export const calculateOrb = (aspectAngle, maxOrb, point1, point2) => {
+
+  // const centerPoint = modulo(point1 + aspectAngle, 360)
+  const comparisonAngle = aspectAngle > 0 ? modulo(Math.abs(point2 - aspectAngle), aspectAngle) : point2
+
+  let orb = getModuloDifference(point1, comparisonAngle)
+  if (aspectAngle > 0) orb = modulo(orb, aspectAngle)
+  return parseFloat(orb.toFixed(4))
+}
+
 export const createAspects = (horoscope) => {
   const aspectData = getAspectData(horoscope);
   const aspectTypes = horoscope._aspectTypes;
@@ -66,12 +76,8 @@ export const createAspects = (horoscope) => {
               maxOrb
             )
           ) {
-            orb =
-              aspectObject.angle -
-              getModuloDifference(
-                Math.max(point1Data.point, point2Data.point),
-                Math.min(point1Data.point, point2Data.point)
-              );
+            orb = calculateOrb(aspectObject.angle, maxOrb, point1Data.point, point2Data.point)
+
             aspect = new Aspect({
               aspectKey: type,
               point1Key: point1,
@@ -88,9 +94,8 @@ export const createAspects = (horoscope) => {
               maxOrb
             )
           ) {
-            orb =
-              aspectObject.angle -
-              getModuloDifference(point2Data.point, point1Data.point);
+            orb = calculateOrb(aspectObject.angle, maxOrb, point1Data.point, point2Data.point)
+
             aspect = new Aspect({
               aspectKey: type,
               point1Key: point1,

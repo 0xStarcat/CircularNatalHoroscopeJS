@@ -13,7 +13,7 @@ export default class Aspect {
      * @param {string} aspectKey - The key of the aspect - please refer to ASPECTS constant
   */
 
-  constructor({point1Key='', point2Key='', aspectKey='', orb=0, orbUsed=0, language='en'}={}) {
+  constructor({ point1Key = '', point2Key = '', aspectKey = '', orb = 0, orbUsed = 0, language = 'en' } = {}) {
     //
     this.point1Key = point1Key
     this.point1Label = LANGUAGE[language][point1Key]
@@ -23,7 +23,7 @@ export default class Aspect {
     this.aspectLevel = ASPECTS[aspectKey].level
     this.aspectLevelLabel = LANGUAGE[language][ASPECTS[aspectKey].level]
     this.label = LANGUAGE[language][aspectKey]
-    this.orb = parseFloat(modulo(orb, orbUsed).toFixed(4))
+    this.orb = orb
     this.orbUsed = orbUsed
   }
 }
