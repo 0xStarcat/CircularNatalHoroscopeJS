@@ -36,11 +36,16 @@ export const getAspectData = (horoscope) => {
 
 export const calculateOrb = (aspectAngle, maxOrb, point1, point2) => {
 
-  // const centerPoint = modulo(point1 + aspectAngle, 360)
-  const comparisonAngle = aspectAngle > 0 ? modulo(Math.abs(point2 - aspectAngle), aspectAngle) : point2
+  // Calculates how close point2 is to the aspect angle from point1.
+  // Ex: Point1 = 100 deg, Point2 = 161 deg, 
+  // Sextile Aspect = 60 deg
+  // => orb = 1 deg
 
-  let orb = getModuloDifference(point1, comparisonAngle)
-  if (aspectAngle > 0) orb = modulo(orb, aspectAngle)
+  const difference = getModuloDifference(point1, point2)
+  const orb = Math.abs(difference - aspectAngle)
+
+  // let orb = getModuloDifference(point1, comparisonAngle)
+  // if (aspectAngle > 0) orb = modulo(orb, aspectAngle)
   return parseFloat(orb.toFixed(4))
 }
 

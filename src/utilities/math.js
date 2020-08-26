@@ -85,6 +85,10 @@ export const decimalDegreesToDMS = (decimalDegrees) => {
 }
 
 export const isDegreeWithinCircleArc = (arcLow, arcHigh, degree, edges = '[)') => {
+  // Calculates if a point ("degree") is within an arc between "arcLow" and "arcHigh" within a circle. 
+  // With parameters for low/high inclusive or exclusive.
+  // [] = low/high inclusive
+  // () = low/high exclusive
   const operators = {
     '[': (a, b) => a >= b,
     '(': (a, b) => a > b,
