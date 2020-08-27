@@ -223,7 +223,7 @@ You'll frequently see a `ChartPosition` class in your results for house cusps, z
 
 The `horizon` is typically understood to be the inner circle on the natal chart. The `Ascendant` is commonly located at `0 degrees` along the horizon circle. 
 
-The `ecpliptic` is understood to be the outer circle on the natal chart. The start of `Aries` is always at `0 degrees` along this circle.
+The `ecliptic` is understood to be the outer circle on the natal chart. The start of `Aries` is always at `0 degrees` along this circle.
 
 ```js
 const mercury = {
