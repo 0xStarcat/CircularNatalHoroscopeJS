@@ -217,7 +217,7 @@ horoscope.ZodiacCusps = [
 ```
 
 
-###### Interpreting ChartPositions:
+##### Interpreting ChartPositions:
 
 You'll frequently see a `ChartPosition` class in your results for house cusps, zodiac cusps, bodies, etc. This class should give you everything you need to orient and place the cusp / body onto your circular natal chart. It provides a set of points for the object to place it along the `horizon` or the `ecliptic`.
 
