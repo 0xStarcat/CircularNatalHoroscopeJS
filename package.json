@@ -1,11 +1,12 @@
 {
-  "name": "western-horoscope-js",
-  "version": "0.0.1",
+  "name": "Circular-Natal-Horoscope-JS",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest --watch",
     "build": "webpack --mode=production",
+    "build:dev": "webpack",
     "start:dev": "webpack --watch --mode=production"
   },
   "keywords": [
@@ -13,14 +14,12 @@
     "Horoscope",
     "Natal Chart"
   ],
-  "author": "",
+  "author": "0xStarcat",
   "license": "Unlicense",
   "dependencies": {
-    "geo-tz": "^5.0.5",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
-    "tz-lookup": "^6.1.24",
-    "webpack": "^4.40.2"
+    "tz-lookup": "^6.1.24"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
@@ -28,6 +27,7 @@
     "babel-jest": "^24.9.0",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.9.0",
+    "webpack": "^4.40.2",
     "webpack-cli": "^3.3.8"
   }
 }

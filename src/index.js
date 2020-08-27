@@ -1,4 +1,7 @@
-import moment from 'moment-timezone'
+import Origin from './Origin'
+import Horoscope from './Horoscope'
 
-export { default as Origin } from './Origin'
-export { default as Horoscope } from './Horoscope'
+export {
+  Origin,
+  Horoscope
+}

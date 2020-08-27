@@ -3,11 +3,11 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    main: './src/index.js',
+    index: './src/index.js',
     demoScript: './demo/script.js'
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [

@@ -1,6 +1,6 @@
 import moment from "moment-timezone";
-import Origin from "../src/Origin";
-import Horoscope from "../src/Horoscope";
+
+import { Origin, Horoscope } from '../src/index.js'
 import { Chart } from "../lib/astrochart-2.0.0.min.js";
 
 class DemoApp {
