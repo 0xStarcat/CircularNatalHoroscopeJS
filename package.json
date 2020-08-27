@@ -33,6 +33,6 @@
     "webpack-cli": "^3.3.8"
   },
   "files": [
-    "index.js"
+    "dist/index.js"
   ]
 }
