@@ -45,7 +45,7 @@ The goal is to allow someone to:
 1. Get the Origin
 
 ```js
-import Origin from "./src/Origin";
+import { Origin } from "circular-natal-horoscope-js";
 
 
 //////////
@@ -79,7 +79,8 @@ const origin = new Origin({
 2. Configure your horoscope results
 
 ```js
-import Horoscope from "./src/Horoscope";
+import { Horoscope } from "circular-natal-horoscope-js";
+
 //////////
 // Horoscope
 //////////
@@ -118,6 +119,9 @@ const horoscope = new Horoscope({
 
 
 ```js
+import { Horoscope } from "circular-natal-horoscope-js";
+
+
 const customOrbs = {
       conjunction: 8,
       opposition: 8,
@@ -149,6 +153,9 @@ const horoscope = new Horoscope({
 
 
 ```js
+import { Horoscope } from "circular-natal-horoscope-js";
+
+
 const horoscope = new Horoscope({...})
 
 
@@ -316,6 +323,11 @@ new Horoscope({language: "es"})
 ```
 
 and your language will appear in the results under the `.label` keys supplied within `Sign`, `Aspect`, `Planet`, `House` objects.
+
+## Publishing / Packaging
+
+- Copy `package.json` into `./dist`
+- run `npm pack` or `npm publish` from with `./dist`
 
 ## Sources / Special Thanks
 - All formula for astronomical and astrological calculations are cited in the codebase.

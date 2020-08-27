@@ -33,7 +33,7 @@ import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHo
 // * example: { aspectPoints: ["sun"], aspectWithPoints: ["moon"], aspectTypes: ["major", "quincrux"] } will only calculate sun / moon major or quincrux aspects if they exist
 // * All usable keys found in ./src/constant.js under BODIES, POINTS, ANGLES
 
-class Horoscope {
+export class Horoscope {
   constructor({
     origin = null,
     language = 'en',
