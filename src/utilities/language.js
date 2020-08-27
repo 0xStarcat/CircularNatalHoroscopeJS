@@ -1,6 +1,8 @@
 export const LANGUAGE = {
   // English
   'en': {
+    // Label
+    'label': "English",
     // Angles
     'ascendant': 'Ascendant',
     'midheaven': 'Midheaven',
@@ -59,9 +61,6 @@ export const LANGUAGE = {
     'septile': 'Septile',
     'semi-square': 'Semi-Square',
     'semi-sextile': 'Semi-Sextile',
-    // Language labels
-    'en': 'English',
-    'es': 'Español',
     // Zodiac Choice Labels
     'tropical-zodiac': 'Tropical',
     'sidereal-zodiac': 'Sidereal',
@@ -78,6 +77,8 @@ export const LANGUAGE = {
   },
   // Spanish
   es: {
+    // Label
+    'label': "Español",
     // Angles
     'ascendant': 'Ascendente',
     'midheaven': 'Medio Cielo',
@@ -136,9 +137,6 @@ export const LANGUAGE = {
     'septile': 'Septil',
     'semi-square': 'Semi-cuadrado',
     'semi-sextile': 'Semi-sextil',
-    // Language labels
-    'en': 'English',
-    'es': 'Español',
     // Zodiac Choice Labels
     'tropical-zodiac': 'Tropical',
     'sidereal-zodiac': 'Sideral',

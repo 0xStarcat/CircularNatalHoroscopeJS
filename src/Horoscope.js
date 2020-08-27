@@ -133,10 +133,13 @@ class Horoscope {
   }
 
   static Languages(language = 'en') {
-    return [
-      { key: 'en', value: 'en', label: LANGUAGE[language]['en'] },
-      { key: 'es', value: 'es', label: LANGUAGE[language]['es'] }
-    ]
+    return Object.keys(LANGUAGE).map(languageKey => {
+      return ({
+        key: languageKey,
+        value: languageKey,
+        label: LANGUAGE[languageKey].label
+      })
+    })
   }
 
   static AspectLabels(language = 'en') {

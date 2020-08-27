@@ -102,7 +102,7 @@ Please Note: The demo chart is not currently finalized or synced with the full f
 
 ## Adding new languages
 
-You can see how English and Spanish tokens implemented in `src/utilities/language.js`. Copy the tokens for 1 language and add it to a key matching the ISO language code you want. Then, when you generate the horoscope, pass this code into the constructor:
+You can see how English and Spanish tokens are implemented in `src/utilities/language.js`. Copy the tokens for 1 language and add it to a key matching the ISO language code you want. Then, when you generate the horoscope, pass this code into the constructor:
 
 ```js
 new Horoscope({language: "es"})
