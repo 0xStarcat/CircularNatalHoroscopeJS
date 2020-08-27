@@ -42,7 +42,7 @@ export const validateString = string => {
 }
 
 export const validateStringOrArray = stringOrArray => {
-  if(!Array.isArray(stringOrArray) && typeof stringOrArray !== 'string') {
+  if (!Array.isArray(stringOrArray) && typeof stringOrArray !== 'string') {
     throw new Error('Please pass a string or an array into aspectTypes')
   } else if (typeof stringOrArray === 'string') {
     stringOrArray = [stringOrArray]
@@ -142,11 +142,13 @@ export const validateAspectPoints = (stringOrArray) => {
 }
 
 export const validateCustomOrbs = customOrbs => {
+  const min = 0
+  const max = 12
   Object.keys(customOrbs).forEach(orbKey => {
     if (!ASPECTS[orbKey]) throw new Error(`"${orbKey}" is not a valid custom orb.`)
     customOrbs[orbKey] = parseFloat(customOrbs[orbKey])
-    if (customOrbs[orbKey] < 0 ) throw new Error(`Custom orb "${orbKey}" must be > 0.`)
-    if (customOrbs[orbKey] > 12 ) throw new Error(`Custom orb "${orbKey}" must be <= 12.`)
+    if (customOrbs[orbKey] < min) throw new Error(`Custom orb "${orbKey}" must be > ${min}.`)
+    if (customOrbs[orbKey] > max) throw new Error(`Custom orb "${orbKey}" must be <= ${max}.`)
   })
 
   return customOrbs

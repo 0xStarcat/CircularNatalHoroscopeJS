@@ -182,7 +182,7 @@ export const SIGNS = [
     endDate: {
       tropical: moment.utc([0, 6, 22, 0, 0, 0]).endOf('day'),
       sidereal: moment.utc([0, 7, 16, 0, 0, 0]).endOf('day'),
-      astronomical:  moment.utc([0, 7, 10, 0, 0, 0]).endOf('day')
+      astronomical: moment.utc([0, 7, 10, 0, 0, 0]).endOf('day')
     },
     zodiacStart: 90,
     zodiacEnd: 120
@@ -282,7 +282,7 @@ export const SIGNS = [
     },
     endDate: {
       tropical: moment.utc([1, 0, 20, 0, 0, 0]).endOf('day'), // add 1 year due to overlap
-      sidereal:  moment.utc([0, 1, 14, 0, 0, 0]).endOf('day'),
+      sidereal: moment.utc([0, 1, 14, 0, 0, 0]).endOf('day'),
       astronomical: moment.utc([0, 1, 16, 0, 0, 0]).endOf('day')
     },
     zodiacStart: 270,

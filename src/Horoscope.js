@@ -20,7 +20,18 @@ import { calculateEqualHouseCusps, calculateKochHouseCusps, calculatePlacidianHo
 // This class contains horoscope chart calculations
 /////////
 // * Origin origin: instance of the Origin class
-// * string houseSystem: a string from the list assigned to Horoscope.HouseSystems in the constructor.
+// * string houseSystem: one of the following: ['placidus', 'koch', 'whole-sign', 'equal-house', 'regiomontanus', 'topocentric'] - full list validated in self.HouseSystems
+// * string zodiac: one of the following: ['sidereal', 'tropical'] - full list validated self.ZodiacSystems
+// * array aspectPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine which starting points will be used in aspect generation 
+// * array aspectWithPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine ending points will be used in aspect generation
+// * array aspectTypes = an array containing all or none of the following: "major", "minor", "conjunction", "opposition", etc to determine which aspects to calculate.
+// * object customOrbs = an object with specific keys set to override the default orbs and set your own for aspect calculation.
+// * string language = the language code (en, es, etc) which will return labels and results in a specific language, if configured.
+//
+// *NOTE: "bodies" = planets, "points" = lunar nodes / lilith, "angles" = ascendant / midheaven
+// *NOTE: You can also pass in individual bodies, points, or angles into aspectPoints or aspectWithPoints
+// * example: { aspectPoints: ["sun"], aspectWithPoints: ["moon"], aspectTypes: ["major", "quincrux"] } will only calculate sun / moon major or quincrux aspects if they exist
+// * All usable keys found in ./src/constant.js under BODIES, POINTS, ANGLES
 
 class Horoscope {
   constructor({
