@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "module": "src/index.js",
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "build": "webpack --mode=production",
     "build:dev": "webpack",
     "start:dev": "webpack --watch --mode=production"
