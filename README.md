@@ -4,7 +4,7 @@ By **horoscope**, we're talking about astrological **birth charts**. **Not  horo
 
 Example Chart:
 
-![Natal Chart Example]("https://github.com/0xStarcat/CircularNatalHoroscopeJS/blob/master/public/natal-chart.svg)
+![Natal Chart Example](https://github.com/0xStarcat/CircularNatalHoroscopeJS/blob/master/public/natal-chart.svg)
 
 The goal is to allow someone to:
 
