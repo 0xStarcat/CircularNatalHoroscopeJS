@@ -98,6 +98,18 @@ To view, build the demo files locally with:
 
 and then open `dist/demo.html` in a browser.
 
+Please Note: The demo chart is not currently finalized or synced with the full functionality of this library. I'm currently working on writing / finding a different demo chart which can have the houses calibrated correctly based on the chosen system.
+
+## Adding new languages
+
+You can see how English and Spanish tokens implemented in `src/utilities/language.js`. Copy the tokens for 1 language and add it to a key matching the ISO language code you want. Then, when you generate the horoscope, pass this code into the constructor:
+
+```js
+new Horoscope({language: "es"})
+```
+
+and your language will appear in the results under the `.label` keys supplied within `Sign`, `Aspect`, `Planet`, `House` objects.
+
 ## Sources / Special Thanks
 - All formula for astronomical and astrological calculations are cited in the codebase.
 - Special thanks to Mivion for their javascript implementation of Moshier's ephemeris https://github.com/mivion/ephemeris

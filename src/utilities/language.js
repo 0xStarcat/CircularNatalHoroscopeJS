@@ -72,7 +72,7 @@ export const LANGUAGE = {
     'regiomontanus': 'Regiomontanus',
     'topocentric': 'Topocentric',
     'whole-sign': 'Whole Sign',
-    //Aspect level labels
+    // Aspect level labels
     'major': 'Major',
     'minor': 'Minor',
   },
@@ -149,7 +149,7 @@ export const LANGUAGE = {
     'regiomontanus': 'Regiomontanus',
     'topocentric': 'Topocéntrico',
     'whole-sign': 'Signo Entero',
-    //Aspect level labels
+    // Aspect level labels
     'major': 'Mayor',
     'minor': 'Menor',
   }
