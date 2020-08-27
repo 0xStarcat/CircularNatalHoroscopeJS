@@ -96,8 +96,8 @@ import Horoscope from "./src/Horoscope";
 //
 // *NOTE: "bodies" = planets, "points" = lunar nodes / lilith, "angles" = ascendant / midheaven
 // *NOTE: You can also pass in individual bodies, points, or angles into aspectPoints or aspectWithPoints
-// * example: { aspectPoints: ["sun"], aspectWithPoints: ["moon"], aspectTypes: ["major", "quincrux"] } 
-// * will only calculate sun to moon major or quincrux aspects if they exist
+// * example: { aspectPoints: ["sun"], aspectWithPoints: ["moon"], aspectTypes: ["major", "quincunx"] } 
+// * will only calculate sun to moon major or quincunx aspects if they exist
 // * All usable keys found in ./src/constant.js under BODIES, POINTS, ANGLES
 
 
@@ -142,6 +142,108 @@ const horoscope = new Horoscope({
       customOrbs: customOrbs,
       language: 'en'
     });
+
+```
+
+3. Get your results
+
+
+```
+const horoscope = new Horoscope({...})
+
+
+// Info for all critical angles
+horoscope.Angles = {
+  all: [...],
+  ascendant: {...},
+  midheaven: {...}
+}
+
+// The ascendant info
+horoscope.Ascendant = {...}
+
+// Aspect results
+horoscope.Aspects = {
+  all: [...],
+  points: {
+    // organized by point
+    ascendant: [...], // etc
+    sun: [...], // etc
+    moon: [...], // etc
+  },
+  types: {
+    // organized by type
+    conjunction: [...], // etc
+    opposition: [...] // etc
+  }
+}
+
+// Planet / Asteriod results
+// sun, moon, mercury, venus, mars, jupiter, saturn, uranus, neptune, pluto, chiron, sirius
+horoscope.CelestialBodies = {
+  all: [...],
+  sun: {...}, // etc
+  moon: {...} // etc
+}
+
+// lunar results
+// northnode, southnode, lilith
+horoscope.CelestialPoints = {
+  all: [...],
+  northnode: {...}, //etc
+}
+
+// house cusps
+horoscope.Houses = [
+  ...12
+]
+
+// Midheaven info
+
+horoscope.Midheaven = {
+  ...
+}
+
+// Info about what zodiac sign the sun is in at a given origin
+horoscope.SunSign = {
+  ...
+}
+
+// Info about the zodiac cusps at the given date/time/location origin
+horoscope.ZodiacCusps = [
+  ...12
+]
+
+```
+
+
+###### Interpreting ChartPositions:
+
+You'll frequently see a `ChartPosition` class in your results for house cusps, zodiac cusps, bodies, etc. This class should give you everything you need to orient and place the cusp / body onto your circular natal chart. It provides a set of points for the object to place it along the `horizon` or the `ecliptic`.
+
+The `horizon` is typically understood to be the inner circle on the natal chart. The `Ascendant` is commonly located at `0 degrees` along the horizon circle. 
+
+The `ecpliptic` is understood to be the outer circle on the natal chart. The start of `Aries` is always at `0 degrees` along this circle.
+
+```js
+const mercury = {
+  ...,
+  // ChartPosition for a mercury in Libra and conjunct the ascendant.
+  ChartPosition: {
+    Horizon: { // mercury is on the horizon mercury the ascendant (0 deg horizon)
+      ArcDegrees: {degrees: 0, minutes: 0, seconds: 0}
+      ArcDegreesFormatted: "0° 0' 0''"
+      ArcDegreesFormatted30: "0° 0' 0''"
+      DecimalDegrees: 0
+    },
+    Ecliptic: { // mercury is also at 180 degrees on the ecliptic, so within Libra sign. 
+      ArcDegrees: {degrees: 180, minutes: 38, seconds: 2}
+      ArcDegreesFormatted: "180° 38' 2''"
+      ArcDegreesFormatted30: "0° 38' 2''"
+      DecimalDegrees: 180.634
+    }
+  }
+}
 
 ```
 
