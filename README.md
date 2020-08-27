@@ -1,44 +1,40 @@
 # Circular Natal Horoscope JS
 
-By **horoscope**, we're talking about astrological **birth charts**. **Not  horoscope readings** or **interpretations**.
+By **horoscope**, we're talking about the astrological **birth charts**. **Not** horoscope readings or interpretations.
+
+I'm hoping to avoid commonly used labels like "Western" or "Hellenistic", but these are very much the circular charts you see in eur-asian based astrology traditions and not the charts in Chinese or Vedic traditions.
 
 Example Chart:
 
-![Natal Chart Example](https://github.com/0xStarcat/CircularNatalHoroscopeJS/blob/master/public/natal-chart.svg)
+![Natal Chart Example](https://raw.githubusercontent.com/0xStarcat/CircularNatalHoroscopeJS/master/public/natal-chart.svg)
 
-The goal is to allow someone to:
+The goal is to provide a library which will allow someone to:
 
 1) Enter a calendar date + time and latitude/longitude coordinates for a position on the planet Earth.
 
-2) And receive a javascript class that interfaces with a frontend library (maybe this one https://github.com/Kibo/AstroChart or a custom one) for creating the actual charts.
+2) And receive Javascript results which can be used to interface with a separate frontend library (maybe this one https://github.com/Kibo/AstroChart or a custom one) for creating the actual charts.
 
-## Work in Progress
+## Current Features
 
-=> ~~Calculated SunSign from Tropical, Sidereal, and IAU Astronomical zodiacs~~
+Given a date/time/point of origin...
 
-=> ~~the calculated major angles (`ascendant` and `Midheaven (MC)`) for a given datetime and origin~~
+1. Allows user to switch between Tropical and Sidereal zodiacs when constructing calculations.
+2. Calculates the major angles (`ascendant` and `Midheaven (MC)`) in relation to the point of origin
+3. Calculates the positions for all major bodies (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)  in relation to the point of origin
+4. Calculates the positions of the north/south Lunar Nodes and Lilith  in relation to the point of origin
+5. Notes whether a planet is in retrograde at the given date/time
+6. Provides the cusps of each house in relation to the point of origin within multiple house systems.~~ (Placidus, Koch, Topocentric, Regiomontanus, Whole Sign, and Equal House added.)
+7. Provides the cusps of each astrological sign in relation to the point of origin
+8. Provides a configurable list containing all the computed major and minor aspects of all bodies / points / angles
+9. Provides a way to extend this library with other language and deliver language-specific labels and names within the results.
 
-=> ~~the positions for all major bodies as they relate to the ecliptic for a given datetime and origin (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)~~
-
-=> ~~Positions of Lunar Nodes, Lilith~~
-
-=> Positions of the lots (Fortune, Spirit, Eros, etc)
-
-=> ~~Data for retrograde planets~~
-
-=> ~~the cusps of each astrological sign as they relate to the 2D ecliptic chart for a given datetime, origin, and a particular house system.~~
-
-=> ~~the cusps of each house within multiple house systems.~~ (Placidus, Koch, Topocentric, Regiomontanus, Whole Sign, and Equal House added.
-
-=> ~~Data containing the sign major body, and house occupy~~.
-
-=> ~~A list containing all the computed major and minor aspects of all bodies / points / angles.~~
-
-=> ~~Capacity for language translations~~
 
 ## Future work
 
-- I'm open to requests for house systems. I'm currently stopped at 6 - we have 2 "modern" systems (Topocentric, Koch), 2 "medieval" systems (Placidus, Regiomontanus), and 2 "ancient" systems (Whole Sign, Equal House). My formula resource "An Astrological House Formulary" by Michael P. Munkasey has many more house formulas I can implement if wanted. Hopefully I covered the most popular ones.
+=> Positions of the lots (Fortune, Spirit, Eros, etc)
+
+
+=> I'm open to requests for house systems. I'm currently stopped at 6 - we have 2 "modern" systems (Topocentric, Koch), 2 "medieval" systems (Placidus, Regiomontanus), and 2 "ancient" systems (Whole Sign, Equal House). My formula resource "An Astrological House Formulary" by Michael P. Munkasey has many more house formulas I can implement if wanted. Hopefully I covered the most popular ones.
 
 ## Implementation / Use
 
