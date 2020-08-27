@@ -8,8 +8,7 @@
     "test": "jest --watch",
     "build": "webpack --mode=production",
     "build:dev": "webpack",
-    "start:dev": "webpack --watch --mode=production",
-    "npm-publish": "cp ./package.json ./dist && cd ./dist && np"
+    "start:dev": "webpack --watch --mode=production"
   },
   "keywords": [
     "Astrology",
