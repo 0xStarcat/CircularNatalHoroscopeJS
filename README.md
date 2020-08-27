@@ -148,7 +148,7 @@ const horoscope = new Horoscope({
 3. Get your results
 
 
-```
+```js
 const horoscope = new Horoscope({...})
 
 
