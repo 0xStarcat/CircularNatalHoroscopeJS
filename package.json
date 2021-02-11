@@ -4,6 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "module": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xStarcat/CircularNatalHoroscopeJS.git"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
