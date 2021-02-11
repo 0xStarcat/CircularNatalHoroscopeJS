@@ -117,6 +117,8 @@ export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSid
 
   if (ascendant >= 180) {
     ascendant -= 180
+  } else {
+    ascendant += 180
   }
 
   return modulo(ascendant, 360)
