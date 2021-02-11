@@ -1,15 +1,19 @@
 {
   "name": "circular-natal-horoscope-js",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/index.js",
   "module": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xStarcat/CircularNatalHoroscopeJS.git"
+  },
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "build": "webpack --mode=production",
     "build:dev": "webpack",
-    "start:dev": "webpack --watch --mode=production",
-    "npm-publish": "cp ./package.json ./dist && cd ./dist && np"
+    "start:dev": "webpack --watch --mode=production"
   },
   "keywords": [
     "Astrology",
@@ -33,6 +37,6 @@
     "webpack-cli": "^3.3.8"
   },
   "files": [
-    "index.js"
+    "dist/index.js"
   ]
 }
