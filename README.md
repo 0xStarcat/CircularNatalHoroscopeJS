@@ -315,17 +315,19 @@ Please Note: The demo chart is not currently finalized or synced with the full f
 You can see how English and Spanish tokens are implemented in `src/utilities/language.js`. Copy the tokens for 1 language and add it to a key matching the ISO language code you want. Then, when you generate the horoscope, pass this code into the constructor:
 
 ```js
-new Horoscope({language: "es"})
+new Horoscope({ language: "es" });
 ```
 
 and your language will appear in the results under the `.label` keys supplied within `Sign`, `Aspect`, `Planet`, `House` objects.
 
 ## Publishing / Packaging
 
+- Build with `npm run build`
 - Copy `package.json` into `./dist`
-- run `npm pack` or `npm publish` from with `./dist`
+- run `npm pack` or `npm publish` from within `./dist`
 
 ## Sources / Special Thanks
+
 - All formula for astronomical and astrological calculations are cited in the codebase.
 - Special thanks to Mivion for their javascript implementation of Moshier's ephemeris https://github.com/mivion/ephemeris
 - and to xErik for their work converting it into a module https://github.com/xErik/ephemeris-moshier/
