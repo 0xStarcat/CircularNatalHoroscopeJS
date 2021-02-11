@@ -1,6 +1,6 @@
 {
   "name": "circular-natal-horoscope-js",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "main": "dist/index.js",
   "module": "src/index.js",
@@ -13,8 +13,7 @@
     "test:watch": "jest --watch",
     "build": "webpack --mode=production",
     "build:dev": "webpack",
-    "start:dev": "webpack --watch --mode=production",
-    "publish": "cp ./package.json ./dist/package.json && cd ./dist/package.json && npm publish"
+    "start:dev": "webpack --watch --mode=production"
   },
   "keywords": [
     "Astrology",
