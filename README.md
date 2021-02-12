@@ -10,9 +10,9 @@ Example Chart:
 
 The goal is to provide a library which will allow someone to:
 
-1) Enter a calendar date + time and latitude/longitude coordinates for a position on the planet Earth.
+1. Enter a calendar date + time and latitude/longitude coordinates for a position on the planet Earth.
 
-2) And receive Javascript results which can be used to interface with a separate frontend library (maybe this one https://github.com/Kibo/AstroChart or a custom one) for creating the actual charts.
+2. And receive Javascript results which can be used to interface with a separate frontend library (maybe this one https://github.com/Kibo/AstroChart or a custom one) for creating the actual charts.
 
 ## Current Features
 
@@ -20,19 +20,17 @@ Given a date/time/point of origin...
 
 1. Allows user to switch between Tropical and Sidereal zodiacs when constructing calculations.
 2. Calculates the major angles (`ascendant` and `Midheaven (MC)`) in relation to the point of origin
-3. Calculates the positions for all major bodies (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`)  in relation to the point of origin
-4. Calculates the positions of the north/south Lunar Nodes and Lilith  in relation to the point of origin
+3. Calculates the positions for all major bodies (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`) in relation to the point of origin
+4. Calculates the positions of the north/south Lunar Nodes and Lilith in relation to the point of origin
 5. Notes whether a planet is in retrograde at the given date/time
 6. Provides the cusps of each house in relation to the point of origin within multiple house systems.~~ (Placidus, Koch, Topocentric, Regiomontanus, Whole Sign, and Equal House added.)
 7. Provides the cusps of each astrological sign in relation to the point of origin
 8. Provides a configurable list containing all the computed major and minor aspects of all bodies / points / angles
 9. Provides a way to extend this library with other language and deliver language-specific labels and names within the results.
 
-
 ## Future work
 
 => Positions of the lots (Fortune, Spirit, Eros, etc)
-
 
 => I'm open to requests for house systems. I'm currently stopped at 6 - we have 2 "modern" systems (Topocentric, Koch), 2 "medieval" systems (Placidus, Regiomontanus), and 2 "ancient" systems (Whole Sign, Equal House). My formula resource "An Astrological House Formulary" by Michael P. Munkasey has many more house formulas I can implement if wanted. Hopefully I covered the most popular ones.
 
@@ -42,7 +40,6 @@ Given a date/time/point of origin...
 
 ```js
 import { Origin } from "circular-natal-horoscope-js";
-
 
 //////////
 // Origin
@@ -61,15 +58,14 @@ import { Origin } from "circular-natal-horoscope-js";
 
 // December 1st, 2020 - 430pm
 const origin = new Origin({
-      year: 2020,
-      month: 11, // 0 = January, 11 = December!
-      date: 1,
-      hour: 16,
-      minute: 30,
-      latitude: 40.00
-      longitude: -70.00
-    });
-
+  year: 2020,
+  month: 11, // 0 = January, 11 = December!
+  date: 1,
+  hour: 16,
+  minute: 30,
+  latitude: 40.0,
+  longitude: -70.0,
+});
 ```
 
 2. Configure your horoscope results
@@ -85,7 +81,7 @@ import { Horoscope } from "circular-natal-horoscope-js";
 // * Origin origin: instance of the Origin class
 // * string houseSystem: one of the following: ['placidus', 'koch', 'whole-sign', 'equal-house', 'regiomontanus', 'topocentric'] - full list validated in self.HouseSystems
 // * string zodiac: one of the following: ['sidereal', 'tropical'] - full list validated self.ZodiacSystems
-// * array aspectPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine which starting points will be used in aspect generation 
+// * array aspectPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine which starting points will be used in aspect generation
 // * array aspectWithPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine ending points will be used in aspect generation
 // * array aspectTypes = an array containing all or none of the following: "major", "minor", "conjunction", "opposition", etc to determine which aspects to calculate.
 // * object customOrbs = an object with specific keys set to override the default orbs and set your own for aspect calculation.
@@ -93,7 +89,7 @@ import { Horoscope } from "circular-natal-horoscope-js";
 //
 // *NOTE: "bodies" = planets, "points" = lunar nodes / lilith, "angles" = ascendant / midheaven
 // *NOTE: You can also pass in individual bodies, points, or angles into aspectPoints or aspectWithPoints
-// * example: { aspectPoints: ["sun"], aspectWithPoints: ["moon"], aspectTypes: ["major", "quincunx"] } 
+// * example: { aspectPoints: ["sun"], aspectWithPoints: ["moon"], aspectTypes: ["major", "quincunx"] }
 // * will only calculate sun to moon major or quincunx aspects if they exist
 // * All usable keys found in ./src/constant.js under BODIES, POINTS, ANGLES
 
@@ -112,7 +108,6 @@ const horoscope = new Horoscope({
 ```
 
 2b. (optional) Set custom orb degrees for aspects. Default orbs are found in `./src/constants.js`
-
 
 ```js
 import { Horoscope } from "circular-natal-horoscope-js";
@@ -146,7 +141,6 @@ const horoscope = new Horoscope({
 ```
 
 3. Get your results
-
 
 ```js
 import { Horoscope } from "circular-natal-horoscope-js";
@@ -219,12 +213,11 @@ horoscope.ZodiacCusps = [
 
 ```
 
-
 ##### Interpreting ChartPositions:
 
 You'll frequently see a `ChartPosition` class in your results for house cusps, zodiac cusps, bodies, etc. This class should give you everything you need to orient and place the cusp / body onto your circular natal chart. It provides a set of points for the object to place it along the `horizon` or the `ecliptic`.
 
-The `horizon` is typically understood to be the inner circle on the natal chart. The `Ascendant` is commonly located at `0 degrees` along the horizon circle. 
+The `horizon` is typically understood to be the inner circle on the natal chart. The `Ascendant` is commonly located at `0 degrees` along the horizon circle.
 
 The `ecliptic` is understood to be the outer circle on the natal chart. The start of `Aries` is always at `0 degrees` along this circle.
 
@@ -239,7 +232,7 @@ const mercury = {
       ArcDegreesFormatted30: "0° 0' 0''"
       DecimalDegrees: 0
     },
-    Ecliptic: { // mercury is also at 180 degrees on the ecliptic, so within Libra sign. 
+    Ecliptic: { // mercury is also at 180 degrees on the ecliptic, so within Libra sign.
       ArcDegrees: {degrees: 180, minutes: 38, seconds: 2}
       ArcDegreesFormatted: "180° 38' 2''"
       ArcDegreesFormatted30: "0° 38' 2''"
@@ -249,7 +242,6 @@ const mercury = {
 }
 
 ```
-
 
 ## Installation
 
