@@ -296,11 +296,11 @@ A small HTML implementation demo is provided.
 
 To view, build the demo files locally with:
 
-`npm run build`
+`npm run build:demo`
 
-and then open `dist/demo.html` in a browser.
+and then open `demo/dist/demo.html` in a browser.
 
-Please Note: The demo chart is not currently finalized or synced with the full functionality of this library. I'm currently working on writing / finding a different demo chart which can have the houses calibrated correctly based on the chosen system.
+Please Note: The demo chart is just used as an visual example of what the library can do and isnt part of the core library. The chart uses code from this repo: [https://github.com/Kibo/AstroChart](https://github.com/Kibo/AstroChart).
 
 ## Adding new languages
 
