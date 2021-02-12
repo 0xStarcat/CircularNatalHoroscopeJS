@@ -67,3 +67,4 @@ solarTimeConverter.js
 
 demo.html
 demoScript.bundle.js
+demo/dist/**
