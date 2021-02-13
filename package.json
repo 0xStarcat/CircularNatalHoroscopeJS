@@ -36,8 +36,5 @@
     "jest": "^24.9.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^4.5.0"
-  },
-  "files": [
-    "dist/index.js"
-  ]
+  }
 }
