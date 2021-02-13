@@ -1,6 +1,6 @@
 import moment from "moment-timezone";
 
-import { Origin, Horoscope } from '../src/index.js'
+import { Origin, Horoscope } from "../src/index.js";
 import { Chart } from "../lib/astrochart-2.0.0.min.js";
 
 class DemoApp {
@@ -332,10 +332,11 @@ class DemoApp {
     const ic =
       (horoscope.Midheaven.ChartPosition.Horizon.DecimalDegrees + 180) % 360;
 
-    const chartCusps = horoscope.ZodiacCusps.map((cusp) => {
-      return cusp.ChartPosition.Horizon.DecimalDegrees;
+    const chartCusps = horoscope.Houses.map((cusp) => {
+      return cusp.ChartPosition.StartPosition.Ecliptic.DecimalDegrees;
     });
 
+    this.chart.innerHTML = "";
     const chart = new astrology.Chart(this.chart.id, 800, 800);
     const data = {
       planets: chartPlanets,
