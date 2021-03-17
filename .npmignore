@@ -2,4 +2,5 @@
 *
 
 # But not these files...
-!dist/index.js
+!/dist/
+!dist/*

@@ -1,0 +1,14 @@
+export function validateYear(year: any): any;
+export function validateMonth(month: any): any;
+export function validateDate(date: any): any;
+export function validateHour(hour: any): any;
+export function validateMinute(minute: any): any;
+export function validateLatitude(latitude: any): any;
+export function validateLongitude(longitude: any): any;
+export function validateString(string: any): any;
+export function validateStringOrArray(stringOrArray: any): any;
+export function validateAspectTypes(stringOrArray: any): any;
+export function validateHouseSystem(string: any, language: any): any;
+export function validateZodiac(string: any, language: any): any;
+export function validateAspectPoints(stringOrArray: any): any;
+export function validateCustomOrbs(customOrbs: any): any;
