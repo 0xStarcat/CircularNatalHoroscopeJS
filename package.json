@@ -11,7 +11,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "tsc && webpack --mode=production",
+    "build": "webpack --mode=production && tsc",
     "build:dev": "webpack",
     "build:demo": "webpack -c ./webpack-demo.config.js",
     "start:dev": "webpack --watch --mode=production"

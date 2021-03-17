@@ -1,6 +1,6 @@
 {
   // Change this to match your project
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "dist/index.js"],
   "exclude": [
     "node_modules",
     "*.d.ts"
