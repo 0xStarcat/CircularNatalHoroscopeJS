@@ -1,0 +1,72 @@
+{
+  "_from": "circular-natal-horoscope-js@^1.0.11",
+  "_id": "circular-natal-horoscope-js@1.0.11",
+  "_inBundle": false,
+  "_integrity": "sha512-friiSEaT/JoMvUrVDXRGlKoHMMzN4DzcXz7G2yy8MVcmE7qHV1e3JzeI3ixXF2rONp2xgDB4e2HEsdrB0K46Nw==",
+  "_location": "/circular-natal-horoscope-js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "circular-natal-horoscope-js@^1.0.11",
+    "name": "circular-natal-horoscope-js",
+    "escapedName": "circular-natal-horoscope-js",
+    "rawSpec": "^1.0.11",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.11"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/circular-natal-horoscope-js/-/circular-natal-horoscope-js-1.0.11.tgz",
+  "_shasum": "d853a4c252d9914a037a9f8c9ac48f6cc790e1fb",
+  "_spec": "circular-natal-horoscope-js@^1.0.11",
+  "_where": "D:\\Documentos\\projetos_pessoais\\mapa-sephirotico",
+  "author": {
+    "name": "0xStarcat"
+  },
+  "bugs": {
+    "url": "https://github.com/0xStarcat/CircularNatalHoroscopeJS/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.26",
+    "tz-lookup": "^6.1.24"
+  },
+  "deprecated": false,
+  "description": "By **horoscope**, we're talking about the astrological **birth charts**. **Not** horoscope readings or interpretations.",
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "babel-jest": "^24.9.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.9.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^4.5.0"
+  },
+  "homepage": "https://github.com/0xStarcat/CircularNatalHoroscopeJS#readme",
+  "keywords": [
+    "Astrology",
+    "Horoscope",
+    "Natal Chart"
+  ],
+  "license": "Unlicense",
+  "main": "src/index.d.ts",
+  "module": "src/index.d.ts",
+  "name": "circular-natal-horoscope-js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xStarcat/CircularNatalHoroscopeJS.git"
+  },
+  "scripts": {
+    "build": "webpack --mode=production",
+    "build:demo": "webpack -c ./webpack-demo.config.js",
+    "build:dev": "webpack",
+    "start:dev": "webpack --watch --mode=production",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "version": "1.0.11"
+}
