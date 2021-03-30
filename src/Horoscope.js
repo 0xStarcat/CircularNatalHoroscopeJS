@@ -58,12 +58,18 @@ export class Horoscope {
     this._aspectWithPoints = validateAspectPoints(aspectWithPoints)
     this._customOrbs = validateCustomOrbs(customOrbs)
 
+    // Remember - Ephemeris requires UTC time!
     this.Ephemeris = new Ephemeris({
-      year: this.origin.year, month: this.origin.month, day: this.origin.date,
-      hours: this.origin.hour, minutes: this.origin.minute, seconds: this.origin.second,
-      latitude: parseFloat(this.origin.latitude), longitude: parseFloat(this.origin.longitude),
-      calculateShadows: false
-    })
+      year: this.origin.utcTime.year(),
+      month: this.origin.utcTime.month(),
+      day: this.origin.utcTime.date(),
+      hours: this.origin.utcTime.hour(),
+      minutes: this.origin.utcTime.minute(),
+      seconds: this.origin.utcTime.second(),
+      latitude: parseFloat(this.origin.latitude),
+      longitude: parseFloat(this.origin.longitude),
+      calculateShadows: false,
+    });
 
     this._celestialBodies = this.processCelestialBodies(this.Ephemeris.Results)
     this._celestialPoints = this.processCelestialPoints(this.Ephemeris.Results)

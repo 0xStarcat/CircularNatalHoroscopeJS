@@ -14,7 +14,7 @@
     "build": "webpack --mode=production",
     "build:dev": "webpack",
     "build:demo": "webpack -c ./webpack-demo.config.js",
-    "start:dev": "webpack --watch --mode=production"
+    "start:dev": "webpack  -c ./webpack-demo.config.js --watch --mode=production"
   },
   "keywords": [
     "Astrology",
