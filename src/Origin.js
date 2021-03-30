@@ -53,9 +53,11 @@ export class Origin {
 
     this.latitude = latitude
     this.longitude = longitude
-    this.timezone = moment.tz.zone(tzlookup(this.latitude, this.longitude))
-    this.localTime = moment.tz(this.timeObject, this.timezone.name)
-    this.utcTime = moment.tz(this.timeObject, this.timezone.name).utc()
+    this.timezone = moment.tz.zone(tzlookup(this.latitude, this.longitude));
+    this.localTime = moment.tz(this.timeObject, this.timezone.name);
+    this.localTimeFormatted = this.localTime.format();
+    this.utcTime = moment.tz(this.timeObject, this.timezone.name).utc(); // `.utc()` mutates the original localTime so don't call it on this.localTime itself.
+    this.utcTimeFormatted = this.utcTime.format();
     this.julianDate = getJulianDate({
       year: this.utcTime.year(),
       month: this.utcTime.month() + 1,
