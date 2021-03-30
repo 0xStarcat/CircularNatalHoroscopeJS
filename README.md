@@ -314,7 +314,7 @@ and your language will appear in the results under the `.label` keys supplied wi
 
 ## Publishing / Packaging
 
-- update the version number
+- update the version number in `package.json`
 - Build with `npm run build`
 - run `npm publish`
 

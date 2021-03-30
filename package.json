@@ -1,6 +1,6 @@
 {
   "name": "circular-natal-horoscope-js",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "",
   "main": "dist/index.js",
   "module": "src/index.js",
