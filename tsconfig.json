@@ -3,7 +3,8 @@
   "include": ["src/**/*", "dist/index.js"],
   "exclude": [
     "node_modules",
-    "*.d.ts"
+    "*.d.ts",
+    "dist"
   ],
   "compilerOptions": {
     // Tells TypeScript to read JS files, as
@@ -18,7 +19,7 @@
     // Types should go into this directory.
     // Removing this would place the .d.ts files
     // next to the .js files
-    "outDir": "dist/types"
+    "outDir": "types"
 
   }
 }
