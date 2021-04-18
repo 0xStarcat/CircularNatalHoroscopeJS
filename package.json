@@ -5,6 +5,9 @@
   "main": "dist/index",
   "types": "dist/types/src/index",
   "module": "src/index.js",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/0xStarcat/CircularNatalHoroscopeJS.git"
