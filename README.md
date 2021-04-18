@@ -314,6 +314,13 @@ and your language will appear in the results under the `.label` keys supplied wi
 
 ## Publishing / Packaging
 
+I recommend doing a github release first and then testing this package locally before publishing to npm!
+You can test a package from a github release by adding the following to any project dependencies:
+
+```
+"git+https://github.com/0xStarcat/CircularNatalHoroscopeJS.git#<tag or commit>"
+```
+
 - update the version number in `package.json`
 - Build with `npm run build` and commit to branch
 - run `npm publish`
