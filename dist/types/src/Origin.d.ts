@@ -27,7 +27,9 @@ export class Origin {
     };
     timezone: any;
     localTime: any;
+    localTimeFormatted: any;
     utcTime: any;
+    utcTimeFormatted: any;
     julianDate: number;
     localSiderealTime: number;
 }
