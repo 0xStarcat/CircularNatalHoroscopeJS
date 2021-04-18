@@ -1,1 +1,0 @@
-declare module 'circular-natal-horoscope-js';
