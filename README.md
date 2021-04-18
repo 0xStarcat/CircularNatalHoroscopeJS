@@ -14,6 +14,8 @@ The goal is to provide a library which will allow someone to:
 
 2. And receive Javascript results which can be used to interface with a separate frontend library (maybe this one https://github.com/Kibo/AstroChart or a custom one) for creating the actual charts.
 
+This package now works with typescript projects!
+
 ## Current Features
 
 Given a date/time/point of origin...
@@ -39,7 +41,7 @@ Given a date/time/point of origin...
 1. Get the Origin
 
 ```js
-import { Origin } from "circular-natal-horoscope-js";
+import { Origin, Horoscope } from "circular-natal-horoscope-js";
 
 //////////
 // Origin
@@ -71,7 +73,7 @@ const origin = new Origin({
 2. Configure your horoscope results
 
 ```js
-import { Horoscope } from "circular-natal-horoscope-js";
+import { Origin, Horoscope } from "circular-natal-horoscope-js";
 
 //////////
 // Horoscope
@@ -110,7 +112,7 @@ const horoscope = new Horoscope({
 2b. (optional) Set custom orb degrees for aspects. Default orbs are found in `./src/constants.js`
 
 ```js
-import { Horoscope } from "circular-natal-horoscope-js";
+import { Origin, Horoscope } from "circular-natal-horoscope-js";
 
 
 const customOrbs = {
@@ -143,7 +145,7 @@ const horoscope = new Horoscope({
 3. Get your results
 
 ```js
-import { Horoscope } from "circular-natal-horoscope-js";
+import { Origin, Horoscope } from "circular-natal-horoscope-js";
 
 
 const horoscope = new Horoscope({...})
