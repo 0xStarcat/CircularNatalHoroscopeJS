@@ -3,7 +3,7 @@
   "version": "1.0.13",
   "description": "",
   "main": "dist/index",
-  "types": "dist/index",
+  "types": "dist/types/src/index",
   "module": "src/index.js",
   "repository": {
     "type": "git",

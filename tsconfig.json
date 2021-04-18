@@ -3,7 +3,8 @@
   "include": ["src/**/*", "dist/index.js"],
   "exclude": [
     "node_modules",
-    "*.d.ts"
+    "*.d.ts",
+    "dist"
   ],
   "compilerOptions": {
     // Tells TypeScript to read JS files, as
