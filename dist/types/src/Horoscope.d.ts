@@ -16,7 +16,7 @@ export class Horoscope {
         label: any;
     }[];
     static CelestialLabels(language?: string): any[];
-    static Languages(language?: string): {
+    static Languages(): {
         key: string;
         value: string;
         label: any;
@@ -29,7 +29,7 @@ export class Horoscope {
         level: any;
         levelLabel: any;
     }[];
-    constructor({ origin, language, houseSystem, zodiac, aspectPoints, aspectWithPoints, aspectTypes, customOrbs }?: {
+    constructor({ origin, language, houseSystem, zodiac, aspectPoints, aspectWithPoints, aspectTypes, customOrbs, }?: {
         origin?: any;
         language?: string;
         houseSystem?: string;
