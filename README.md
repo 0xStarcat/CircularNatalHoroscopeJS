@@ -247,7 +247,19 @@ const mercury = {
 
 ## Installation
 
-If installing from source, clone this repo load the main file found at `dist/main.bundle.js`.
+If installing from source, clone this repo load the main file found at `dist/index.js`.
+
+This package is also hosted on [NPM](https://www.npmjs.com/package/circular-natal-horoscope-js)
+
+Install it with:
+
+```
+npm i circular-natal-horoscope-js --save
+
+// or yarn
+
+yarn add circular-natal-horoscope-js
+```
 
 ## Development
 
