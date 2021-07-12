@@ -25,7 +25,7 @@ Given a date/time/point of origin...
 3. Calculates the positions for all major bodies (`Sun`, `Moon`, `Mercury`, `Venus`, `Mars`, `Jupiter`, `Saturn`, `Uranus`, `Neptune`, `Pluto`) in relation to the point of origin
 4. Calculates the positions of the north/south Lunar Nodes and Lilith in relation to the point of origin
 5. Notes whether a planet is in retrograde at the given date/time
-6. Provides the cusps of each house in relation to the point of origin within multiple house systems.~~ (Placidus, Koch, Topocentric, Regiomontanus, Whole Sign, and Equal House added.)
+6. Provides the cusps of each house in relation to the point of origin within multiple house systems.~~ (Placidus, Koch, Topocentric, Regiomontanus, Campanus, Whole Sign, and Equal House added.)
 7. Provides the cusps of each astrological sign in relation to the point of origin
 8. Provides a configurable list containing all the computed major and minor aspects of all bodies / points / angles
 9. Provides a way to extend this library with other language and deliver language-specific labels and names within the results.
@@ -34,7 +34,7 @@ Given a date/time/point of origin...
 
 => Positions of the lots (Fortune, Spirit, Eros, etc)
 
-=> I'm open to requests for house systems. I'm currently stopped at 6 - we have 2 "modern" systems (Topocentric, Koch), 2 "medieval" systems (Placidus, Regiomontanus), and 2 "ancient" systems (Whole Sign, Equal House). My formula resource "An Astrological House Formulary" by Michael P. Munkasey has many more house formulas I can implement if wanted. Hopefully I covered the most popular ones.
+=> I'm open to requests for house systems. I'm currently stopped at 6 - we have 2 "modern" systems (Topocentric, Koch), 3 "medieval" systems (Placidus, Regiomontanus, Campanus), and 2 "ancient" systems (Whole Sign, Equal House). My formula resource "An Astrological House Formulary" by Michael P. Munkasey has many more house formulas I can implement if wanted. Hopefully I covered the most popular ones.
 
 ## Implementation / Use
 
@@ -81,7 +81,7 @@ import { Origin, Horoscope } from "circular-natal-horoscope-js";
 // This class contains horoscope chart calculations
 /////////
 // * Origin origin: instance of the Origin class
-// * string houseSystem: one of the following: ['placidus', 'koch', 'whole-sign', 'equal-house', 'regiomontanus', 'topocentric'] - full list validated in self.HouseSystems
+// * string houseSystem: one of the following: ['placidus', 'koch', 'campanus', 'whole-sign', 'equal-house', 'regiomontanus', 'topocentric'] - full list validated in self.HouseSystems
 // * string zodiac: one of the following: ['sidereal', 'tropical'] - full list validated self.ZodiacSystems
 // * array aspectPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine which starting points will be used in aspect generation
 // * array aspectWithPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine ending points will be used in aspect generation
