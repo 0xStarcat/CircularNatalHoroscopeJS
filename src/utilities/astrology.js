@@ -453,129 +453,287 @@ export const calculateWholeSignHouseCusps = ({ ascendant = 0.00, zodiac = 'tropi
 export const calculateCampanusHouseCusps = ({
   rightAscensionMC = 0.00, midheaven = 0.00, ascendant = 0.00, latitude = 0.00, obliquityEcliptic = 23.4367,
 } = {}) => {
-  // * NOTE * - the Munkasey formula below does not produce results that match other online sources
-  // https://cafeastrology.com/compare-house-systems-report.html
-
-  // source: An Astrological House Formulary by Michael P. Munkasey, page 11
-  console.log(rightAscensionMC, midheaven, ascendant, latitude);
-  // note: f = latitude, e = obliquityEcliptic
-  // 1. Compute the RAMC, MC, and ASC in the normal manner.
-  // 2. Determine the following house cusp intervals:
-  // H11 = 30o
-  // H2 = 120o
-  // H12 = 60o
-  // H3 = 150o
-  // 3. Compute an intermediate number:
-  // J11 = ARCCOT ( COS f x TAN H11 )
-  // J2 = ARCCOT ( COS f x TAN H2 )
-  // J12 = ARCCOT ( COS f x TAN H12 )
-  // J3 = ARCCOT ( COS f x TAN H3 )
-  // 4. Compute the Prime Vertical interval:
-  // F11 = RAMC + 90o - J11
-  // F2 = RAMC + 90o - J2
-  // F12 = RAMC + 90o - J12
-  // F3 = RAMC + 90o - J3
-  // 5. Compute the house cusp positions as follows:
-  // P11 = ARCSIN ( SIN H11 x SIN f )
-  // P2 = ARCSIN ( SIN H2 x SIN f )
-  // P12 = ARCSIN ( SIN H12 x SIN f )
-  // P3 = ARCSIN ( SIN H3 x SIN f )
-  // 6. Compute the associate angles as follows:
-  // M11 = ARCTAN ( TAN P11 ÷ COS F11 )
-  // M2 = ARCTAN ( TAN P2 ÷ COS F2 )
-  // M12 = ARCTAN ( TAN P12 ÷ COS F12 )
-  // M3 = ARCTAN ( TAN P3 ÷ COS F3 )
-  // 7. Compute the ecliptic intervals:
-  // R11 = ARCTAN ( ( TAN F11 x COS M11 ) ÷ COS ( M11 + e) )
-  // R2 = ARCTAN ( ( TAN F2 x COS M2 ) ÷ COS ( M2 + e) )
-  // R12 = ARCTAN ( ( TAN F12 x COS M12 ) ÷ COS ( M12 + e) )
-  // R3 = ARCTAN ( ( TAN F3 x COS M3 ) ÷ COS ( M3 + e) )
-  // 8. Compute the individual house cusps as follows:
-  // C10 = MC
-  // C4 = 180o + C10
-  // C11 = MC + R11
-  // C5 = 180o + C11
-  // C12 = MC + R12
-  // C6 = 180o + C12
-  // C1 = ASC
-  // C7 = 180o + C1
-  // C2 = MC + R2
-  // C8 = 180o + C2
-  // C3 = MC + R3
-  // C9 = 180o + C3
+  // Source:
+  // Dividing the Heavens by Leonard Wiliams, pg 101
 
   const f = degreesToRadians(parseFloat(latitude));
   const e = degreesToRadians(obliquityEcliptic);
+  const rightAscensionIC = modulo(rightAscensionMC + 180, 360);
 
-  const h2 = degreesToRadians(120.0);
-  const h3 = degreesToRadians(150.0);
-  const h11 = degreesToRadians(30.0);
-  const h12 = degreesToRadians(60.0);
+  const calculateNorthernCuspAngleEcliptic = (oahc, qhc) => {
+    // For northern hemisphere
+    // oahc and qhc should come in as radians
+    // returns radians
 
-  console.log('h', h2, h3, h11, h12);
+    const degoahc = radiansToDegrees(oahc);
 
-  const j2 = arccot(Math.cos(f) * Math.tan(h2));
-  const j3 = arccot(Math.cos(f) * Math.tan(h3));
-  const j11 = arccot(Math.cos(f) * Math.tan(h11));
-  const j12 = arccot(Math.cos(f) * Math.tan(h12));
+    const f1 = Math.cos(e) * Math.sin(qhc);
+    const f2 = Math.sin(e) * Math.cos(qhc) * Math.cos(oahc);
+    const f3 = -Math.cos(e) * Math.sin(qhc);
+    let a = 0;
+    let c = 0;
+    if (degoahc === 360 || degoahc < 90) {
+      a = Math.acos(f1 + f2);
+      const coahc = Math.acos(Math.tan(e) * Math.tan(qhc));
+      const g = Math.asin((Math.cos(qhc) * Math.sin(oahc)) / Math.sin(a));
 
-  console.log('j', j2, j3, j11, j12);
+      if (oahc < coahc) {
+        c = g;
+      } else if (oahc === coahc) {
+        c = degreesToRadians(90);
+      } else if (oahc > coahc) {
+        c = degreesToRadians(180) - g;
+      }
+    } else if (degoahc >= 90 && degoahc < 180) {
+      a = Math.acos(f3 - f2);
+      const g = Math.acos((Math.cos(qhc) * Math.cos(oahc - degreesToRadians(90))) / Math.sin(a));
 
-  const f2 = degreesToRadians(rightAscensionMC) + degreesToRadians(90.0) - j2;
-  const f3 = degreesToRadians(rightAscensionMC) + degreesToRadians(90.0) - j3;
-  const f11 = degreesToRadians(rightAscensionMC) + degreesToRadians(90.0) - j11;
-  const f12 = degreesToRadians(rightAscensionMC) + degreesToRadians(90.0) - j12;
+      c = degreesToRadians(90) + g;
+    } else if (degoahc >= 180 && degoahc < 270) {
+      a = Math.acos(f3 - f2);
+      const g = Math.asin((Math.cos(qhc) * Math.sin(oahc - degreesToRadians(180))) / Math.sin(a));
 
-  console.log('f', f2, f3, f11, f12);
+      c = degreesToRadians(180) + g;
+    } else if (degoahc >= 270 && degoahc < 360) {
+      a = Math.acos(f1 + f2);
+      const g = Math.acos((Math.cos(qhc) * Math.cos(oahc - degreesToRadians(270))) / Math.sin(a));
 
-  const p2 = Math.asin(Math.sin(h2) * Math.sin(f));
-  const p3 = Math.asin(Math.sin(h3) * Math.sin(f));
-  const p11 = Math.asin(Math.sin(h11) * Math.sin(f));
-  const p12 = Math.asin(Math.sin(h12) * Math.sin(f));
+      const coahc = degreesToRadians(360) - Math.acos(Math.tan(e) * Math.tan(qhc));
 
-  console.log('p', p2, p3, p11, p12);
+      if (oahc < coahc) {
+        c = degreesToRadians(270) - g;
+      } else if (oahc === coahc) {
+        c = degreesToRadians(270);
+      } else if (oahc > coahc) {
+        c = degreesToRadians(270) + g;
+      }
+    }
 
-  const m2 = Math.atan(Math.tan(p2) / Math.cos(f2));
-  const m3 = Math.atan(Math.tan(p3) / Math.cos(f3));
-  const m11 = Math.atan(Math.tan(p11) / Math.cos(f11));
-  const m12 = Math.atan(Math.tan(p12) / Math.cos(f12));
+    return c;
+  };
 
-  console.log('m', m2, m3, m11, m12);
+  const calculateSouthernCuspAngleEcliptic = (oahc, qhc) => {
+    // for Southern hemisphere
+    // oahc and qhc should come in as radians
+    // returns radians
+    const degoahc = radiansToDegrees(oahc);
 
-  const r2 = Math.atan((Math.tan(f2) * Math.cos(m2)) / Math.cos(m2 + e));
-  const r3 = Math.atan((Math.tan(f3) * Math.cos(m3)) / Math.cos(m3 + e));
-  const r11 = Math.atan((Math.tan(f11) * Math.cos(m11)) / Math.cos(m11 + e));
-  const r12 = Math.atan((Math.tan(f12) * Math.cos(m12)) / Math.cos(m12 + e));
+    const f1 = Math.cos(e) * Math.sin(qhc);
+    const f2 = Math.sin(e) * Math.cos(qhc) * Math.cos(oahc);
+    const f3 = -Math.cos(e) * Math.sin(qhc);
+    let a = 0;
+    let c = 0;
+    if (degoahc === 360 || degoahc < 90) {
+      a = Math.acos(f3 + f2);
+      const g = Math.asin((Math.cos(qhc) * Math.sin(oahc)) / Math.sin(a));
+      c = g;
+    } else if (degoahc >= 90 && degoahc < 180) {
+      a = Math.acos(f1 - f2);
+      const coahc = Math.acos(-Math.tan(e) * Math.tan(qhc));
 
-  console.log('r', r2, r3, r11, r12);
-  console.log('r-degs', radiansToDegrees(r2), radiansToDegrees(r3), radiansToDegrees(r11), radiansToDegrees(r12));
-  const c10 = midheaven;
-  const c4 = 180.0 + c10;
-  const c11 = midheaven + radiansToDegrees(r11);
-  const c5 = 180.0 + c11;
-  const c12 = midheaven + radiansToDegrees(r12);
-  const c6 = 180.0 + c12;
+      const g = Math.acos((Math.cos(qhc) * Math.cos(oahc - degreesToRadians(90))) / Math.sin(a));
+
+      if (oahc < coahc) {
+        c = degreesToRadians(90) - g;
+      } else if (oahc === coahc) {
+        c = degreesToRadians(90);
+      } else if (oahc > coahc) {
+        c = degreesToRadians(90) + g;
+      }
+    } else if (degoahc >= 180 && degoahc < 270) {
+      a = Math.acos(f1 - f2);
+      const coahc = degreesToRadians(360) - Math.acos(-Math.tan(e) * Math.tan(qhc));
+
+      const g = Math.asin((Math.cos(qhc) * Math.sin(oahc - degreesToRadians(180))) / Math.sin(a));
+      if (oahc < coahc) {
+        c = degreesToRadians(180) + g;
+      } else if (oahc === coahc) {
+        c = degreesToRadians(270);
+      } else if (oahc > coahc) {
+        c = degreesToRadians(360) - g;
+      }
+    } else if (degoahc >= 270 && degoahc < 360) {
+      a = Math.acos(f3 + f2);
+      const g = Math.acos((Math.cos(qhc) * Math.cos(oahc - degreesToRadians(270))) / Math.sin(a));
+
+      c = degreesToRadians(270) + g;
+    }
+
+    return c;
+  };
+
+  const calculateNorthernCircumpolarCuspAngleEcliptic = (oahc, qhc) => {
+    // For northern circumpolar (latitudes within 90 - OE)
+    // oahc and qhc should come in as radians
+    // returns radians
+    console.log('!', oahc, qhc);
+
+    const degoahc = radiansToDegrees(oahc);
+    console.log('! deg oahc', degoahc);
+    console.log('! deg qhc', radiansToDegrees(qhc));
+
+    const f1 = Math.cos(e) * Math.sin(qhc);
+    const f2 = Math.sin(e) * Math.cos(qhc) * Math.cos(oahc);
+    const f3 = -Math.cos(e) * Math.sin(qhc);
+    let a = 0;
+    let c = 0;
+    if (degoahc === 360 || degoahc < 90) {
+      a = Math.acos(f1 + f2);
+      console.log(1, radiansToDegrees(a));
+      const coahc = Math.acos(Math.tan(e) * Math.tan(qhc));
+      const g = Math.asin((Math.cos(qhc) * Math.sin(oahc)) / Math.sin(a));
+
+      if (oahc < coahc) {
+        c = g;
+      } else if (oahc === coahc) {
+        c = degreesToRadians(90);
+      } else if (oahc > coahc) {
+        c = degreesToRadians(180) - g;
+      }
+    } else if (degoahc >= 90 && degoahc < 180) {
+      console.log(2);
+      a = Math.acos(f3 - f2);
+      console.log(2, radiansToDegrees(a));
+      const g = Math.acos((Math.cos(qhc) * Math.cos(oahc - degreesToRadians(90))) / Math.sin(a));
+
+      c = degreesToRadians(90) + g;
+    } else if (degoahc >= 180 && degoahc < 270) {
+      console.log(3);
+      a = Math.acos(f3 - f2);
+      console.log(3, radiansToDegrees(a));
+      const g = Math.asin((Math.cos(qhc) * Math.sin(oahc - degreesToRadians(180))) / Math.sin(a));
+
+      c = degreesToRadians(180) + g;
+    } else if (degoahc >= 270 && degoahc < 360) {
+      a = Math.acos(f1 + f2);
+      const g = Math.acos((Math.cos(qhc) * Math.cos(oahc - degreesToRadians(270))) / Math.sin(a));
+
+      const coahc = degreesToRadians(360) - Math.acos(Math.tan(e) * Math.tan(qhc));
+
+      if (oahc < coahc) {
+        c = degreesToRadians(270) - g;
+      } else if (oahc === coahc) {
+        c = degreesToRadians(270);
+      } else if (oahc > coahc) {
+        c = degreesToRadians(270) + g;
+      }
+    }
+
+    return c;
+  };
+
+  const calculateSouthernCircumpolarCuspAngleEcliptic = (oahc, qhc) => {
+    // For southern circumpolar (latitudes within -90 + OE)
+    // oahc and qhc should come in as radians
+    // returns radians
+    console.log('!', oahc, qhc);
+
+    const degoahc = radiansToDegrees(oahc);
+    console.log('! deg oahc', degoahc);
+    console.log('! deg qhc', radiansToDegrees(qhc));
+
+    const f1 = Math.cos(e) * Math.sin(qhc);
+    const f2 = Math.sin(e) * Math.cos(qhc) * Math.cos(oahc);
+    const f3 = -Math.cos(e) * Math.sin(qhc);
+    let a = 0;
+    let c = 0;
+    if (degoahc === 360 || degoahc < 90) {
+      a = Math.acos(f1 + f2);
+      console.log(1, radiansToDegrees(a));
+      const coahc = Math.acos(Math.tan(e) * Math.tan(qhc));
+      const g = Math.asin((Math.cos(qhc) * Math.sin(oahc)) / Math.sin(a));
+
+      if (oahc < coahc) {
+        c = g;
+      } else if (oahc === coahc) {
+        c = degreesToRadians(90);
+      } else if (oahc > coahc) {
+        c = degreesToRadians(180) - g;
+      }
+    } else if (degoahc >= 90 && degoahc < 180) {
+      console.log(2);
+      a = Math.acos(f3 - f2);
+      console.log(2, radiansToDegrees(a));
+      const g = Math.acos((Math.cos(qhc) * Math.cos(oahc - degreesToRadians(90))) / Math.sin(a));
+
+      c = degreesToRadians(90) + g;
+    } else if (degoahc >= 180 && degoahc < 270) {
+      console.log(3);
+      a = Math.acos(f3 - f2);
+      console.log(3, radiansToDegrees(a));
+      const g = Math.asin((Math.cos(qhc) * Math.sin(oahc - degreesToRadians(180))) / Math.sin(a));
+
+      c = degreesToRadians(180) + g;
+    } else if (degoahc >= 270 && degoahc < 360) {
+      a = Math.acos(f1 + f2);
+      const g = Math.acos((Math.cos(qhc) * Math.cos(oahc - degreesToRadians(270))) / Math.sin(a));
+
+      const coahc = degreesToRadians(360) - Math.acos(Math.tan(e) * Math.tan(qhc));
+
+      if (oahc < coahc) {
+        c = degreesToRadians(270) - g;
+      } else if (oahc === coahc) {
+        c = degreesToRadians(270);
+      } else if (oahc > coahc) {
+        c = degreesToRadians(270) + g;
+      }
+    }
+
+    return c;
+  };
+
+  const a30 = degreesToRadians(30.0);
+  const a60 = degreesToRadians(60.0);
+
   const c1 = ascendant;
-  const c7 = 180.0 + c1;
-  const c2 = midheaven + radiansToDegrees(r2);
-  const c8 = 180.0 + c2;
-  const c3 = midheaven + radiansToDegrees(r3);
-  const c9 = 180.0 + c3;
+  const c7 = modulo(c1 + 180, 360);
+  const c10 = midheaven;
+  const c4 = modulo(midheaven + 180, 360);
+  const oa2 = Math.abs(degreesToRadians(rightAscensionIC) - Math.atan(Math.cos(f) * Math.tan(a60)));
+  const oa3 = Math.abs(degreesToRadians(rightAscensionIC) - Math.atan(Math.cos(f) * Math.tan(a30)));
+  const oa11 = Math.abs(degreesToRadians(rightAscensionMC) + Math.atan(Math.cos(f) * Math.tan(a30)));
+  const oa12 = Math.abs(degreesToRadians(rightAscensionMC) + Math.atan(Math.cos(f) * Math.tan(a60)));
+  const q2 = Math.abs(Math.asin(Math.sin(f) * Math.sin(a60)));
+  const q12 = Math.abs(Math.asin(Math.sin(f) * Math.sin(a60)));
+  const q3 = Math.abs(Math.asin(Math.sin(f) * Math.sin(a30)));
+  const q11 = Math.abs(Math.asin(Math.sin(f) * Math.sin(a30)));
 
-  // return [
-  //   c1,
-  //   c2,
-  //   c3,
-  //   c4,
-  //   c5,
-  //   c6,
-  //   c7,
-  //   c8,
-  //   c9,
-  //   c10,
-  //   c11,
-  //   c12,
-  // ];
+  let c2;
+  let c3;
+  let c11;
+  let c12;
+
+  if (latitude > 90 - obliquityEcliptic) {
+    // northern circumpolar
+    c2 = radiansToDegrees(calculateNorthernCircumpolarCuspAngleEcliptic(oa2, q2));
+    c3 = radiansToDegrees(calculateNorthernCircumpolarCuspAngleEcliptic(oa3, q3));
+    c11 = radiansToDegrees(calculateNorthernCircumpolarCuspAngleEcliptic(oa11, q11));
+    c12 = radiansToDegrees(calculateNorthernCircumpolarCuspAngleEcliptic(oa12, q12));
+  } else if (latitude >= 0) {
+    // northern hemisphere
+    c2 = radiansToDegrees(calculateNorthernCuspAngleEcliptic(oa2, q2));
+    c3 = radiansToDegrees(calculateNorthernCuspAngleEcliptic(oa3, q3));
+    c11 = radiansToDegrees(calculateNorthernCuspAngleEcliptic(oa11, q11));
+    c12 = radiansToDegrees(calculateNorthernCuspAngleEcliptic(oa12, q12));
+  } else if (latitude >= -90 + obliquityEcliptic) {
+    // southern hemisphere
+    c2 = radiansToDegrees(calculateSouthernCuspAngleEcliptic(oa2, q2));
+    c3 = radiansToDegrees(calculateSouthernCuspAngleEcliptic(oa3, q3));
+    c11 = radiansToDegrees(calculateSouthernCuspAngleEcliptic(oa11, q11));
+    c12 = radiansToDegrees(calculateSouthernCuspAngleEcliptic(oa12, q12));
+    console.log('c12', modulo(c12, 360));
+  } else {
+    // southern circumpolar
+    c2 = radiansToDegrees(calculateSouthernCircumpolarCuspAngleEcliptic(oa2, q2));
+    c3 = radiansToDegrees(calculateSouthernCircumpolarCuspAngleEcliptic(oa3, q3));
+    c11 = radiansToDegrees(calculateSouthernCircumpolarCuspAngleEcliptic(oa11, q11));
+    c12 = radiansToDegrees(calculateSouthernCircumpolarCuspAngleEcliptic(oa12, q12));
+  }
+
+  const c5 = modulo(c11 + 180, 360);
+  const c6 = modulo(c12 + 180, 360);
+  const c8 = modulo(c2 + 180, 360);
+  const c9 = modulo(c3 + 180, 360);
 
   return [
     modulo(c1, 360).toFixed(4),
