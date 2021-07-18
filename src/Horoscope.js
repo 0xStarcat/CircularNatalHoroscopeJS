@@ -352,6 +352,7 @@ export class Horoscope {
           ascendant: this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees,
           latitude: this.origin.latitude,
         });
+
         break;
       case 'equal-house':
         cuspsArray = calculateEqualHouseCusps({
