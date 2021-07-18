@@ -9,28 +9,28 @@ export function getZodiacSign({ decimalDegrees, zodiac, language }?: {
     zodiac?: string;
     language?: string;
 }): any;
-export function calculateKochHouseCusps({ rightAscensionMC, midheaven, ascendant, latitude, obliquityEcliptic }?: {
+export function calculateKochHouseCusps({ rightAscensionMC, midheaven, ascendant, latitude, obliquityEcliptic, }?: {
     rightAscensionMC?: number;
     midheaven?: number;
     ascendant?: number;
     latitude?: number;
     obliquityEcliptic?: number;
 }): string[];
-export function calculatePlacidianHouseCusps({ rightAscensionMC, midheaven, ascendant, latitude, obliquityEcliptic }?: {
+export function calculatePlacidianHouseCusps({ rightAscensionMC, midheaven, ascendant, latitude, obliquityEcliptic, }?: {
     rightAscensionMC?: number;
     midheaven?: number;
     ascendant?: number;
     latitude?: number;
     obliquityEcliptic?: number;
 }): any[];
-export function calculateRegiomontanusHouseCusps({ rightAscensionMC, midheaven, ascendant, latitude, obliquityEcliptic }?: {
+export function calculateRegiomontanusHouseCusps({ rightAscensionMC, midheaven, ascendant, latitude, obliquityEcliptic, }?: {
     rightAscensionMC?: number;
     midheaven?: number;
     ascendant?: number;
     latitude?: number;
     obliquityEcliptic?: number;
 }): any[];
-export function calculateTopocentricHouseCusps({ rightAscensionMC, midheaven, ascendant, latitude, obliquityEcliptic }?: {
+export function calculateTopocentricHouseCusps({ rightAscensionMC, midheaven, ascendant, latitude, obliquityEcliptic, }?: {
     rightAscensionMC?: number;
     midheaven?: number;
     ascendant?: number;
@@ -45,3 +45,10 @@ export function calculateWholeSignHouseCusps({ ascendant, zodiac }?: {
     ascendant?: number;
     zodiac?: string;
 }): number[];
+export function calculateCampanusHouseCusps({ rightAscensionMC, midheaven, ascendant, latitude, obliquityEcliptic, }?: {
+    rightAscensionMC?: number;
+    midheaven?: number;
+    ascendant?: number;
+    latitude?: number;
+    obliquityEcliptic?: number;
+}): string[];

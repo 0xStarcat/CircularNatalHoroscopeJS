@@ -1,5 +1,5 @@
 export function getObliquityEcliptic(): void;
-export function getJulianDate({ year, month, date, ut }?: {
+export function getJulianDate({ year, month, date, ut, }?: {
     year?: number;
     month?: number;
     date?: number;
