@@ -345,3 +345,6 @@ You can test a package from a github release by adding the following to any proj
 - Special thanks to Mivion for their javascript implementation of Moshier's ephemeris https://github.com/mivion/ephemeris
 - and to xErik for their work converting it into a module https://github.com/xErik/ephemeris-moshier/
 - and Moshier for creating and sharing their C implementation of an ephemeris
+- "Astronomical Algorithims" by Jean Meeus
+- "An Astrological House Formulary" by Michael P. Munkasey
+- "Dividing the Heavens" by Leonard Williams
