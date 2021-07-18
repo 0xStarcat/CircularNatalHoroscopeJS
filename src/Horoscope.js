@@ -21,6 +21,7 @@ import {
 
 import {
   calculateEqualHouseCusps,
+  calculateCampanusHouseCusps,
   calculateKochHouseCusps,
   calculatePlacidianHouseCusps,
   calculateRegiomontanusHouseCusps,
@@ -108,6 +109,7 @@ export class Horoscope {
     return [
       { value: 'equal-house', label: LANGUAGE[language]['equal-house'] },
       { value: 'koch', label: LANGUAGE[language].koch },
+      { value: 'campanus', label: LANGUAGE[language].campanus },
       { value: 'placidus', label: LANGUAGE[language].placidus },
       { value: 'regiomontanus', label: LANGUAGE[language].regiomontanus },
       { value: 'topocentric', label: LANGUAGE[language].topocentric },
@@ -340,6 +342,18 @@ export class Horoscope {
     let cuspsArray;
 
     switch (string) {
+      case 'campanus':
+        cuspsArray = calculateCampanusHouseCusps({
+          rightAscensionMC: applyZodiacOffsetCounter(
+            this.origin.localSiderealTime,
+            this._zodiac,
+          ),
+          midheaven: this.Midheaven.ChartPosition.Ecliptic.DecimalDegrees,
+          ascendant: this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees,
+          latitude: this.origin.latitude,
+        });
+
+        break;
       case 'equal-house':
         cuspsArray = calculateEqualHouseCusps({
           ascendant: this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees,
